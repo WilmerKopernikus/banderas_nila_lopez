@@ -5,6 +5,7 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
+    "build:netlify": "ng build --configuration production --no-ssr",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "serve:ssr:banderas_nila_lopez": "node dist/banderas_nila_lopez/server/server.mjs"
