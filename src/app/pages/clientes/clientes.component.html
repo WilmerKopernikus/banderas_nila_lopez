@@ -1,0 +1,15 @@
+<section class="container clientes">
+  <div class="section-heading">
+    <p class="badge">Confianza institucional</p>
+    <h1 class="section-title">Relaciones de largo plazo con entidades públicas y privadas</h1>
+    <p class="text-muted">Respaldo en proyectos protocolarios, educativos y corporativos.</p>
+  </div>
+
+  <div class="grid">
+    <article class="card" *ngFor="let testimonio of testimonios">
+      <div class="badge">{{ testimonio.entidad }}</div>
+      <p class="text-muted">“{{ testimonio.texto }}”</p>
+      <p class="autor">{{ testimonio.responsable }}</p>
+    </article>
+  </div>
+</section>

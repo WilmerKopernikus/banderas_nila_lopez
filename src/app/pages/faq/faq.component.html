@@ -1,0 +1,14 @@
+<section class="container faq">
+  <div class="section-heading">
+    <p class="badge">Preguntas frecuentes</p>
+    <h1 class="section-title">Respuestas rápidas</h1>
+    <p class="text-muted">Información clave sobre envíos, materiales y personalización.</p>
+  </div>
+
+  <div class="card list">
+    <div class="item" *ngFor="let pregunta of preguntas">
+      <h3>{{ pregunta.pregunta }}</h3>
+      <p class="text-muted">{{ pregunta.respuesta }}</p>
+    </div>
+  </div>
+</section>

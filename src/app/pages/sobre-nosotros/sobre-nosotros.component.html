@@ -1,0 +1,44 @@
+<section class="container sobre">
+  <p class="badge">Nuestra historia</p>
+  <h1 class="section-title">Tres décadas confeccionando símbolos que inspiran respeto</h1>
+  <div class="card historia">
+    <div>
+      <h3>Origen familiar en Bogotá</h3>
+      <p class="text-muted">
+        Banderas Nila López nació como un taller familiar en Teusaquillo. Hoy contamos con procesos
+        industriales y equipo especializado, sin perder el cuidado artesanal que nos caracteriza.
+      </p>
+    </div>
+    <div>
+      <h3>Visión y valores</h3>
+      <p class="text-muted">
+        Nos mueve la confianza. Trabajamos con protocolos claros, fichas técnicas verificables y
+        seguimiento puntual para cada entrega.
+      </p>
+      <ul>
+        <li *ngFor="let valor of valores">{{ valor }}</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="grid">
+    <div class="card block">
+      <p class="badge">Misión</p>
+      <p>
+        Diseñar, producir y entregar banderas que representen la identidad institucional de nuestros
+        clientes con excelencia, puntualidad y respeto por los símbolos que custodian.
+      </p>
+    </div>
+    <div class="card block">
+      <p class="badge">Visión</p>
+      <p>
+        Ser el referente colombiano en confección de banderas protocolarias, reconocidos por nuestra
+        precisión técnica y acompañamiento cercano.
+      </p>
+    </div>
+    <div class="card block">
+      <p class="badge">Cobertura</p>
+      <p>Producción en Bogotá con envíos nacionales asegurados y soporte remoto.</p>
+    </div>
+  </div>
+</section>
