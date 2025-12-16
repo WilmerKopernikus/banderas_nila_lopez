@@ -1,11 +1,6 @@
 [build]
-  command = "npm run build:netlify"
+  command = "ng build"
   publish = "dist/banderas_nila_lopez/browser"
 
-[build.environment]
-  NODE_VERSION = "20"
-
-[[redirects]]
-  from = "/*"
-  to = "/index.html"
-  status = 200
+[[plugins]]
+  package = "@netlify/angular-runtime"
