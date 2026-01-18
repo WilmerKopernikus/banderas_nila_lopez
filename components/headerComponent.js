@@ -15,10 +15,7 @@ const HeaderComponent = {
       };
   
       const translations = {
-        en: ['Inicio', 'Productos', 'Nuestra Empresa', 'Contacto'],
-        zh: ['首页', '课程', '关于', '联系'],
-        fr: ['Accueil', 'Cours', 'À propos', 'Contact'],
-        ru: ['Главная', 'Курсы', 'О проекте', 'Контакты'],
+        es: ['Inicio', 'Productos', 'Nuestra Empresa', 'Contacto'],
       };
   
       const icons = [
@@ -30,7 +27,7 @@ const HeaderComponent = {
   
       const sectionIds = ['home', 'courses', 'about', 'contact'];
   
-      const labels = computed(() => translations[props.language] || translations.en);
+      const labels = computed(() => translations[props.language] || translations.es);
   
       return {
         logo: 'assets/logo.svg',

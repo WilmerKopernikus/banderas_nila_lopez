@@ -5,25 +5,21 @@ const FooterComponent = {
       const { computed } = Vue;
   
       const translations = {
-        en: 'All rights reserved.',
-        zh: '版权所有。',
-        fr: 'Tous droits réservés.',
-        ru: 'Все права защищены.',
+        es: 'Todos los derechos reservados.',
       };
   
       const currentYear = new Date().getFullYear();
   
-      const text = computed(() => translations[props.language] || translations.en);
+      const t = computed(() => translations[props.language] || translations.es);
   
       return {
         currentYear,
-        text,
+        t,
       };
     },
     template: `
       <footer>
-        © {{ currentYear }} JEducation. {{ text }}
+        © {{ currentYear }} JEducation. {{ t }}
       </footer>
     `,
   };
-  

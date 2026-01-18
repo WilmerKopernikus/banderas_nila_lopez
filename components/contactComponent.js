@@ -6,7 +6,7 @@ const ContactComponent = {
 
     // Translations for each language
     const translations = {
-      en: {
+      es: {
         title: 'Solicita una Cotización',
         namePlaceholder: 'Nombre',
         emailPlaceholder: 'Correo Electrónico',
@@ -14,33 +14,9 @@ const ContactComponent = {
         submit: 'Enviar',
         thankYou: "¡Gracias! Nos pondremos en contacto contigo pronto.",
       },
-      zh: {
-        title: '联系我们',
-        namePlaceholder: '姓名',
-        emailPlaceholder: '电子邮箱',
-        questionPlaceholder: '您的问题',
-        submit: '提交',
-        thankYou: '谢谢！我们会尽快与您联系。',
-      },
-      fr: {
-        title: 'Contactez-nous',
-        namePlaceholder: 'Nom',
-        emailPlaceholder: 'E-mail',
-        questionPlaceholder: 'Votre question',
-        submit: 'Envoyer',
-        thankYou: 'Merci ! Nous vous répondrons très bientôt.',
-      },
-      ru: {
-        title: 'Свяжитесь с нами',
-        namePlaceholder: 'Имя',
-        emailPlaceholder: 'Электронная почта',
-        questionPlaceholder: 'Ваш вопрос',
-        submit: 'Отправить',
-        thankYou: 'Спасибо! Мы скоро свяжемся с вами.',
-      },
     };
 
-    const t = computed(() => translations[props.language] || translations.en);
+    const t = computed(() => translations[props.language] || translations.es);
 
     // Bind questionMessage to the textarea
     const questionMessage = ref('');
@@ -83,4 +59,3 @@ const ContactComponent = {
   `,
 };
 
-  
