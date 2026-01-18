@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Banderas Nila López</title>
+  <link rel="stylesheet" href="global.css" />
+  <link rel="stylesheet" href="header.css" />
+  <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
+</head>
+<body>
+  <div id="app">
+    <header-component :language="language" :set-language="setLanguage"></header-component>
+    <hero-component :language="language"></hero-component>
+  
+    <courses-component v-if="showCourses" :language="language"></courses-component>
+    <locations-component v-if="showLocations" :language="language"></locations-component>
+    <about-component v-if="showAbout" :language="language"></about-component>
+    <testimonials-component v-if="showTestimonials" :language="language"></testimonials-component>
+    <contact-component :language="language"></contact-component>
+    <footer-component v-if="showFooter" :language="language"></footer-component>
+  </div>
+
+  <script src="components/HeaderComponent.js"></script>
+  <script src="components/HeroComponent.js"></script>
+  <script src="components/coursesComponent.js"></script>
+  <script src="components/locationsComponent.js"></script>
+  <script src="components/aboutComponent.js"></script>
+  <script src="components/testimonialsComponent.js"></script>
+  <script src="components/contactComponent.js"></script>
+  <script src="components/footerComponent.js"></script>
+  <script src="main.js"></script>
+</body>
+</html>

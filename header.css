@@ -1,0 +1,313 @@
+/* ================= HEADER ================= */
+header{
+  /* 🔧 keep it in the viewport at all times */
+  position: fixed;        /* instead of sticky               */
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1100;          /* higher than .menu-overlay       */
+  background: #fff;
+  box-shadow: 0 2px 6px rgba(0,0,0,.06);
+}
+  
+  .nav-container {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 60px;
+    border-bottom: 2px solid #ccc;
+  }
+  
+  /* ================= LOGO ================= */
+  .logo img {
+    height: 40px;
+  }
+  
+  .logo {
+    transition: transform 0.7s ease;
+    margin-top:10px;
+  }
+  
+  .logo:hover {
+    transform: scale(1.1);
+  }
+  
+  /* ================= HAMBURGER ================= */
+  .hamburger-menu {
+    position: absolute;
+    top: 50%;
+    left: 20px;
+    transform: translateY(-50%);
+    z-index: 1000;
+  }
+  
+  .hamburger {
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    width: 40px;
+    height: 30px;
+  }
+  
+  .hamburger span {
+    display: block;
+    width: 100%;
+    height: 4px;
+    background-color: #333;
+    transition: all 0.3s ease;
+    transform-origin: center;
+  }
+  
+  .hamburger.open span:nth-child(1) {
+    transform: rotate(45deg) translate(9px, 9px);
+    background-color: #4f4f4f;
+  }
+  
+  .hamburger.open span:nth-child(2) {
+    opacity: 0;
+  }
+  
+  .hamburger.open span:nth-child(3) {
+    transform: rotate(-45deg) translate(5px, -5px);
+    background-color: #4f4f4f;
+  }
+  
+  /* ================= MENU OVERLAY ================= */
+  .menu-overlay {
+    position: fixed;
+    top: 60px;
+    left: 0;
+    width: 100%;
+    height: 30%;
+    background: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-bottom: 2px solid #ccc;
+    transform-origin: top;
+    transform: scaleY(0);
+    transition: transform 0.2s ease-in-out;
+    pointer-events: none;
+    z-index: 999;
+  }
+  
+  .menu-overlay.show {
+    transform: scaleY(1);
+    pointer-events: auto;
+  }
+  
+  .menu-overlay ul {
+    display: flex;
+    justify-content: space-evenly;
+    width: 100%;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .menu-overlay a {
+    color: #777777;
+    text-decoration: none;
+    font-size: 18px;
+    transition: color 0.3s;
+  }
+  
+  .menu-overlay a:hover {
+    color: #004f9f;
+    font-weight: 600;
+  }
+  
+  .menu-icon {
+    width: 40px;
+    height: auto;
+    display: block;
+    margin: 0 auto 10px;
+    transition: transform 0.7s ease;
+  }
+  
+  .menu-icon:hover {
+    transform: scale(1.2);
+  }
+  
+  /* ================= LANGUAGE SELECTOR ================= */
+.language-selector {
+  position: fixed;
+  top: 10px;
+  right: 20px;
+  z-index: 2000;
+  display: inline-block;
+}
+
+/* Current language display box */
+.language-selector .current-lang {
+  cursor: pointer;
+  padding: 6px 10px;
+  background: #eee;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  user-select: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-width: 100px;
+  text-align: center;
+  font-weight: 600;
+  color: #333;
+  box-sizing: border-box;
+}
+
+/* Flag inside current language */
+.language-selector .current-lang .flag-icon {
+  width: auto;
+  height: 20px;
+}
+
+/* Language options dropdown */
+.language-options {
+  display: none;
+  position: absolute;
+  right: 0;
+  top: calc(100% + 4px);
+  background: #fff;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  z-index: 999;
+  min-width: 100%;
+  box-sizing: border-box;
+}
+
+/* Show language dropdown when toggled via Vue */
+.language-options.show {
+  display: block;
+}
+
+/* Add divider between items */
+.language-options li + li {
+  border-top: 1px solid #eee;
+}
+
+/* Button inside list */
+.language-options li button {
+  display: block;
+  width: 100%;
+  text-align: center;
+  padding: 10px 16px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #333;
+  font-family: inherit;
+  font-size: 16px;
+  white-space: nowrap;
+}
+
+/* Hover effect for button */
+.language-options li button:hover {
+  background-color: #f5f5f5;
+}
+
+/* Flag + text alignment in button */
+.language-options li button.lang-button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  justify-content: center;
+}
+
+/* Flag icon in button */
+.language-options li button.lang-button img.flag-icon {
+  width: auto;
+  height: 20px;
+  display: inline-block;
+}
+
+  
+  
+  
+  /* ================= MEDIA QUERIES ================= */
+
+/* ====== Tablet and below (max-width: 992px) ====== */
+@media (max-width: 992px) {
+  /* === Logo === */
+  .logo img {
+    height: 20px;
+  }
+
+  /* === Hamburger Menu === */
+  .hamburger {
+    width: 25px;
+    height: 25px;
+  }
+
+  .hamburger.open span:nth-child(1) {
+    transform: rotate(45deg) translate(6px, 6px);
+  }
+
+  .hamburger.open span:nth-child(3) {
+    transform: rotate(-45deg) translate(6px, -6px);
+  }
+
+  /* === Menu Overlay === */
+  .menu-overlay {
+    height: 70%;
+  }
+
+  .menu-overlay ul {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    row-gap: 80px;
+    column-gap: 40px;
+    justify-items: center;
+    width: 100%;
+    max-width: 300px;
+    margin: 0 auto;
+    list-style: none;
+    padding: 0;
+  }
+
+  /* NEW: Match updated structure */
+  .language-selector .current-lang .flag-icon {
+    height: 18px;
+  }
+
+  .language-selector {
+    right: 5px;
+  }
+}
+
+/* ====== Mobile (max-width: 767.98px) ====== */
+@media (max-width: 767.98px) {
+  /* Match new .current-lang structure */
+  .language-selector .current-lang {
+    gap: 0;
+    width: 65px;
+    min-width: 65px;
+    font-size: 0; /* Hide language letters */
+  }
+
+  .language-selector .current-lang::after {
+    content: "▼";
+    font-size: 1rem;
+    margin-left: 0.25rem;
+  }
+
+  /* every option in the drop-down */
+  .lang-button {
+    font-size: 0; /* hide EN / ZH / … */
+  }
+}
+
+/* Keep flag icon size consistent */
+.flag-icon {
+  width: 24px;
+  height: 24px;
+}
+
