@@ -12,7 +12,7 @@ const CoursesComponent = {
               title: 'Banderas de Colombia',
               description:
                 'Somos expertos en la fabricación de banderas de Colombia, sus departamentos, ciudades y municipios. Estamos ubicados en Bogotá y ofrecemos envíos nacionales e internacionales. Solicita tu cotización hoy y recibe asesoría personalizada.',
-              button: 'Solicitar Cotización',
+              button: 'Cotizar bandera de Colombia',
               image: 'images/001-Colombia.png',
               alt: 'Banderas de Colombia',
             },
@@ -20,41 +20,41 @@ const CoursesComponent = {
               title: 'Banderas Empresariales',
               description:
                 'Contáctanos si necesitas una bandera para tu empresa. Fabricamos banderas personalizadas según el logo y los colores de tu marca. También ofrecemos diseño gráfico para fortalecer tu identidad corporativa. Solicita tu cotización hoy.',
-              button: 'Solicitar Cotización',
+              button: 'Cotizar bandera empresarial',
               image: 'images/Banderas_Empresariales.png',
               alt: 'Banderas Empresariales',
             },
             {
               title: 'Banderas del Mundo',
               description:
-                'Boost your speaking skills with practical debate strategies. Learn to express opinions clearly, defend your ideas, and engage in structured discussions with confidence.',
-              button: 'Solicitar Cotización',
+                'Fabricamos banderas de países de todo el mundo con altos estándares de calidad. Trabajamos con embajadas reconocidas y entidades oficiales. Contáctanos hoy y solicita tu cotización para banderas diplomáticas y protocolares.',
+              button: 'Cotizar bandera internacional',
               image: 'images/Banderas_del_Mundo.png',
-              alt: 'Debating and Critical Thinking',
+              alt: 'Banderas del Mundo',
             },
             {
               title: 'Banderas de Escritorio',
               description:
-                'Master the IELTS exam with expert guidance and targeted practice. This course covers all four components—Listening, Reading, Writing, and Speaking—helping you achieve the score you need for university admission, visas, or professional purposes.',
-              button: 'Solicitar Cotización',
+                'Ofrecemos banderas de escritorio para oficinas, eventos y espacios institucionales. Fabricamos modelos personalizados y de países, con bases elegantes y excelente calidad. Contáctanos hoy y solicita tu cotización.',
+              button: 'Cotizar bandera de escritorio',
               image: 'images/Banderas_de_Escritorio.png',
-              alt: 'IELTS Preparation Course',
+              alt: 'Banderas de Escritorio',
             },
             {
               title: 'Banderas para Exteriores',
               description:
-                'Get ready to succeed on the TOEFL exam with this focused preparation course. Develop strategies for each section—Reading, Listening, Speaking, and Writing—and practice with real test materials to boost your score and confidence.',
-              button: 'Solicitar Cotización',
+                'Ofrecemos banderas para exteriores resistentes y duraderas, ideales para eventos al aire libre, instituciones y espacios públicos. Fabricamos modelos personalizados y estándar con materiales de alta calidad. Contáctanos hoy y solicita tu cotización.',
+              button: 'Cotizar bandera para exteriores',
               image: 'images/Banderas_para_Exteriores.png',
-              alt: 'TOEFL Preparation Course',
+              alt: 'Banderas para Exteriores',
             },
             {
               title: 'Banderas Institucionales',
               description:
-                'Strengthen your core English skills with this practical course. Improve your grammar, build a wider vocabulary, and gain confidence in everyday conversations, writing, and listening. Perfect for learners at B1–B2 levels.',
-              button: 'Solicitar Cotización',
+                'Elaboramos banderas institucionales para entidades públicas y privadas. Cuidamos que los logos de su institución queden acordes a sus reglas de diseño, garantizando calidad, precisión y excelente presentación. Solicite su cotización hoy.',
+              button: 'Cotizar bandera institucional',
               image: 'images/Banderas_Institucionales.png',
-              alt: 'Intermediate English Course',
+              alt: 'Banderas Institucionales',
             }
           ],
         },
