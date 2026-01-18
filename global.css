@@ -87,6 +87,33 @@ p{
   margin-bottom:2rem;
 }
 
+/* Locations Hero Section */
+.locations-hero {
+  background: linear-gradient(rgba(0, 0, 0, 0.21), rgba(0, 0, 0, 0.242)),
+              url('images/hero5.png') center/cover no-repeat;
+  height: 130vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: white;
+}
+
+.locations-hero .hero-content {
+  max-width: 800px;
+  padding: 0 20px;
+}
+
+.locations-hero h1 {
+  font-size: clamp(1.5rem, 4vw, 3rem);
+  margin-bottom: 1rem;
+}
+
+.locations-hero p {
+  font-size: 1.125rem;
+  margin-bottom: 2rem;
+}
+
 /* Courses */
 section{
   padding:4rem 1rem;
@@ -247,6 +274,10 @@ footer{
 
   .menu-overlay li {
     margin: 10px 0;
+  }
+
+  .locations-hero {
+    height: 85vh;
   }
 }
 
