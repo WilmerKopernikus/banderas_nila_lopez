@@ -7,12 +7,12 @@ const ContactComponent = {
     // Translations for each language
     const translations = {
       en: {
-        title: 'Contact Us',
-        namePlaceholder: 'Name',
-        emailPlaceholder: 'Email',
-        questionPlaceholder: 'Your question',
-        submit: 'Submit',
-        thankYou: "Thank you! We'll get back to you soon.",
+        title: 'Solicita una Cotización',
+        namePlaceholder: 'Nombre',
+        emailPlaceholder: 'Correo Electrónico',
+        questionPlaceholder: 'Tu solicitud de Cotización',
+        submit: 'Enviar',
+        thankYou: "¡Gracias! Nos pondremos en contacto contigo pronto.",
       },
       zh: {
         title: '联系我们',

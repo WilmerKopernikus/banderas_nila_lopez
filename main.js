@@ -15,9 +15,6 @@ createApp({
     FooterComponent,
   },
   setup() {
-    const setLanguage = (lang) => {
-      appLanguage.value = lang;
-    };
 
     // Visibility refs for deferred components
     const showCourses = ref(false);
@@ -39,7 +36,6 @@ createApp({
 
     return {
       language: appLanguage,
-      setLanguage,
       showCourses,
       showLocations,
       showAbout,
