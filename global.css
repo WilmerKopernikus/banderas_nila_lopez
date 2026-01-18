@@ -155,10 +155,10 @@ section{
 #about-jane {
   display: block;
   margin: 0 auto;
-  max-width: 300px; /* Ajusta según tu contenido real */
-  aspect-ratio: 2/3;
+  max-width: 500px; /* Ajusta según tu contenido real */
+  aspect-ratio: 3/2;
   object-fit: cover;
-  border: 2px solid rgb(0, 153, 255);
+  border: 2px solid rgb(255, 255, 255);
   border-radius: 8px;
 }
 #about-jane2 {

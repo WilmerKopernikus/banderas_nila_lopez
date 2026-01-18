@@ -19,7 +19,7 @@ const FooterComponent = {
     },
     template: `
       <footer>
-        © {{ currentYear }} JEducation. {{ t }}
+        © {{ currentYear }} Banderas Nila López. {{ t }}
       </footer>
     `,
   };

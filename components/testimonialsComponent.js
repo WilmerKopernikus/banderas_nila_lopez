@@ -24,7 +24,7 @@ const TestimonialsComponent = {
         },
       };
   
-      const t = computed(() => translations[props.language] || translations.en);
+      const t = computed(() => translations[props.language] || translations.es);
       const activeIndex = ref(0);
       const testimonialsLength = computed(() => t.value.testimonials.length);
   
