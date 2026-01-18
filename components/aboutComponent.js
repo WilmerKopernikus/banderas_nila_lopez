@@ -9,7 +9,7 @@ const AboutComponent = {
           title: 'Nuestra Empresa',
           sections: [
             {
-              heading: 'Alrededor de 30 años en el mercado de las bandera',
+              heading: 'Alrededor de 30 años en el mercado de las banderas',
               description: `Somos una de las mejores empresas de Colombia en la fabricación de banderas, reconocidos por nuestra calidad, cumplimiento y amplia trayectoria. Contamos con una sólida experiencia trabajando para embajadas, instituciones públicas y privadas de gran importancia a nivel nacional e internacional. Cada proyecto refleja nuestro compromiso con la excelencia, el respeto por los protocolos oficiales y la satisfacción de nuestros clientes. Nuestra experiencia respalda cada detalle de nuestro trabajo.`,
               image: 'images/about.jpg',
               alt: 'JBanderas Nila López',
