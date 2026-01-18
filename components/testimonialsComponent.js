@@ -6,19 +6,35 @@ const TestimonialsComponent = {
   
       const translations = {
         es: {
-          title: 'What our students say',
+          title: 'Imagenes de nuestro trabajo',
           testimonials: [
             {
-              text: 'The Business English course helped me feel confident speaking with international clients. I use what I learned every day at work.',
-              author: '— Wei Zhang, Shanghai',
+              src: 'images/testimonial01.jpg',
+              alt: 'Student testimonial 1',
             },
             {
-              text: 'I always struggled with pronunciation, but this course made it fun and effective. My colleagues immediately noticed the difference.',
-              author: '— Yi-Ting Shi, Guangzhou',
+              src: 'images/testimonial02.jpg',
+              alt: 'Student testimonial 2',
             },
             {
-              text: 'The debate classes improved my critical thinking and public speaking. I now participate in conferences without fear.',
-              author: '— Anastasia Ivanova, Saint Petersburg',
+              src: 'images/testimonial03.jpg',
+              alt: 'Student testimonial 3',
+            },
+            {
+              src: 'images/testimonial04.jpg',
+              alt: 'Student testimonial 4',
+            },
+            {
+              src: 'images/testimonial05.jpg',
+              alt: 'Student testimonial 5',
+            },
+            {
+              src: 'images/testimonial06.jpg',
+              alt: 'Student testimonial 6',
+            },
+            {
+              src: 'images/testimonial07.jpg',
+              alt: 'Student testimonial 7',
             },
           ],
         },
@@ -33,7 +49,7 @@ const TestimonialsComponent = {
           setInterval(() => {
             activeIndex.value =
               (activeIndex.value + 1) % testimonialsLength.value;
-          }, 7000);
+          }, 3000);
         }
       });
   
@@ -43,18 +59,17 @@ const TestimonialsComponent = {
       };
     },
     template: `
-      <section id="testimonials" style="background: linear-gradient(to right, #81d9ff, #009fe3);">
+      <section id="testimonials" style="background: linear-gradient(to right, #ffffff, #ffffff);">
         <h2 class="section-title">{{ t.title }}</h2>
         <div class="testimonial-wrapper">
-          <blockquote
+          <div
             v-for="(item, index) in t.testimonials"
             :key="index"
             class="testimonial"
             :class="{ active: index === activeIndex }"
           >
-            <p>"{{ item.text }}"</p><br />
-            <cite>{{ item.author }}</cite>
-          </blockquote>
+          <img class="testimonial-image" :src="item.src" :alt="item.alt" />
+          </div>
         </div>
       </section>
     `,
