@@ -6,7 +6,7 @@ const TestimonialsComponent = {
   
       const translations = {
         es: {
-          title: 'Imagenes de nuestro trabajo',
+          title: 'Nuestro trabajo',
           testimonials: [
             {
               src: 'images/testimonial01.jpg',
