@@ -22,7 +22,8 @@ body {
   font-family: 'Inter', sans-serif;
   color: var(--dark);
   line-height: 1.6;
-  padding-top: 100px;
+  padding-top: 60px;
+  padding-bottom: 60px;
 }
 
 a {

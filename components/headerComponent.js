@@ -59,12 +59,13 @@ const HeaderComponent = {
     };
   },
   template: `
+    <div class="contact-info-bar">
+      <div v-for="(item, index) in contactItems" :key="index" class="contact-info-item">
+        <img :src="item.icon" :alt="item.alt" />
+        <span>{{ item.text }}</span>
+      </div>
+    </div>
     <header>
-    <div class="top-info-bar">
-        <div v-for="(item, index) in contactItems" :key="index" class="top-info-item">
-          <img :src="item.icon" :alt="item.alt" />
-          <span>{{ item.text }}</span>
-        </div>
       </div>
       <div class="nav-container">
         <!-- Logo -->
