@@ -1,46 +1,71 @@
 // components/HeaderComponent.js
 const HeaderComponent = {
-    props: ['language'],
-    setup(props) {
-      const { ref, computed } = Vue;
-  
-      const menuOpen = ref(false);
-  
-      const toggleMenu = () => {
-        menuOpen.value = !menuOpen.value;
-      };
-  
-      const closeMenu = () => {
-        menuOpen.value = false;
-      };
-  
-      const translations = {
-        es: ['Inicio', 'Productos', 'Nuestra Empresa', 'Contacto'],
-      };
-  
-      const icons = [
-        'assets/home.svg',
-        'assets/productos.svg',
-        'assets/about.svg',
-        'assets/contact.svg',
-      ];
-  
-      const sectionIds = ['home', 'courses', 'about', 'contact'];
-  
-      const labels = computed(() => translations[props.language] || translations.es);
-  
-      return {
-        logo: 'assets/logo.svg',
-        icons,
-        labels,
-        sectionIds,
-        menuOpen,
-        toggleMenu,
-        closeMenu,
-      };
-    },
-    template: `
+  props: ['language'],
+  setup(props) {
+    const { ref, computed } = Vue;
+
+    const menuOpen = ref(false);
+
+    const toggleMenu = () => {
+      menuOpen.value = !menuOpen.value;
+    };
+
+    const closeMenu = () => {
+      menuOpen.value = false;
+    };
+
+    const translations = {
+      es: ['Inicio', 'Productos', 'Nuestra Empresa', 'Contacto'],
+    };
+
+    const icons = [
+      'assets/home.svg',
+      'assets/productos.svg',
+      'assets/about.svg',
+      'assets/contact.svg',
+    ];
+
+    const contactItems = [
+      {
+        icon: 'assets/icon01-negativo.png',
+        text: '315 6299918',
+        alt: 'Teléfono',
+      },
+      {
+        icon: 'assets/icon02-negativo.png',
+        text: 'Calle 75 No 58-51 - 2o. Piso - Bogotá, Colombia',
+        alt: 'Ubicación',
+      },
+      {
+        icon: 'assets/icon03-negativo.png',
+        text: 'banderasnilalopez@gmail.com',
+        alt: 'Correo',
+      },
+    ];
+
+    const sectionIds = ['home', 'courses', 'about', 'contact'];
+
+    const labels = computed(() => translations[props.language] || translations.es);
+
+    return {
+      logo: 'assets/logo.svg',
+      icons,
+      labels,
+      sectionIds,
+      contactItems,
+      menuOpen,
+      toggleMenu,
+      closeMenu,
+    };
+  },
+  template: `
     <header>
+    <div class="top-info-bar">
+        <div v-for="(item, index) in contactItems" :key="index" class="top-info-item">
+          <img :src="item.icon" :alt="item.alt" />
+          <span>{{ item.text }}</span>
+        </div>
+      </div>
       <div class="nav-container">
         <!-- Logo -->
         <div class="logo">
@@ -70,4 +95,4 @@ const HeaderComponent = {
       </div>
     </header>
     `,
-  };
+};
