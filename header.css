@@ -228,4 +228,7 @@ header {
     justify-content: center;
     width: 100%;
   }
+  .menu-overlay {
+  top: 153px;
+  }
 }
