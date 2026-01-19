@@ -350,4 +350,8 @@ footer {
     max-width: 250px;
     /* Ajusta según tu contenido real */
   }
+
+  body {
+  padding-top: 0px;
+  }
 }
