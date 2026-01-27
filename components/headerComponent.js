@@ -15,8 +15,9 @@ const HeaderComponent = {
     };
 
     const translations = {
-      es: ['Inicio', 'Productos', 'Nuestra Empresa', 'Contacto'],
+      es: ['Inicio', 'Productos', 'Nuestra Empresa', 'Galería', 'Contacto'],
     };
+
 
     const icons = [
       'assets/home.svg',
@@ -43,7 +44,8 @@ const HeaderComponent = {
       },
     ];
 
-    const sectionIds = ['home', 'courses', 'about', 'contact'];
+    const sectionIds = ['home', 'courses', 'about', 'gallery.html', 'contact'];
+
 
     const labels = computed(() => translations[props.language] || translations.es);
 
@@ -66,11 +68,12 @@ const HeaderComponent = {
       </div>
     </div>
     <header>
-      </div>
       <div class="nav-container">
         <!-- Logo -->
         <div class="logo">
-          <a href="#"><img :src="logo" alt="Logo" /></a>
+          <a href="#home" @click="closeMenu">
+            <img :src="logo" alt="Banderas Nila López" />
+          </a>
         </div>
   
         <!-- Hamburger Menu -->
@@ -87,7 +90,10 @@ const HeaderComponent = {
       <div :class="['menu-overlay', { show: menuOpen }]">
         <ul>
           <li v-for="(label, i) in labels" :key="i">
-            <a :href="'#' + sectionIds[i]" @click="closeMenu">
+            <a 
+              :href="sectionIds[i].includes('.html') ? sectionIds[i] : '#' + sectionIds[i]" 
+              @click="closeMenu"
+            >
               <img :src="icons[i]" :alt="label + ' icon'" class="menu-icon" />
               {{ label }}
             </a>

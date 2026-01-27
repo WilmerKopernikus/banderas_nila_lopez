@@ -1,0 +1,53 @@
+/* ===== Gallery Page Layout ===== */
+
+body {
+  background: #f5f5f5; /* o tu color base */
+}
+
+/* Container already fluid by bootstrap style logic */
+#gallery {
+  margin: 40px auto;
+  width: 100%;
+  max-width: 1400px;
+}
+
+/* Masonry items */
+.item {
+  width: 350px;
+  margin-bottom: 16px;
+  border-radius: 8px;
+  overflow: hidden;
+  background: #fff;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.item:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 28px rgba(0,0,0,0.15);
+}
+
+/* Images */
+.item img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* ===== Responsive adjustments ===== */
+
+@media (max-width: 1200px) {
+  .item {
+    width: 300px;
+  }
+}
+
+@media (max-width: 768px) {
+  .item {
+    width: 100%;
+  }
+
+  #gallery {
+    padding: 0 12px;
+  }
+}
