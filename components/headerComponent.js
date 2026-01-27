@@ -23,6 +23,7 @@ const HeaderComponent = {
       'assets/home.svg',
       'assets/productos.svg',
       'assets/about.svg',
+      'assets/gallery.svg',
       'assets/contact.svg',
     ];
 
@@ -55,6 +56,10 @@ const HeaderComponent = {
         sectionId.includes('.html') ? sectionId : `${hashPrefix}${sectionId}`
       );
     });
+    const logoLink = computed(() => {
+      const isGalleryPage = window.location.pathname.includes('gallery.html');
+      return isGalleryPage ? 'index.html#home' : '#home';
+    });
 
     return {
       logo: 'assets/logo.svg',
@@ -63,6 +68,7 @@ const HeaderComponent = {
       sectionLinks,
       sectionIds,
       contactItems,
+      logoLink,
       menuOpen,
       toggleMenu,
       closeMenu,
@@ -79,7 +85,7 @@ const HeaderComponent = {
       <div class="nav-container">
         <!-- Logo -->
         <div class="logo">
-          <a href="#home" @click="closeMenu">
+          <a :href="logoLink" @click="closeMenu">
             <img :src="logo" alt="Banderas Nila López" />
           </a>
         </div>

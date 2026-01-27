@@ -1,51 +1,58 @@
 /* ===== Gallery Page Layout ===== */
 
 body {
-  background: #f5f5f5; /* o tu color base */
+  background: #f5f5f5;
 }
 
-/* Container already fluid by bootstrap style logic */
+/* Contenedor principal de la galería con ancho máximo y centrado */
 .container-fluid {
-  max-width: 1500px;
-  margin: 0 auto;
-  padding: 40px 20px;
+  max-width: 1500px; 
+  margin: 0 auto; /* Centrado horizontal */
+  padding: 40px 20px; /* El primer valor determina el padding superior e inferior, el segundo el padding lateral */
 }
+
 
 #gallery {
-  margin: 0 auto;
+  margin: 0 auto; /* Centrado horizontal del grid de Masonry. El primer valor determina el margen superior e inferior, el segundo el margen lateral */
 }
 
-/* Masonry items */
+/* Tarjetas individuales de cada imagen en la galería */
 .item {
-  width: 450px;
-  margin-bottom: 16px;
-  border-radius: 8px;
-  overflow: hidden;
-  background: #fff;
-  box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+  width: calc(33.333% - 11px); /* Ancho dinámico para 3 columnas, restando espacio del gutter */
+  margin-bottom: 16px; /* Espaciado vertical entre elementos */
+  border-radius: 8px; /* Bordes redondeados */
+  overflow: hidden; /* Oculta contenido que desborde (para imágenes) */
+  background: #fff; /* Fondo blanco para las tarjetas */
+  box-shadow: 0 6px 18px rgba(0,0,0,0.08); /* Sombra suave para efecto de elevación */
 }
 
-/* Images */
+/* Imágenes dentro de cada tarjeta */
 .item img {
-  width: 100%;
-  height: auto;
-  display: block;
+  width: 100%; /* Ocupa todo el ancho de la tarjeta */
+  height: auto; /* Mantiene la proporción original de la imagen */
+  display: block; /* Elimina espacios en blanco debajo de la imagen */
 }
 
 /* ===== Responsive adjustments ===== */
 
-@media (max-width: 1200px) {
+/* Pantallas medianas (tablets) - 2 columnas con ancho dinámico */
+@media (max-width: 1200px) and (min-width: 769px) {
   .item {
-    width: 300px;
+    width: calc(50% - 8px); /* 50% menos la mitad del gutter (16px / 2) para 2 columnas */
   }
 }
 
+/* Pantallas pequeñas (móviles) */
 @media (max-width: 768px) {
   .item {
-    width: 100%;
+    width: 100%; /* Tarjetas ocupan todo el ancho disponible */
   }
 
   #gallery {
-    padding: 0 12px;
+    padding: 0 12px; /* Reduce padding lateral en móviles */
   }
+
+  .container-fluid {
+    padding: 30px 30px 10px 10px; /* El primer valor determina el padding superior e inferior, el segundo el padding lateral */
+}
 }
