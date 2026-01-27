@@ -46,13 +46,21 @@ const HeaderComponent = {
 
     const sectionIds = ['home', 'courses', 'about', 'gallery.html', 'contact'];
 
-
     const labels = computed(() => translations[props.language] || translations.es);
+    const sectionLinks = computed(() => {
+      const isGalleryPage = window.location.pathname.includes('gallery.html');
+      const hashPrefix = isGalleryPage ? 'index.html#' : '#';
+
+      return sectionIds.map((sectionId) =>
+        sectionId.includes('.html') ? sectionId : `${hashPrefix}${sectionId}`
+      );
+    });
 
     return {
       logo: 'assets/logo.svg',
       icons,
       labels,
+      sectionLinks,
       sectionIds,
       contactItems,
       menuOpen,
@@ -91,7 +99,7 @@ const HeaderComponent = {
         <ul>
           <li v-for="(label, i) in labels" :key="i">
             <a 
-              :href="sectionIds[i].includes('.html') ? sectionIds[i] : '#' + sectionIds[i]" 
+              :href="sectionLinks[i]" 
               @click="closeMenu"
             >
               <img :src="icons[i]" :alt="label + ' icon'" class="menu-icon" />
