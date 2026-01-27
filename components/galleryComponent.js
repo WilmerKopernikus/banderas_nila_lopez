@@ -8,7 +8,23 @@ const GalleryComponent = {
       await nextTick(); // esperar a que Vue pinte las imágenes
 
       const grid = document.querySelector('#gallery');
+      const images = grid.querySelectorAll('img');
+      
+      // Wait for all images to load
+      const imagePromises = Array.from(images).map(img => {
+        return new Promise((resolve) => {
+          if (img.complete) {
+            resolve();
+          } else {
+            img.addEventListener('load', resolve);
+            img.addEventListener('error', resolve); // resolve even on error to prevent hanging
+          }
+        });
+      });
 
+      // Initialize Masonry after all images are loaded
+      await Promise.all(imagePromises);
+      
       new Masonry(grid, {
         itemSelector: '.item',
         columnWidth: '.item',
