@@ -16,6 +16,17 @@ body {
   margin: 0 auto; /* Centrado horizontal del grid de Masonry. El primer valor determina el margen superior e inferior, el segundo el margen lateral */
 }
 
+.gallery-sentinel {
+  display: flex;
+  justify-content: center;
+  padding: 24px 0 40px;
+  min-height: 40px;
+}
+
+.gallery-loading {
+  font-size: 0.95rem;
+  color: #666;
+}
 /* Tarjetas individuales de cada imagen en la galería */
 .item {
   width: calc(33.333% - 11px); /* Ancho dinámico para 3 columnas, restando espacio del gutter */

@@ -15,7 +15,7 @@ const HeaderComponent = {
     };
 
     const translations = {
-      es: ['Inicio', 'Productos', 'Nuestra Empresa', 'Galería', 'Contacto'],
+      es: ['Inicio', 'Productos', 'Nuestra Empresa', 'Nuestro Catálogo', 'Contacto'],
     };
 
 
@@ -45,11 +45,11 @@ const HeaderComponent = {
       },
     ];
 
-    const sectionIds = ['home', 'courses', 'about', 'gallery.html', 'contact'];
+    const sectionIds = ['home', 'courses', 'about', 'nuestro_catalogo.html', 'contact'];
 
     const labels = computed(() => translations[props.language] || translations.es);
     const sectionLinks = computed(() => {
-      const isGalleryPage = window.location.pathname.includes('gallery.html');
+      const isGalleryPage = window.location.pathname.includes('nuestro_catalogo.html');
       const hashPrefix = isGalleryPage ? 'index.html#' : '#';
 
       return sectionIds.map((sectionId) =>
@@ -57,7 +57,7 @@ const HeaderComponent = {
       );
     });
     const logoLink = computed(() => {
-      const isGalleryPage = window.location.pathname.includes('gallery.html');
+      const isGalleryPage = window.location.pathname.includes('nuestro_catalogo.html');
       return isGalleryPage ? 'index.html#home' : '#home';
     });
 
