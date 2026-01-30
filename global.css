@@ -180,7 +180,7 @@ section {
 #about-jane {
   display: block;
   margin: 0 auto;
-  max-width: 500px;
+  max-width: 570px;
   /* Ajusta según tu contenido real */
   aspect-ratio: 3/2;
   object-fit: cover;
@@ -347,7 +347,7 @@ footer {
   }
 
   #about-jane {
-    max-width: 250px;
+    max-width: 90%;
     /* Ajusta según tu contenido real */
   }
 

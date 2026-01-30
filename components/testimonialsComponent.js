@@ -10,31 +10,63 @@ const TestimonialsComponent = {
           testimonials: [
             {
               src: 'images/testimonial01.jpg',
-              alt: 'Student testimonial 1',
+              alt: 'Bandera de Colombia',
             },
             {
               src: 'images/testimonial02.jpg',
-              alt: 'Student testimonial 2',
+              alt: 'Banderas Chinas y de Colombia',
             },
             {
               src: 'images/testimonial03.jpg',
-              alt: 'Student testimonial 3',
+              alt: 'Banderas del Mundo',
             },
             {
               src: 'images/testimonial04.jpg',
-              alt: 'Student testimonial 4',
+              alt: 'Banderas del Mundo',
             },
             {
               src: 'images/testimonial05.jpg',
-              alt: 'Student testimonial 5',
+              alt: 'Banderas de Bogotá',
             },
             {
               src: 'images/testimonial06.jpg',
-              alt: 'Student testimonial 6',
+              alt: 'Banderas de Escritorio',
             },
             {
               src: 'images/testimonial07.jpg',
-              alt: 'Student testimonial 7',
+              alt: 'Banderas Institucionales',
+            },
+            {
+              src: 'images/testimonial08.jpg',
+              alt: 'Banderas Institucionales',
+            },
+            {
+              src: 'images/testimonial09.jpg',
+              alt: 'Banderas Institucionales',
+            },
+            {
+              src: 'images/testimonial10.jpg',
+              alt: 'Bandera de España',
+            },
+            {
+              src: 'images/testimonial11.jpg',
+              alt: 'Bandera del Vaticano',
+            },
+            {
+              src: 'images/testimonial12.jpg',
+              alt: 'Banderas Institucionales',
+            },
+            {
+              src: 'images/testimonial13.jpg',
+              alt: 'Banderas Institucionales',
+            },
+            {
+              src: 'images/testimonial14.jpg',
+              alt: 'Banderas de Interior',
+            },
+            {
+              src: 'images/testimonial15.jpg',
+              alt: 'Banderas de Escritorio',
             },
           ],
         },
@@ -49,7 +81,7 @@ const TestimonialsComponent = {
           setInterval(() => {
             activeIndex.value =
               (activeIndex.value + 1) % testimonialsLength.value;
-          }, 3000);
+          }, 3500);
         }
       });
   
