@@ -296,6 +296,24 @@ const ContactComponent = {
       }, successCanvasRef.value);
     };
 
+    const wait = (ms) => new Promise((resolve) => {
+      setTimeout(resolve, ms);
+    });
+
+    const submitToNetlify = async () => {
+      const payload = new FormData(formRef.value);
+      payload.set('form-name', 'contacto-cotizacion');
+
+      const response = await fetch('/', {
+        method: 'POST',
+        body: payload,
+      });
+
+      if (!response.ok) {
+        throw new Error(`Netlify form submission failed with status ${response.status}`);
+      }
+    };
+
     const handleSubmit = async () => {
       if (isSubmitting.value) {
         return;
@@ -306,16 +324,20 @@ const ContactComponent = {
 
       try {
         submitStatus.value = 'submitting';
-        const payload = new FormData(formRef.value);
-        payload.set('form-name', 'contacto-cotizacion');
 
-        const response = await fetch('/', {
-          method: 'POST',
-          body: payload,
-        });
 
-        if (!response.ok) {
-          throw new Error('Netlify form submission failed');
+        const maxAttempts = 2;
+        for (let attempt = 1; attempt <= maxAttempts; attempt += 1) {
+          try {
+            await submitToNetlify();
+            break;
+          } catch (error) {
+            console.error('Error enviando formulario de cotización:', error);
+            if (attempt === maxAttempts) {
+              throw error;
+            }
+            await wait(700);
+          }
         }
 
         submitStatus.value = 'success';
