@@ -9,6 +9,13 @@
   <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
 </head>
 <body>
+  <form name="contacto" data-netlify="true" netlify-honeypot="bot-field" hidden>
+    <input type="hidden" name="form-name" value="contacto" />
+    <input type="text" name="name" />
+    <input type="email" name="email" />
+    <textarea name="message"></textarea>
+  </form>
+
   <div id="app">
     <header-component :language="language"></header-component>
     <hero-component :language="language"></hero-component>

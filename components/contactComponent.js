@@ -20,6 +20,8 @@ const ContactComponent = {
 
     // Bind questionMessage to the textarea
     const questionMessage = ref('');
+    const userName = ref('');
+    const userEmail = ref('');
 
     // Check localStorage when component is mounted
     onMounted(() => {
@@ -30,26 +32,51 @@ const ContactComponent = {
       }
     });
 
-    const handleSubmit = () => {
-      alert(t.value.thankYou);
-      // Optionally clear the form after submission
-      questionMessage.value = '';
+    const encode = (data) =>
+      Object.keys(data)
+        .map((key) => `${encodeURIComponent(key)}=${encodeURIComponent(data[key])}`)
+        .join('&');
+
+    const handleSubmit = async () => {
+      try {
+        await fetch('/', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          body: encode({
+            'form-name': 'contacto',
+            name: userName.value,
+            email: userEmail.value,
+            message: questionMessage.value,
+          }),
+        });
+
+        alert(t.value.thankYou);
+        userName.value = '';
+        userEmail.value = '';
+        questionMessage.value = '';
+      } catch (error) {
+        alert('Hubo un error enviando el formulario. Intenta nuevamente.');
+      }
     };
 
     return {
       t,
       handleSubmit,
       questionMessage,
+      userName,
+      userEmail,
     };
   },
   template: `
     <section id="contact">
       <h2 class="section-title">{{ t.title }}</h2>
-      <form @submit.prevent="handleSubmit">
-        <input type="text" :placeholder="t.namePlaceholder" required />
-        <input type="email" :placeholder="t.emailPlaceholder" required />
+      <form name="contacto" method="POST" data-netlify="true" @submit.prevent="handleSubmit">
+        <input type="hidden" name="form-name" value="contacto" />
+        <input type="text" name="name" v-model="userName" :placeholder="t.namePlaceholder" required />
+        <input type="email" name="email" v-model="userEmail" :placeholder="t.emailPlaceholder" required />
         <textarea
           rows="4"
+          name="message"
           :placeholder="t.questionPlaceholder"
           v-model="questionMessage">
         </textarea>

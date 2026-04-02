@@ -217,7 +217,6 @@ const galleryImages = [
   'images/catalogo/2025-07-97.jpg',
   'images/catalogo/2025-07-98.jpg',
   'images/catalogo/2025-07-99.jpg',
-
   'images/catalogo/2025-08-01.jpg',
   'images/catalogo/2025-08-02.jpg',
   'images/catalogo/2025-08-04.jpg',
@@ -234,7 +233,6 @@ const galleryImages = [
   'images/catalogo/2025-08-17.jpg',
   'images/catalogo/2025-08-18.jpg',
   'images/catalogo/2025-08-20.jpg',
-
   'images/catalogo/2025-08-14.jpg',
   'images/catalogo/2025-09-01.jpg',
   'images/catalogo/2025-09-03.jpg',
@@ -242,7 +240,6 @@ const galleryImages = [
   'images/catalogo/2025-09-06.jpg',
   'images/catalogo/2025-09-07.jpg',
   'images/catalogo/2025-09-08.jpg',
- 
   'images/catalogo/2025-09-09.jpg',
   'images/catalogo/2025-09-12.jpg',
   'images/catalogo/2025-09-13.jpg',
@@ -258,16 +255,13 @@ const galleryImages = [
   'images/catalogo/2025-10-04.jpg',
   'images/catalogo/2025-10-06.jpg',
   'images/catalogo/2025-10-09.jpg',
-
   'images/catalogo/2025-10-16.jpg',
   'images/catalogo/2025-10-19.jpg',
   'images/catalogo/2025-10-20.jpg',
   'images/catalogo/2025-10-21.jpg',
-
   'images/catalogo/2025-11-00.jpg',
   'images/catalogo/2025-11-01.jpg',
   'images/catalogo/2025-11-02.jpg',
-
   'images/catalogo/2025-11-04.jpg',
   'images/catalogo/2025-11-05.jpg',
   'images/catalogo/2025-11-10.jpg',
@@ -277,17 +271,42 @@ const galleryImages = [
   'images/catalogo/2025-11-14.jpg',
   'images/catalogo/2025-11-15.jpg',
   'images/catalogo/2025-11-16.jpg',
-
   'images/catalogo/2025-11-20.jpg',
   'images/catalogo/2025-11-21.jpg',
   'images/catalogo/2025-11-22.jpg',
   'images/catalogo/2025-11-24.jpg',
   'images/catalogo/2025-11-27.jpg',
-
-
-
-
-
+  'images/catalogo/2025-11-28.jpg',
+  'images/catalogo/2025-11-34.jpg',
+  'images/catalogo/2025-11-35.jpg',
+  'images/catalogo/2025-11-38.jpg',
+  'images/catalogo/2025-11-40.jpg',
+  'images/catalogo/2025-11-43.jpg',
+  'images/catalogo/2025-11-44.jpg',
+  'images/catalogo/2025-11-47.jpg',
+  'images/catalogo/2025-11-49.jpg',
+  'images/catalogo/2025-12-03.jpg',
+  'images/catalogo/2025-12-04.jpg',
+  'images/catalogo/2025-12-05.jpg',
+  'images/catalogo/2025-12-07.jpg',
+  'images/catalogo/2025-12-10.jpg',
+  'images/catalogo/2025-12-12.jpg',
+  'images/catalogo/2025-12-14.jpg',
+  'images/catalogo/2025-12-15.jpg',
+  'images/catalogo/2025-12-17.jpg',
+  'images/catalogo/2025-12-21.jpg',
+  'images/catalogo/2025-12-22.jpg',
+  'images/catalogo/2025-12-02.jpg',
+  'images/catalogo/2025-12-25.jpg',
+  'images/catalogo/2025-12-24.jpg',
+  'images/catalogo/2025-12-01.jpg',
+  'images/catalogo/2026-01-01.jpg',
+  'images/catalogo/2026-01-02.jpg',
+  'images/catalogo/2026-01-05.jpg',
+  'images/catalogo/2026-01-06.jpg',
+  'images/catalogo/2026-01-07.jpg',
+  'images/catalogo/2026-01-08.jpg',
+  'images/catalogo/2026-01-09.jpg'
 ];
 
 createApp({
