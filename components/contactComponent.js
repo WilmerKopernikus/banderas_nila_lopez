@@ -378,6 +378,16 @@ const ContactComponent = {
         <label>No llenar si eres humano: <input name="bot-field" /></label>
         </p>
 
+        <input type="hidden" name="tipo_bandera" :value="form.banderaType" />
+        <input type="hidden" name="cantidad" :value="form.quantity" />
+        <input type="hidden" name="ancho_cm" :value="form.widthCm" />
+        <input type="hidden" name="alto_cm" :value="form.heightCm" />
+        <input type="hidden" name="material" :value="form.material" />
+        <input type="hidden" name="asta_y_base" :value="form.needsPoleBase" />
+        <input type="hidden" name="ciudad_entrega" :value="form.city" />
+        <input type="hidden" name="bandera_personalizada" :value="form.customLogo" />
+        <input type="hidden" name="nombre" :value="form.name" />
+        <input type="hidden" name="email" :value="form.email" />
         <template v-if="step === 1">
           <label>
             {{ t.banderaType }}
@@ -457,7 +467,7 @@ const ContactComponent = {
         <template v-else-if="step === 3">
           <label>
             {{ t.name }}
-            <input type="text" name="name" v-model="form.name" @input="validateField('name')" required />
+            <input type="text" name="nombre" v-model="form.name" @input="validateField('name')" required />
             <small v-if="errors.name" class="field-error">{{ errors.name }}</small>
           </label>
 
@@ -491,7 +501,7 @@ const ContactComponent = {
       </form>
 
         <div v-else class="quote-success" role="status" aria-live="polite">
-        <img src="assets/logo.png" alt="Logo Banderas Nila López" class="quote-success-logo" />
+        <img src="/assets/logo.svg" alt="Logo Banderas Nila López" class="quote-success-logo" />
         <h3>{{ t.thankYouTitle }}</h3>
         <p>{{ t.thankYou }}</p>
         <div ref="successCanvasRef" class="quote-confetti-canvas" aria-hidden="true"></div>

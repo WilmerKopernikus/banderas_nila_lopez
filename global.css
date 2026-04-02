@@ -366,7 +366,7 @@ section {
 }
 
 .quote-success-logo {
-  width: min(180px, 50vw);
+  width: min(280px, 75vw);
   height: auto;
   margin-bottom: .75rem;
 }

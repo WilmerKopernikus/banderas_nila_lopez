@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -9,17 +10,11 @@
   <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/p5@1.9.4/lib/p5.min.js"></script>
 </head>
+
 <body>
-  <form
-    name="contacto-cotizacion"
-    method="POST"
-    enctype="multipart/form-data"
-    data-netlify="true"
-    netlify-honeypot="bot-field"
-    aria-hidden="true"
-    tabindex="-1"
-    style="display:none !important; visibility:hidden; position:absolute; left:-9999px; width:0; height:0; overflow:hidden;"
-  >
+  <form name="contacto-cotizacion" method="POST" enctype="multipart/form-data" data-netlify="true"
+    netlify-honeypot="bot-field" aria-hidden="true" tabindex="-1"
+    style="display:none !important; visibility:hidden; position:absolute; left:-9999px; width:0; height:0; overflow:hidden;">
     <input type="hidden" name="form-name" value="contacto-cotizacion" />
     <input type="text" name="bot-field" />
     <input type="text" name="tipo_bandera" />
@@ -31,14 +26,14 @@
     <input type="text" name="ciudad_entrega" />
     <input type="text" name="bandera_personalizada" />
     <input type="file" name="logo" />
-    <input type="text" name="name" />
+    <input type="text" name="nombre" />
     <input type="email" name="email" />
   </form>
 
   <div id="app">
     <header-component :language="language"></header-component>
     <hero-component :language="language"></hero-component>
-  
+
     <courses-component v-if="showCourses" :language="language"></courses-component>
     <locations-component v-if="showLocations" :language="language"></locations-component>
     <about-component v-if="showAbout" :language="language"></about-component>
@@ -57,4 +52,5 @@
   <script src="components/footerComponent.js"></script>
   <script src="main.js"></script>
 </body>
+
 </html>
