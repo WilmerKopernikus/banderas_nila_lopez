@@ -306,6 +306,19 @@ section {
   background: #fff;
 }
 
+.quote-form-fields {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  display: grid;
+  gap: 1rem;
+  min-width: 0;
+}
+
+.quote-form-fields:disabled {
+  opacity: .75;
+}
+
 .quote-form label {
   display: grid;
   gap: .4rem;
@@ -395,6 +408,35 @@ section {
   display: flex;
   justify-content: flex-end;
   gap: .75rem;
+}
+
+.quote-processing {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: .6rem;
+  padding: .4rem .75rem .25rem;
+  color: #334155;
+  font-weight: 600;
+}
+
+.quote-processing p {
+  margin: 0;
+}
+
+.quote-processing-spinner {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 2px solid #c8d8f7;
+  border-top-color: var(--primary);
+  animation: quote-spin .9s linear infinite;
+}
+
+@keyframes quote-spin {
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 .btn-secondary {

@@ -12,6 +12,7 @@ const ContactComponent = {
         next: 'Siguiente',
         back: 'Atrás',
         submit: 'Enviar cotización',
+        processing: 'Espera mientras procesamos tu solicitud...',
         thankYouTitle: '¡Gracias por tu mensaje!',
         thankYou: 'Recibimos tu solicitud y te contactaremos pronto.',
         errorSending: 'Hubo un error enviando el formulario. Intenta nuevamente.',
@@ -73,6 +74,7 @@ const ContactComponent = {
     const errors = reactive({});
 
     const progressPct = computed(() => Math.round((step.value / totalSteps) * 100));
+    const isSubmitting = computed(() => submitStatus.value === 'submitting');
     const aspectRatio = computed(() => {
       const width = Number(form.widthCm);
       const height = Number(form.heightCm);
@@ -295,11 +297,15 @@ const ContactComponent = {
     };
 
     const handleSubmit = async () => {
+      if (isSubmitting.value) {
+        return;
+      }
       if (!validateStep()) {
         return;
       }
 
       try {
+        submitStatus.value = 'submitting';
         const payload = new FormData(formRef.value);
         payload.set('form-name', 'contacto-cotizacion');
 
@@ -345,6 +351,7 @@ const ContactComponent = {
       formRef,
       successCanvasRef,
       submitStatus,
+      isSubmitting,
       validateField,
       nextStep,
       prevStep,
@@ -373,6 +380,7 @@ const ContactComponent = {
         netlify-honeypot="bot-field"
         @submit.prevent="handleSubmit"
       >
+        <fieldset :disabled="isSubmitting" class="quote-form-fields">
         <input type="hidden" name="form-name" value="contacto-cotizacion" />
         <p style="display:none;">
         <label>No llenar si eres humano: <input name="bot-field" /></label>
@@ -494,9 +502,15 @@ const ContactComponent = {
         </template>
 
         <div class="step-actions">
-          <button v-if="step > 1" type="button" class="btn-secondary" @click="prevStep">{{ t.back }}</button>
-          <button v-if="step < totalSteps" type="button" class="btn-primary" @click="nextStep">{{ t.next }}</button>
-          <button v-else type="submit" class="btn-primary">{{ t.submit }}</button>
+           <button v-if="step > 1" type="button" class="btn-secondary" @click="prevStep" :disabled="isSubmitting">{{ t.back }}</button>
+          <button v-if="step < totalSteps" type="button" class="btn-primary" @click="nextStep" :disabled="isSubmitting">{{ t.next }}</button>
+          <button v-else type="submit" class="btn-primary" :disabled="isSubmitting">{{ isSubmitting ? t.processing : t.submit }}</button>
+        </div>
+        </fieldset>
+
+        <div v-if="isSubmitting" class="quote-processing" role="status" aria-live="polite">
+          <span class="quote-processing-spinner" aria-hidden="true"></span>
+          <p>{{ t.processing }}</p>
         </div>
       </form>
 
