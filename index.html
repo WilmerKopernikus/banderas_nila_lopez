@@ -11,19 +11,28 @@
 </head>
 <body>
   <form
-    name="contacto"
+    name="contacto-cotizacion"
     method="POST"
+    enctype="multipart/form-data"
     data-netlify="true"
     netlify-honeypot="bot-field"
     aria-hidden="true"
     tabindex="-1"
     style="display:none !important; visibility:hidden; position:absolute; left:-9999px; width:0; height:0; overflow:hidden;"
   >
-    <input type="hidden" name="form-name" value="contacto" />
+    <input type="hidden" name="form-name" value="contacto-cotizacion" />
     <input type="text" name="bot-field" />
+    <input type="text" name="tipo_bandera" />
+    <input type="number" name="cantidad" />
+    <input type="number" name="ancho_cm" />
+    <input type="number" name="alto_cm" />
+    <input type="text" name="material" />
+    <input type="text" name="asta_y_base" />
+    <input type="text" name="ciudad_entrega" />
+    <input type="text" name="bandera_personalizada" />
+    <input type="file" name="logo" />
     <input type="text" name="name" />
     <input type="email" name="email" />
-    <textarea name="message"></textarea>
   </form>
 
   <div id="app">

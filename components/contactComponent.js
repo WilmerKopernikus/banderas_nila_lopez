@@ -303,10 +303,14 @@ const ContactComponent = {
         const payload = new FormData(formRef.value);
         payload.set('form-name', 'contacto-cotizacion');
 
-        await fetch('/', {
+        const response = await fetch('/', {
           method: 'POST',
           body: payload,
         });
+
+        if (!response.ok) {
+          throw new Error('Netlify form submission failed');
+        }
 
         submitStatus.value = 'success';
         await nextTick();
@@ -366,9 +370,13 @@ const ContactComponent = {
         method="POST"
         enctype="multipart/form-data"
         data-netlify="true"
+        netlify-honeypot="bot-field"
         @submit.prevent="handleSubmit"
       >
         <input type="hidden" name="form-name" value="contacto-cotizacion" />
+        <p style="display:none;">
+        <label>No llenar si eres humano: <input name="bot-field" /></label>
+        </p>
 
         <template v-if="step === 1">
           <label>
