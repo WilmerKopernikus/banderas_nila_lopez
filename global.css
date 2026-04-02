@@ -355,6 +355,42 @@ section {
   gap: .35rem;
 }
 
+.quote-success {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 1.5rem 1.25rem;
+  border: 1px solid #e4e4e4;
+  border-radius: 10px;
+  background: #fff;
+  text-align: center;
+}
+
+.quote-success-logo {
+  width: min(180px, 50vw);
+  height: auto;
+  margin-bottom: .75rem;
+}
+
+.quote-confetti-canvas {
+  margin-top: 1rem;
+  border-radius: 8px;
+  background: linear-gradient(180deg, #f8f9ff 0%, #eef3ff 100%);
+  overflow: hidden;
+}
+
+.quote-confetti-canvas canvas {
+  display: block;
+  width: 100% !important;
+  height: auto !important;
+}
+
+.submit-error {
+  max-width: 680px;
+  margin: .75rem auto 0;
+  color: #b42318;
+  font-weight: 600;
+  text-align: center;
+}
 .step-actions {
   display: flex;
   justify-content: flex-end;

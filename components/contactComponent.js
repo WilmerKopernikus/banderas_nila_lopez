@@ -2,7 +2,7 @@
 const ContactComponent = {
   props: ['language'],
   setup(props) {
-    const { computed, reactive, ref, watch, onMounted } = Vue;
+    const { computed, reactive, ref, watch, onMounted, onUnmounted, nextTick } = Vue;
 
     const translations = {
       es: {
@@ -12,7 +12,8 @@ const ContactComponent = {
         next: 'Siguiente',
         back: 'Atrás',
         submit: 'Enviar cotización',
-        thankYou: '¡Gracias! Recibimos tu solicitud y te contactaremos pronto.',
+        thankYouTitle: '¡Gracias por tu mensaje!',
+        thankYou: 'Recibimos tu solicitud y te contactaremos pronto.',
         errorSending: 'Hubo un error enviando el formulario. Intenta nuevamente.',
         required: 'Este campo es obligatorio.',
         positiveNumber: 'Ingresa un número mayor a 0.',
@@ -51,6 +52,9 @@ const ContactComponent = {
     const totalSteps = 4;
     const step = ref(1);
     const formRef = ref(null);
+    const successCanvasRef = ref(null);
+    const submitStatus = ref('idle');
+    let confettiSketch = null;
 
     const form = reactive({
       banderaType: '',
@@ -212,6 +216,84 @@ const ContactComponent = {
       }
     };
 
+    const destroyConfetti = () => {
+      if (confettiSketch) {
+        confettiSketch.remove();
+        confettiSketch = null;
+      }
+    };
+
+    const startConfetti = () => {
+      if (!successCanvasRef.value || typeof window.p5 === 'undefined') {
+        return;
+      }
+
+      destroyConfetti();
+
+      confettiSketch = new window.p5((p) => {
+        const particles = [];
+        const confettiColors = ['#FCD116', '#003893', '#CE1126'];
+
+        const spawnParticle = (x = p.random(p.width), y = p.random(-80, -10)) => {
+          particles.push({
+            x,
+            y,
+            w: p.random(8, 16),
+            h: p.random(14, 24),
+            vx: p.random(-1, 1),
+            vy: p.random(1.5, 4),
+            angle: p.random(p.TWO_PI),
+            spin: p.random(-0.1, 0.1),
+            color: p.random(confettiColors),
+          });
+        };
+
+        p.setup = () => {
+          const { width } = successCanvasRef.value.getBoundingClientRect();
+          p.createCanvas(Math.max(260, width), 220);
+          p.clear();
+          for (let i = 0; i < 90; i += 1) {
+            spawnParticle();
+          }
+        };
+
+        p.windowResized = () => {
+          const { width } = successCanvasRef.value.getBoundingClientRect();
+          p.resizeCanvas(Math.max(260, width), 220);
+        };
+
+        p.draw = () => {
+          p.clear();
+          if (particles.length < 110) {
+            for (let i = 0; i < 3; i += 1) {
+              spawnParticle(p.random(p.width), p.random(-30, 0));
+            }
+          }
+
+          for (let i = particles.length - 1; i >= 0; i -= 1) {
+            const item = particles[i];
+            item.x += item.vx;
+            item.y += item.vy;
+            item.angle += item.spin;
+
+            p.push();
+            p.translate(item.x, item.y);
+            p.rotate(item.angle);
+            p.noStroke();
+            p.fill(item.color);
+            p.rectMode(p.CENTER);
+            p.rect(0, 0, item.w, item.h, 2);
+            p.pop();
+
+            if (item.y > p.height + 30) {
+              particles.splice(i, 1);
+              spawnParticle();
+            }
+          }
+        };
+      }, successCanvasRef.value);
+    };
+
     const handleSubmit = async () => {
       if (!validateStep()) {
         return;
@@ -226,12 +308,27 @@ const ContactComponent = {
           body: payload,
         });
 
-        alert(t.value.thankYou);
+        submitStatus.value = 'success';
+        await nextTick();
+        startConfetti();
         resetForm();
       } catch (error) {
-        alert(t.value.errorSending);
+        submitStatus.value = 'error';
       }
     };
+
+    onUnmounted(() => {
+      destroyConfetti();
+    });
+
+    watch(submitStatus, async (status) => {
+      if (status === 'success') {
+        await nextTick();
+        startConfetti();
+      } else {
+        destroyConfetti();
+      }
+    });
 
     return {
       t,
@@ -242,6 +339,8 @@ const ContactComponent = {
       progressPct,
       aspectRatio,
       formRef,
+      successCanvasRef,
+      submitStatus,
       validateField,
       nextStep,
       prevStep,
@@ -260,6 +359,7 @@ const ContactComponent = {
       <p class="quote-step-label">{{ t.stepLabel }} {{ step }} / {{ totalSteps }}</p>
 
       <form
+        v-if="submitStatus !== 'success'"
         ref="formRef"
         class="quote-form"
         name="contacto-cotizacion"
@@ -381,6 +481,15 @@ const ContactComponent = {
           <button v-else type="submit" class="btn-primary">{{ t.submit }}</button>
         </div>
       </form>
+
+        <div v-else class="quote-success" role="status" aria-live="polite">
+        <img src="assets/logo.png" alt="Logo Banderas Nila López" class="quote-success-logo" />
+        <h3>{{ t.thankYouTitle }}</h3>
+        <p>{{ t.thankYou }}</p>
+        <div ref="successCanvasRef" class="quote-confetti-canvas" aria-hidden="true"></div>
+      </div>
+
+      <p v-if="submitStatus === 'error'" class="submit-error">{{ t.errorSending }}</p>
     </section>
   `,
 };
