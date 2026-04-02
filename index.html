@@ -9,8 +9,17 @@
   <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
 </head>
 <body>
-  <form name="contacto" data-netlify="true" netlify-honeypot="bot-field" hidden>
+  <form
+    name="contacto"
+    method="POST"
+    data-netlify="true"
+    netlify-honeypot="bot-field"
+    aria-hidden="true"
+    tabindex="-1"
+    style="display:none !important; visibility:hidden; position:absolute; left:-9999px; width:0; height:0; overflow:hidden;"
+  >
     <input type="hidden" name="form-name" value="contacto" />
+    <input type="text" name="bot-field" />
     <input type="text" name="name" />
     <input type="email" name="email" />
     <textarea name="message"></textarea>
