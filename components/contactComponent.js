@@ -22,13 +22,15 @@ const ContactComponent = {
         banderaType: 'Tipo de Bandera',
         banderaTypes: [
           'Colombia',
+          'De un país',
           'empresarial',
           'institucional',
-          'internacional',
           'escritorio',
           'exterior',
           'nacional',
         ],
+        country: 'País',
+        countryPlaceholder: 'Escribe o selecciona un país',
         quantity: 'Cantidad',
         dimensionsTitle: 'Dimensiones (cm)',
         width: 'Ancho (cm)',
@@ -54,11 +56,14 @@ const ContactComponent = {
     const step = ref(1);
     const formRef = ref(null);
     const successCanvasRef = ref(null);
+    const countryDropdownRef = ref(null);
     const submitStatus = ref('idle');
+    const showCountryOptions = ref(false);
     let confettiSketch = null;
 
     const form = reactive({
       banderaType: '',
+      country: '',
       quantity: '',
       widthCm: '',
       heightCm: '',
@@ -75,6 +80,7 @@ const ContactComponent = {
 
     const progressPct = computed(() => Math.round((step.value / totalSteps) * 100));
     const isSubmitting = computed(() => submitStatus.value === 'submitting');
+    const showCountryField = computed(() => form.banderaType === 'De un país');
     const aspectRatio = computed(() => {
       const width = Number(form.widthCm);
       const height = Number(form.heightCm);
@@ -105,6 +111,8 @@ const ContactComponent = {
       if (storedStep >= 1 && storedStep <= totalSteps) {
         step.value = storedStep;
       }
+
+      document.addEventListener('click', onDocumentClick);
     });
 
     watch(
@@ -119,6 +127,10 @@ const ContactComponent = {
       errors[field] = '';
 
       if (['banderaType', 'material', 'needsPoleBase', 'city', 'name'].includes(field) && !form[field]) {
+        errors[field] = t.value.required;
+      }
+
+      if (field === 'country' && showCountryField.value && !form.country) {
         errors[field] = t.value.required;
       }
 
@@ -157,7 +169,7 @@ const ContactComponent = {
     };
 
     const fieldsByStep = {
-      1: ['banderaType', 'quantity', 'widthCm', 'heightCm'],
+      1: ['banderaType', 'country', 'quantity', 'widthCm', 'heightCm'],
       2: ['material', 'needsPoleBase', 'city', 'customLogo', 'logoFile'],
       3: ['name', 'email'],
       4: [],
@@ -170,9 +182,95 @@ const ContactComponent = {
           errors.logoFile = '';
           return true;
         }
+        if (field === 'country' && !showCountryField.value) {
+          errors.country = '';
+          return true;
+        }
         return validateField(field);
       });
     };
+
+    const countries = [
+      'Afganistán', 'Albania', 'Alemania', 'Andorra', 'Angola', 'Antigua y Barbuda', 'Arabia Saudita', 'Argelia',
+      'Argentina', 'Armenia', 'Australia', 'Austria', 'Azerbaiyán', 'Bahamas', 'Bangladés', 'Barbados', 'Baréin',
+      'Bélgica', 'Belice', 'Benín', 'Bielorrusia', 'Birmania', 'Bolivia', 'Bosnia y Herzegovina', 'Botsuana',
+      'Brasil', 'Brunéi', 'Bulgaria', 'Burkina Faso', 'Burundi', 'Bután', 'Cabo Verde', 'Camboya', 'Camerún',
+      'Canadá', 'Catar', 'Chad', 'Chile', 'China', 'Chipre', 'Colombia', 'Comoras', 'Corea del Norte',
+      'Corea del Sur', 'Costa de Marfil', 'Costa Rica', 'Croacia', 'Cuba', 'Dinamarca', 'Dominica', 'Ecuador',
+      'Egipto', 'El Salvador', 'Emiratos Árabes Unidos', 'Eritrea', 'Eslovaquia', 'Eslovenia', 'España',
+      'Estados Unidos', 'Estonia', 'Esuatini', 'Etiopía', 'Filipinas', 'Finlandia', 'Fiyi', 'Francia', 'Gabón',
+      'Gambia', 'Georgia', 'Ghana', 'Granada', 'Grecia', 'Guatemala', 'Guyana', 'Guinea', 'Guinea-Bisáu',
+      'Guinea Ecuatorial', 'Haití', 'Honduras', 'Hungría', 'India', 'Indonesia', 'Irak', 'Irán', 'Irlanda',
+      'Islandia', 'Islas Marshall', 'Islas Salomón', 'Israel', 'Italia', 'Jamaica', 'Japón', 'Jordania',
+      'Kazajistán', 'Kenia', 'Kirguistán', 'Kiribati', 'Kuwait', 'Laos', 'Lesoto', 'Letonia', 'Líbano', 'Liberia',
+      'Libia', 'Liechtenstein', 'Lituania', 'Luxemburgo', 'Macedonia del Norte', 'Madagascar', 'Malasia', 'Malaui',
+      'Maldivas', 'Malí', 'Malta', 'Marruecos', 'Mauricio', 'Mauritania', 'México', 'Micronesia', 'Moldavia',
+      'Mónaco', 'Mongolia', 'Montenegro', 'Mozambique', 'Namibia', 'Nauru', 'Nepal', 'Nicaragua', 'Níger',
+      'Nigeria', 'Noruega', 'Nueva Zelanda', 'Omán', 'Países Bajos', 'Pakistán', 'Palaos', 'Panamá',
+      'Papúa Nueva Guinea', 'Paraguay', 'Perú', 'Polonia', 'Portugal', 'Reino Unido',
+      'República Centroafricana', 'República Checa', 'República del Congo', 'República Democrática del Congo',
+      'República Dominicana', 'Ruanda', 'Rumanía', 'Rusia', 'Samoa', 'San Cristóbal y Nieves', 'San Marino',
+      'San Vicente y las Granadinas', 'Santa Lucía', 'Santo Tomé y Príncipe', 'Senegal', 'Serbia', 'Seychelles',
+      'Sierra Leona', 'Singapur', 'Siria', 'Somalia', 'Sri Lanka', 'Sudáfrica', 'Sudán', 'Sudán del Sur', 'Suecia',
+      'Suiza', 'Surinam', 'Tailandia', 'Tanzania', 'Tayikistán', 'Timor Oriental', 'Togo', 'Tonga',
+      'Trinidad y Tobago', 'Túnez', 'Turkmenistán', 'Turquía', 'Tuvalu', 'Ucrania', 'Uganda', 'Uruguay',
+      'Uzbekistán', 'Vanuatu', 'Vaticano', 'Venezuela', 'Vietnam', 'Yemen', 'Yibuti', 'Zambia', 'Zimbabue',
+    ];
+
+    const normalizeText = (value) => value
+      .toLowerCase()
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '');
+
+    const filteredCountries = computed(() => {
+      const query = normalizeText(form.country || '').trim();
+      if (!query) {
+        return countries;
+      }
+      return countries.filter((country) => normalizeText(country).includes(query));
+    });
+
+    const openCountryOptions = () => {
+      if (!showCountryField.value) {
+        return;
+      }
+      showCountryOptions.value = true;
+    };
+
+    const closeCountryOptions = () => {
+      showCountryOptions.value = false;
+    };
+
+    const onCountryInput = () => {
+      validateField('country');
+      openCountryOptions();
+    };
+
+    const selectCountry = (country) => {
+      form.country = country;
+      errors.country = '';
+      closeCountryOptions();
+    };
+
+    const onDocumentClick = (event) => {
+      if (!countryDropdownRef.value) {
+        return;
+      }
+      if (!countryDropdownRef.value.contains(event.target)) {
+        closeCountryOptions();
+      }
+    };
+
+    watch(
+      () => form.banderaType,
+      (value) => {
+        if (value !== 'De un país') {
+          form.country = '';
+          errors.country = '';
+          closeCountryOptions();
+        }
+      }
+    );
 
     const nextStep = () => {
       if (validateStep() && step.value < totalSteps) {
@@ -194,6 +292,7 @@ const ContactComponent = {
     const resetForm = () => {
       Object.assign(form, {
         banderaType: '',
+        country: '',
         quantity: '',
         widthCm: '',
         heightCm: '',
@@ -351,6 +450,7 @@ const ContactComponent = {
 
     onUnmounted(() => {
       destroyConfetti();
+      document.removeEventListener('click', onDocumentClick);
     });
 
     watch(submitStatus, async (status) => {
@@ -370,11 +470,20 @@ const ContactComponent = {
       totalSteps,
       progressPct,
       aspectRatio,
+      countries,
+      filteredCountries,
+      showCountryField,
+      showCountryOptions,
       formRef,
       successCanvasRef,
+      countryDropdownRef,
       submitStatus,
       isSubmitting,
       validateField,
+      onCountryInput,
+      openCountryOptions,
+      closeCountryOptions,
+      selectCountry,
       nextStep,
       prevStep,
       handleSubmit,
@@ -409,6 +518,7 @@ const ContactComponent = {
         </p>
 
         <input type="hidden" name="tipo_bandera" :value="form.banderaType" />
+        <input type="hidden" name="pais_bandera" :value="form.country" />
         <input type="hidden" name="cantidad" :value="form.quantity" />
         <input type="hidden" name="ancho_cm" :value="form.widthCm" />
         <input type="hidden" name="alto_cm" :value="form.heightCm" />
@@ -426,6 +536,38 @@ const ContactComponent = {
               <option v-for="type in t.banderaTypes" :key="type" :value="type">{{ type }}</option>
             </select>
             <small v-if="errors.banderaType" class="field-error">{{ errors.banderaType }}</small>
+          </label>
+
+          <label v-if="showCountryField">
+            {{ t.country }}
+            <div ref="countryDropdownRef" class="country-autocomplete">
+              <input
+                type="text"
+                name="pais_bandera"
+                v-model="form.country"
+                :placeholder="t.countryPlaceholder"
+                autocomplete="off"
+                @focus="openCountryOptions"
+                @input="onCountryInput"
+                @blur="validateField('country')"
+                required
+              />
+              <ul v-if="showCountryOptions" class="country-options" role="listbox" aria-label="Lista de países">
+                <li
+                  v-for="country in filteredCountries"
+                  :key="country"
+                  class="country-option"
+                  role="option"
+                  @mousedown.prevent="selectCountry(country)"
+                >
+                  {{ country }}
+                </li>
+                <li v-if="!filteredCountries.length" class="country-option-empty">
+                  No se encontraron países.
+                </li>
+              </ul>
+            </div>
+            <small v-if="errors.country" class="field-error">{{ errors.country }}</small>
           </label>
 
           <label>
@@ -513,6 +655,7 @@ const ContactComponent = {
             <h3>{{ t.summary }}</h3>
             <ul>
               <li><strong>{{ t.banderaType }}:</strong> {{ form.banderaType }}</li>
+              <li v-if="showCountryField"><strong>{{ t.country }}:</strong> {{ form.country }}</li>
               <li><strong>{{ t.quantity }}:</strong> {{ form.quantity }}</li>
               <li><strong>{{ t.dimensionsTitle }}:</strong> {{ form.widthCm }} x {{ form.heightCm }} cm</li>
               <li><strong>{{ t.material }}:</strong> {{ form.material }}</li>
