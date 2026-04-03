@@ -20,6 +20,9 @@ const ContactComponent = {
         positiveNumber: 'Ingresa un número mayor a 0.',
         emailInvalid: 'Ingresa un correo válido.',
         banderaType: 'Tipo de Bandera',
+        itemLabel: 'Bandera',
+        addFlag: 'Agregar otra bandera',
+        removeFlag: 'Eliminar bandera',
         banderaTypes: [
           'De Colombia',
           'De un departamento de Colombia',
@@ -70,7 +73,7 @@ const ContactComponent = {
     const showMunicipalityOptions = ref(false);
     let confettiSketch = null;
 
-    const form = reactive({
+    const createEmptyItem = () => ({
       banderaType: '',
       country: '',
       department: '',
@@ -78,6 +81,11 @@ const ContactComponent = {
       quantity: '',
       widthCm: '',
       heightCm: '',
+      otherFlagType: '',
+    });
+
+    const form = reactive({
+      items: [createEmptyItem()],
       material: '',
       needsPoleBase: '',
       city: '',
@@ -85,25 +93,36 @@ const ContactComponent = {
       email: '',
       customLogo: 'no',
       logoFile: null,
-      otherFlagType: '',
     });
 
     const errors = reactive({});
 
     const progressPct = computed(() => Math.round((step.value / totalSteps) * 100));
     const isSubmitting = computed(() => submitStatus.value === 'submitting');
-    const showCountryField = computed(() => form.banderaType === 'De un país');
-    const showDepartmentField = computed(() => form.banderaType === 'De un departamento de Colombia');
-    const showMunicipalityField = computed(() => form.banderaType === 'De una ciudad o Municipio de Colombia');
-    const showOtherFlagTypeField = computed(() => form.banderaType === 'Otra');
-    const aspectRatio = computed(() => {
-      const width = Number(form.widthCm);
-      const height = Number(form.heightCm);
+    const getItemErrorKey = (index, field) => `item_${index}_${field}`;
+    const isCountryType = (item) => item.banderaType === 'De un país';
+    const isDepartmentType = (item) => item.banderaType === 'De un departamento de Colombia';
+    const isMunicipalityType = (item) => item.banderaType === 'De una ciudad o Municipio de Colombia';
+    const isOtherType = (item) => item.banderaType === 'Otra';
+    const itemAspectRatio = (item) => {
+      const width = Number(item.widthCm);
+      const height = Number(item.heightCm);
       if (!width || !height || width <= 0 || height <= 0) {
         return '3 / 2';
       }
       return `${width} / ${height}`;
-    });
+     };
+
+    const orderSummaryText = computed(() => form.items.map((item, index) => {
+      const details = [`${index + 1}. ${item.banderaType || 'Sin tipo'}`];
+      if (isCountryType(item) && item.country) details.push(`País: ${item.country}`);
+      if (isDepartmentType(item) && item.department) details.push(`Departamento: ${item.department}`);
+      if (isMunicipalityType(item) && item.municipality) details.push(`Municipio: ${item.municipality}`);
+      if (isOtherType(item) && item.otherFlagType) details.push(`Otra: ${item.otherFlagType}`);
+      details.push(`Cantidad: ${item.quantity || 0}`);
+      details.push(`Tamaño: ${item.widthCm || 0}x${item.heightCm || 0} cm`);
+      return details.join(' | ');
+    }).join('\n'));
 
     const saveDraft = () => {
       const serializable = {
@@ -141,42 +160,8 @@ const ContactComponent = {
     const validateField = (field) => {
       errors[field] = '';
 
-      if (['banderaType', 'material', 'needsPoleBase', 'city', 'name'].includes(field) && !form[field]) {
+      if (['material', 'needsPoleBase', 'city', 'name'].includes(field) && !form[field]) {
         errors[field] = t.value.required;
-      }
-
-      if (field === 'country' && showCountryField.value && !form.country) {
-        errors[field] = t.value.required;
-      }
-
-      if (field === 'department' && showDepartmentField.value && !form.department) {
-        errors[field] = t.value.required;
-      }
-
-      if (field === 'otherFlagType' && showOtherFlagTypeField.value && !form.otherFlagType) {
-        errors[field] = t.value.required;
-      }
-
-      if (field === 'municipality' && showMunicipalityField.value && !form.municipality) {
-        errors[field] = t.value.required;
-      }
-
-      if (field === 'quantity') {
-        const value = Number(form.quantity);
-        if (!form.quantity) {
-          errors[field] = t.value.required;
-        } else if (!value || value <= 0) {
-          errors[field] = t.value.positiveNumber;
-        }
-      }
-
-      if (field === 'widthCm' || field === 'heightCm') {
-        const value = Number(form[field]);
-        if (!form[field]) {
-          errors[field] = t.value.required;
-        } else if (!value || value <= 0) {
-          errors[field] = t.value.positiveNumber;
-        }
       }
 
       if (field === 'email') {
@@ -195,34 +180,77 @@ const ContactComponent = {
       return !errors[field];
     };
 
+      const clearItemError = (index, field) => {
+      errors[getItemErrorKey(index, field)] = '';
+    };
+
+    const validateItemField = (item, index, field) => {
+      const errorKey = getItemErrorKey(index, field);
+      errors[errorKey] = '';
+
+      if (field === 'banderaType' && !item.banderaType) {
+        errors[errorKey] = t.value.required;
+      }
+      if (field === 'country' && isCountryType(item) && !item.country) {
+        errors[errorKey] = t.value.required;
+      }
+      if (field === 'department' && isDepartmentType(item) && !item.department) {
+        errors[errorKey] = t.value.required;
+      }
+      if (field === 'municipality' && isMunicipalityType(item) && !item.municipality) {
+        errors[errorKey] = t.value.required;
+      }
+      if (field === 'otherFlagType' && isOtherType(item) && !item.otherFlagType) {
+        errors[errorKey] = t.value.required;
+      }
+      if (field === 'quantity') {
+        const value = Number(item.quantity);
+        if (!item.quantity) {
+          errors[errorKey] = t.value.required;
+        } else if (!value || value <= 0) {
+          errors[errorKey] = t.value.positiveNumber;
+        }
+      }
+      if (field === 'widthCm' || field === 'heightCm') {
+        const value = Number(item[field]);
+        if (!item[field]) {
+          errors[errorKey] = t.value.required;
+        } else if (!value || value <= 0) {
+         errors[errorKey] = t.value.positiveNumber;
+        }
+      }
+
+      return !errors[errorKey];
+    };
+
     const fieldsByStep = {
-      1: ['banderaType', 'country', 'department', 'municipality', 'otherFlagType', 'quantity', 'widthCm', 'heightCm'],
+      1: [],
       2: ['material', 'needsPoleBase', 'city', 'customLogo', 'logoFile'],
       3: ['name', 'email'],
       4: [],
     };
 
     const validateStep = () => {
+      if (step.value === 1) {
+        return form.items.every((item, index) => {
+          const baseValid = validateItemField(item, index, 'banderaType')
+            && validateItemField(item, index, 'quantity')
+            && validateItemField(item, index, 'widthCm')
+            && validateItemField(item, index, 'heightCm');
+
+          let conditionalValid = true;
+          if (isCountryType(item)) conditionalValid = validateItemField(item, index, 'country') && conditionalValid;
+          if (isDepartmentType(item)) conditionalValid = validateItemField(item, index, 'department') && conditionalValid;
+          if (isMunicipalityType(item)) conditionalValid = validateItemField(item, index, 'municipality') && conditionalValid;
+          if (isOtherType(item)) conditionalValid = validateItemField(item, index, 'otherFlagType') && conditionalValid;
+          return baseValid && conditionalValid;
+        });
+      }
+
       const fields = fieldsByStep[step.value] || [];
       return fields.every((field) => {
         if (field === 'logoFile' && form.customLogo !== 'si') {
           errors.logoFile = '';
-          return true;
-        }
-        if (field === 'country' && !showCountryField.value) {
-          errors.country = '';
-          return true;
-        }
-        if (field === 'department' && !showDepartmentField.value) {
-          errors.department = '';
-          return true;
-        }
-        if (field === 'otherFlagType' && !showOtherFlagTypeField.value) {
-          errors.otherFlagType = '';
-          return true;
-        }
-        if (field === 'municipality' && !showMunicipalityField.value) {
-          errors.municipality = '';
           return true;
         }
         return validateField(field);
@@ -261,13 +289,13 @@ const ContactComponent = {
       .normalize('NFD')
       .replace(/[\u0300-\u036f]/g, '');
 
-    const filteredCountries = computed(() => {
-      const query = normalizeText(form.country || '').trim();
+    const filterCountries = (queryValue = '') => {
+      const query = normalizeText(queryValue).trim();
       if (!query) {
         return countries;
       }
       return countries.filter((country) => normalizeText(country).includes(query));
-    });
+    };
 
     const departments = [
       'Amazonas', 'Antioquia', 'Arauca', 'Atlántico', 'Bolívar', 'Boyacá', 'Caldas', 'Caquetá', 'Casanare',
@@ -276,13 +304,13 @@ const ContactComponent = {
       'San Andrés y Providencia', 'Santander', 'Sucre', 'Tolima', 'Valle del Cauca', 'Vaupés', 'Vichada',
     ];
 
-    const filteredDepartments = computed(() => {
-      const query = normalizeText(form.department || '').trim();
+    const filterDepartments = (queryValue = '') => {
+      const query = normalizeText(queryValue).trim();
       if (!query) {
         return departments;
       }
       return departments.filter((department) => normalizeText(department).includes(query));
-    });
+    };
 
     const municipalities = [
       'Abejorral', 'Ábrego', 'Abriaquí', 'Acacías', 'Acandí', 'Acevedo', 'Achí', 'Agrado', 'Agua de Dios', 'Aguachica', 'Aguada', 'Aguadas', 'Aguazul', 'Agustín Codazzi', 'Aipe', 'Albán', 'Albania, Caquetá', 'Albania, La Guajira', 'Albania, Santander',
@@ -345,16 +373,16 @@ const ContactComponent = {
       'Zambrano', 'Zapatoca', 'Zapayán', 'Zaragoza', 'Zarzal', 'Zetaquirá', 'Zipacón', 'Zipaquirá', 'Zona Bananera',
     ];
 
-    const filteredMunicipalities = computed(() => {
-      const query = normalizeText(form.municipality || '').trim();
+    const filterMunicipalities = (queryValue = '') => {
+      const query = normalizeText(queryValue).trim();
       if (!query) {
         return municipalities;
       }
       return municipalities.filter((municipality) => normalizeText(municipality).includes(query));
-    });
+    };
 
-    const openCountryOptions = () => {
-      if (!showCountryField.value) {
+    const openCountryOptions = (item) => {
+      if (!isCountryType(item)) {
         return;
       }
       showCountryOptions.value = true;
@@ -364,19 +392,19 @@ const ContactComponent = {
       showCountryOptions.value = false;
     };
 
-    const onCountryInput = () => {
-      validateField('country');
-      openCountryOptions();
+    const onCountryInput = (item, index) => {
+      validateItemField(item, index, 'country');
+      openCountryOptions(item);
     };
 
-    const selectCountry = (country) => {
-      form.country = country;
-      errors.country = '';
+    const selectCountry = (item, index, country) => {
+      item.country = country;
+      clearItemError(index, 'country');
       closeCountryOptions();
     };
 
-    const openDepartmentOptions = () => {
-      if (!showDepartmentField.value) {
+    const openDepartmentOptions = (item) => {
+      if (!isDepartmentType(item)) {
         return;
       }
       showDepartmentOptions.value = true;
@@ -386,19 +414,19 @@ const ContactComponent = {
       showDepartmentOptions.value = false;
     };
 
-    const onDepartmentInput = () => {
-      validateField('department');
-      openDepartmentOptions();
+    const onDepartmentInput = (item, index) => {
+      validateItemField(item, index, 'department');
+      openDepartmentOptions(item);
     };
 
-    const selectDepartment = (department) => {
-      form.department = department;
-      errors.department = '';
+    const selectDepartment = (item, index, department) => {
+      item.department = department;
+      clearItemError(index, 'department');
       closeDepartmentOptions();
     };
 
-    const openMunicipalityOptions = () => {
-      if (!showMunicipalityField.value) {
+    const openMunicipalityOptions = (item) => {
+      if (!isMunicipalityType(item)) {
         return;
       }
       showMunicipalityOptions.value = true;
@@ -408,21 +436,29 @@ const ContactComponent = {
       showMunicipalityOptions.value = false;
     };
 
-    const onMunicipalityInput = () => {
-      validateField('municipality');
-      openMunicipalityOptions();
+    const onMunicipalityInput = (item, index) => {
+      validateItemField(item, index, 'municipality');
+      openMunicipalityOptions(item);
     };
 
-    const selectMunicipality = (municipality) => {
-      form.municipality = municipality;
-      errors.municipality = '';
+    const selectMunicipality = (item, index, municipality) => {
+      item.municipality = municipality;
+      clearItemError(index, 'municipality');
       closeMunicipalityOptions();
     };
 
     const onDocumentClick = (event) => {
-      const clickedCountry = countryDropdownRef.value?.contains(event.target);
-      const clickedDepartment = departmentDropdownRef.value?.contains(event.target);
-      const clickedMunicipality = municipalityDropdownRef.value?.contains(event.target);
+      const containsTarget = (refValue) => {
+        if (!refValue) return false;
+        if (Array.isArray(refValue)) {
+          return refValue.some((item) => item?.contains?.(event.target));
+        }
+        return refValue.contains?.(event.target);
+      };
+
+      const clickedCountry = containsTarget(countryDropdownRef.value);
+      const clickedDepartment = containsTarget(departmentDropdownRef.value);
+      const clickedMunicipality = containsTarget(municipalityDropdownRef.value);
       if (!clickedCountry) {
         closeCountryOptions();
       }
@@ -434,30 +470,42 @@ const ContactComponent = {
       }
     };
 
-    watch(
-      () => form.banderaType,
-      (value) => {
-        if (value !== 'De un país') {
-          form.country = '';
-          errors.country = '';
-          closeCountryOptions();
-        }
-        if (value !== 'De un departamento de Colombia') {
-          form.department = '';
-          errors.department = '';
-          closeDepartmentOptions();
-        }
-        if (value !== 'De una ciudad o Municipio de Colombia') {
-          form.municipality = '';
-          errors.municipality = '';
-          closeMunicipalityOptions();
-        }
-        if (value !== 'Otra') {
-          form.otherFlagType = '';
-          errors.otherFlagType = '';
-        }
+const onItemBanderaTypeChange = (item, index) => {
+      if (!isCountryType(item)) {
+        item.country = '';
+        clearItemError(index, 'country');
+        closeCountryOptions();
       }
-    );
+      if (!isDepartmentType(item)) {
+        item.department = '';
+        clearItemError(index, 'department');
+        closeDepartmentOptions();
+      }
+      if (!isMunicipalityType(item)) {
+        item.municipality = '';
+        clearItemError(index, 'municipality');
+        closeMunicipalityOptions();
+      }
+      if (!isOtherType(item)) {
+        item.otherFlagType = '';
+        clearItemError(index, 'otherFlagType');
+      }
+      validateItemField(item, index, 'banderaType');
+    };
+
+    const addItem = () => {
+      form.items.push(createEmptyItem());
+    };
+
+    const removeItem = (index) => {
+      if (form.items.length <= 1) {
+        return;
+      }
+      form.items.splice(index, 1);
+      Object.keys(errors)
+        .filter((key) => key.startsWith('item_'))
+        .forEach((key) => { errors[key] = ''; });
+    };
 
     const nextStep = () => {
       if (validateStep() && step.value < totalSteps) {
@@ -478,13 +526,7 @@ const ContactComponent = {
 
     const resetForm = () => {
       Object.assign(form, {
-        banderaType: '',
-        country: '',
-        department: '',
-        municipality: '',
-        quantity: '',
-        widthCm: '',
-        heightCm: '',
+        items: [createEmptyItem()],
         material: '',
         needsPoleBase: '',
         city: '',
@@ -492,7 +534,6 @@ const ContactComponent = {
         email: '',
         customLogo: 'no',
         logoFile: null,
-        otherFlagType: '',
       });
 
       Object.keys(errors).forEach((key) => {
@@ -659,17 +700,13 @@ const ContactComponent = {
       step,
       totalSteps,
       progressPct,
-      aspectRatio,
+      itemAspectRatio,
       countries,
-      filteredCountries,
+      filterCountries,
       departments,
-      filteredDepartments,
+      filterDepartments,
       municipalities,
-      filteredMunicipalities,
-      showCountryField,
-      showDepartmentField,
-      showMunicipalityField,
-      showOtherFlagTypeField,
+      filterMunicipalities,
       showCountryOptions,
       showDepartmentOptions,
       showMunicipalityOptions,
@@ -680,7 +717,14 @@ const ContactComponent = {
       municipalityDropdownRef,
       submitStatus,
       isSubmitting,
+      isCountryType,
+      isDepartmentType,
+      isMunicipalityType,
+      isOtherType,
       validateField,
+      validateItemField,
+      getItemErrorKey,
+      onItemBanderaTypeChange,
       onCountryInput,
       openCountryOptions,
       closeCountryOptions,
@@ -697,6 +741,9 @@ const ContactComponent = {
       prevStep,
       handleSubmit,
       onFileChange,
+      addItem,
+      removeItem,
+      orderSummaryText,
     };
   },
   template: `
@@ -726,162 +773,94 @@ const ContactComponent = {
         <label>No llenar si eres humano: <input name="bot-field" /></label>
         </p>
 
-        <input type="hidden" name="tipo_bandera" :value="form.banderaType" />
-        <input type="hidden" name="pais_bandera" :value="form.country" />
-        <input type="hidden" name="departamento_bandera" :value="form.department" />
-        <input type="hidden" name="municipio_bandera" :value="form.municipality" />
-        <input type="hidden" name="cantidad" :value="form.quantity" />
-        <input type="hidden" name="ancho_cm" :value="form.widthCm" />
-        <input type="hidden" name="alto_cm" :value="form.heightCm" />
+        <input type="hidden" name="pedido_detalle" :value="orderSummaryText" />
         <input type="hidden" name="material" :value="form.material" />
         <input type="hidden" name="asta_y_base" :value="form.needsPoleBase" />
         <input type="hidden" name="ciudad_entrega" :value="form.city" />
         <input type="hidden" name="bandera_personalizada" :value="form.customLogo" />
         <input type="hidden" name="nombre" :value="form.name" />
         <input type="hidden" name="email" :value="form.email" />
-        <input type="hidden" name="otra_bandera" :value="form.otherFlagType" />
         <template v-if="step === 1">
-          <label>
-            {{ t.banderaType }}
-            <select name="tipo_bandera" v-model="form.banderaType" @blur="validateField('banderaType')" required>
-              <option disabled value="">Selecciona una opción</option>
-              <option v-for="type in t.banderaTypes" :key="type" :value="type">{{ type }}</option>
-            </select>
-            <small v-if="errors.banderaType" class="field-error">{{ errors.banderaType }}</small>
-          </label>
-
-          <label v-if="showCountryField">
-            {{ t.country }}
-            <div ref="countryDropdownRef" class="country-autocomplete">
-              <input
-                type="text"
-                name="pais_bandera"
-                v-model="form.country"
-                :placeholder="t.countryPlaceholder"
-                autocomplete="off"
-                @focus="openCountryOptions"
-                @input="onCountryInput"
-                @blur="validateField('country')"
-                required
-              />
-              <ul v-if="showCountryOptions" class="country-options" role="listbox" aria-label="Lista de países">
-                <li
-                  v-for="country in filteredCountries"
-                  :key="country"
-                  class="country-option"
-                  role="option"
-                  @mousedown.prevent="selectCountry(country)"
-                >
-                  {{ country }}
-                </li>
-                <li v-if="!filteredCountries.length" class="country-option-empty">
-                  No se encontraron países.
-                </li>
-              </ul>
-            </div>
-            <small v-if="errors.country" class="field-error">{{ errors.country }}</small>
-          </label>
-
-          <label v-if="showDepartmentField">
-            {{ t.department }}
-            <div ref="departmentDropdownRef" class="country-autocomplete">
-              <input
-                type="text"
-                name="departamento_bandera"
-                v-model="form.department"
-                :placeholder="t.departmentPlaceholder"
-                autocomplete="off"
-                @focus="openDepartmentOptions"
-                @input="onDepartmentInput"
-                @blur="validateField('department')"
-                required
-              />
-              <ul v-if="showDepartmentOptions" class="country-options" role="listbox" aria-label="Lista de departamentos">
-                <li
-                  v-for="department in filteredDepartments"
-                  :key="department"
-                  class="country-option"
-                  role="option"
-                  @mousedown.prevent="selectDepartment(department)"
-                >
-                  {{ department }}
-                </li>
-                <li v-if="!filteredDepartments.length" class="country-option-empty">
-                  No se encontraron departamentos.
-                </li>
-              </ul>
-            </div>
-            <small v-if="errors.department" class="field-error">{{ errors.department }}</small>
-          </label>
-
-          <label v-if="showMunicipalityField">
-            {{ t.municipality }}
-            <div ref="municipalityDropdownRef" class="country-autocomplete">
-              <input
-                type="text"
-                name="municipio_bandera"
-                v-model="form.municipality"
-                :placeholder="t.municipalityPlaceholder"
-                autocomplete="off"
-                @focus="openMunicipalityOptions"
-                @input="onMunicipalityInput"
-                @blur="validateField('municipality')"
-                required
-              />
-              <ul v-if="showMunicipalityOptions" class="country-options" role="listbox" aria-label="Lista de ciudades y municipios">
-                <li
-                  v-for="municipality in filteredMunicipalities"
-                  :key="municipality"
-                  class="country-option"
-                  role="option"
-                  @mousedown.prevent="selectMunicipality(municipality)"
-                >
-                  {{ municipality }}
-                </li>
-                <li v-if="!filteredMunicipalities.length" class="country-option-empty">
-                  No se encontraron ciudades o municipios.
-                </li>
-              </ul>
-            </div>
-            <small v-if="errors.municipality" class="field-error">{{ errors.municipality }}</small>
-          </label>
-
-          <label v-if="showOtherFlagTypeField">
-            {{ t.otherFlagType }}
-            <input
-              type="text"
-              name="otra_bandera"
-              v-model="form.otherFlagType"
-              :placeholder="t.otherFlagTypePlaceholder"
-              @input="validateField('otherFlagType')"
-              required
-            />
-            <small v-if="errors.otherFlagType" class="field-error">{{ errors.otherFlagType }}</small>
-          </label>
-
-          <label>
-            {{ t.quantity }}
-            <input type="number" min="1" step="1" name="cantidad" v-model="form.quantity" @input="validateField('quantity')" required />
-            <small v-if="errors.quantity" class="field-error">{{ errors.quantity }}</small>
-          </label>
-
-          <div class="dimensions-grid">
+         <div v-for="(item, index) in form.items" :key="index" class="quote-item-card">
+            <h3>{{ t.itemLabel }} #{{ index + 1 }}</h3>
             <label>
-              {{ t.width }}
-              <input type="number" min="1" step="1" name="ancho_cm" v-model="form.widthCm" @input="validateField('widthCm')" required />
-              <small v-if="errors.widthCm" class="field-error">{{ errors.widthCm }}</small>
+              {{ t.banderaType }}
+              <select v-model="item.banderaType" @change="onItemBanderaTypeChange(item, index)" @blur="validateItemField(item, index, 'banderaType')" required>
+                <option disabled value="">Selecciona una opción</option>
+                <option v-for="type in t.banderaTypes" :key="type" :value="type">{{ type }}</option>
+              </select>
+              <small v-if="errors[getItemErrorKey(index, 'banderaType')]" class="field-error">{{ errors[getItemErrorKey(index, 'banderaType')] }}</small>
             </label>
+
+            <label v-if="isCountryType(item)">
+              {{ t.country }}
+              <div ref="countryDropdownRef" class="country-autocomplete">
+                <input type="text" v-model="item.country" :placeholder="t.countryPlaceholder" autocomplete="off" @focus="openCountryOptions(item)" @input="onCountryInput(item, index)" @blur="validateItemField(item, index, 'country')" required />
+                <ul v-if="showCountryOptions" class="country-options" role="listbox" aria-label="Lista de países">
+                  <li v-for="country in filterCountries(item.country)" :key="country" class="country-option" role="option" @mousedown.prevent="selectCountry(item, index, country)">{{ country }}</li>
+                  <li v-if="!filterCountries(item.country).length" class="country-option-empty">No se encontraron países.</li>
+                </ul>
+              </div>
+              <small v-if="errors[getItemErrorKey(index, 'country')]" class="field-error">{{ errors[getItemErrorKey(index, 'country')] }}</small>
+            </label>
+
+          <label v-if="isDepartmentType(item)">
+              {{ t.department }}
+              <div ref="departmentDropdownRef" class="country-autocomplete">
+                <input type="text" v-model="item.department" :placeholder="t.departmentPlaceholder" autocomplete="off" @focus="openDepartmentOptions(item)" @input="onDepartmentInput(item, index)" @blur="validateItemField(item, index, 'department')" required />
+                <ul v-if="showDepartmentOptions" class="country-options" role="listbox" aria-label="Lista de departamentos">
+                  <li v-for="department in filterDepartments(item.department)" :key="department" class="country-option" role="option" @mousedown.prevent="selectDepartment(item, index, department)">{{ department }}</li>
+                  <li v-if="!filterDepartments(item.department).length" class="country-option-empty">No se encontraron departamentos.</li>
+                </ul>
+              </div>
+              <small v-if="errors[getItemErrorKey(index, 'department')]" class="field-error">{{ errors[getItemErrorKey(index, 'department')] }}</small>
+            </label>
+
+          <label v-if="isMunicipalityType(item)">
+              {{ t.municipality }}
+              <div ref="municipalityDropdownRef" class="country-autocomplete">
+                <input type="text" v-model="item.municipality" :placeholder="t.municipalityPlaceholder" autocomplete="off" @focus="openMunicipalityOptions(item)" @input="onMunicipalityInput(item, index)" @blur="validateItemField(item, index, 'municipality')" required />
+                <ul v-if="showMunicipalityOptions" class="country-options" role="listbox" aria-label="Lista de ciudades y municipios">
+                  <li v-for="municipality in filterMunicipalities(item.municipality)" :key="municipality" class="country-option" role="option" @mousedown.prevent="selectMunicipality(item, index, municipality)">{{ municipality }}</li>
+                  <li v-if="!filterMunicipalities(item.municipality).length" class="country-option-empty">No se encontraron ciudades o municipios.</li>
+                </ul>
+              </div>
+              <small v-if="errors[getItemErrorKey(index, 'municipality')]" class="field-error">{{ errors[getItemErrorKey(index, 'municipality')] }}</small>
+            </label>
+
+          <label v-if="isOtherType(item)">
+              {{ t.otherFlagType }}
+              <input type="text" v-model="item.otherFlagType" :placeholder="t.otherFlagTypePlaceholder" @input="validateItemField(item, index, 'otherFlagType')" required />
+              <small v-if="errors[getItemErrorKey(index, 'otherFlagType')]" class="field-error">{{ errors[getItemErrorKey(index, 'otherFlagType')] }}</small>
+            </label>
+
             <label>
-              {{ t.height }}
-              <input type="number" min="1" step="1" name="alto_cm" v-model="form.heightCm" @input="validateField('heightCm')" required />
-              <small v-if="errors.heightCm" class="field-error">{{ errors.heightCm }}</small>
+              {{ t.quantity }}
+              <input type="number" min="1" step="1" v-model="item.quantity" @input="validateItemField(item, index, 'quantity')" required />
+              <small v-if="errors[getItemErrorKey(index, 'quantity')]" class="field-error">{{ errors[getItemErrorKey(index, 'quantity')] }}</small>
             </label>
+          
+         <div class="dimensions-grid">
+              <label>
+                {{ t.width }}
+                <input type="number" min="1" step="1" v-model="item.widthCm" @input="validateItemField(item, index, 'widthCm')" required />
+                <small v-if="errors[getItemErrorKey(index, 'widthCm')]" class="field-error">{{ errors[getItemErrorKey(index, 'widthCm')] }}</small>
+              </label>
+              <label>
+                {{ t.height }}
+                <input type="number" min="1" step="1" v-model="item.heightCm" @input="validateItemField(item, index, 'heightCm')" required />
+                <small v-if="errors[getItemErrorKey(index, 'heightCm')]" class="field-error">{{ errors[getItemErrorKey(index, 'heightCm')] }}</small>
+              </label>
+            </div>
+
+            <div class="flag-preview-wrap">
+              <p>{{ t.preview }}</p>
+              <div class="flag-preview" :style="{ aspectRatio: itemAspectRatio(item) }"></div>
+            </div>
+            <button v-if="form.items.length > 1" type="button" class="btn-secondary quote-remove-item" @click="removeItem(index)">{{ t.removeFlag }}</button>
           </div>
 
-          <div class="flag-preview-wrap">
-            <p>{{ t.preview }}</p>
-            <div class="flag-preview" :style="{ aspectRatio: aspectRatio }"></div>
-          </div>
+          <button type="button" class="btn-primary quote-add-item" @click="addItem">{{ t.addFlag }}</button>
         </template>
 
         <template v-else-if="step === 2">
@@ -943,12 +922,16 @@ const ContactComponent = {
           <div class="quote-summary">
             <h3>{{ t.summary }}</h3>
             <ul>
-              <li><strong>{{ t.banderaType }}:</strong> {{ form.banderaType }}</li>
-              <li v-if="showCountryField"><strong>{{ t.country }}:</strong> {{ form.country }}</li>
-              <li v-if="showDepartmentField"><strong>{{ t.department }}:</strong> {{ form.department }}</li>
-              <li v-if="showOtherFlagTypeField"><strong>{{ t.otherFlagType }}:</strong> {{ form.otherFlagType }}</li>
-              <li><strong>{{ t.quantity }}:</strong> {{ form.quantity }}</li>
-              <li><strong>{{ t.dimensionsTitle }}:</strong> {{ form.widthCm }} x {{ form.heightCm }} cm</li>
+              <li v-for="(item, index) in form.items" :key="'summary-' + index">
+                <strong>{{ t.itemLabel }} #{{ index + 1 }}:</strong>
+                {{ item.banderaType }} |
+                <span v-if="isCountryType(item)">{{ t.country }}: {{ item.country }} | </span>
+                <span v-if="isDepartmentType(item)">{{ t.department }}: {{ item.department }} | </span>
+                <span v-if="isMunicipalityType(item)">{{ t.municipality }}: {{ item.municipality }} | </span>
+                <span v-if="isOtherType(item)">{{ t.otherFlagType }}: {{ item.otherFlagType }} | </span>
+                {{ t.quantity }}: {{ item.quantity }} |
+                {{ t.dimensionsTitle }}: {{ item.widthCm }} x {{ item.heightCm }} cm
+              </li>
               <li><strong>{{ t.material }}:</strong> {{ form.material }}</li>
               <li><strong>{{ t.needsPoleBase }}:</strong> {{ form.needsPoleBase }}</li>
               <li><strong>{{ t.city }}:</strong> {{ form.city }}</li>
