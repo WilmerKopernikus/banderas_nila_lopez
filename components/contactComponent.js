@@ -23,6 +23,7 @@ const ContactComponent = {
         banderaTypes: [
           'De Colombia',
           'De un departamento de Colombia',
+          'De una ciudad o Municipio de Colombia',
           'De un país',
           'Empresarial o institucional',
           'Otra',
@@ -33,6 +34,8 @@ const ContactComponent = {
         countryPlaceholder: 'Escribe o selecciona un país',
         department: 'Departamento',
         departmentPlaceholder: 'Escribe o selecciona un departamento',
+        municipality: 'Ciudad o Municipio',
+        municipalityPlaceholder: 'Escribe o selecciona una ciudad o municipio',
         quantity: 'Cantidad',
         dimensionsTitle: 'Dimensiones (cm)',
         width: 'Ancho (cm)',
@@ -60,15 +63,18 @@ const ContactComponent = {
     const successCanvasRef = ref(null);
     const countryDropdownRef = ref(null);
     const departmentDropdownRef = ref(null);
+    const municipalityDropdownRef = ref(null);
     const submitStatus = ref('idle');
     const showCountryOptions = ref(false);
     const showDepartmentOptions = ref(false);
+    const showMunicipalityOptions = ref(false);
     let confettiSketch = null;
 
     const form = reactive({
       banderaType: '',
       country: '',
       department: '',
+      municipality: '',
       quantity: '',
       widthCm: '',
       heightCm: '',
@@ -88,6 +94,7 @@ const ContactComponent = {
     const isSubmitting = computed(() => submitStatus.value === 'submitting');
     const showCountryField = computed(() => form.banderaType === 'De un país');
     const showDepartmentField = computed(() => form.banderaType === 'De un departamento de Colombia');
+    const showMunicipalityField = computed(() => form.banderaType === 'De una ciudad o Municipio de Colombia');
     const showOtherFlagTypeField = computed(() => form.banderaType === 'Otra');
     const aspectRatio = computed(() => {
       const width = Number(form.widthCm);
@@ -150,6 +157,10 @@ const ContactComponent = {
         errors[field] = t.value.required;
       }
 
+      if (field === 'municipality' && showMunicipalityField.value && !form.municipality) {
+        errors[field] = t.value.required;
+      }
+
       if (field === 'quantity') {
         const value = Number(form.quantity);
         if (!form.quantity) {
@@ -185,7 +196,7 @@ const ContactComponent = {
     };
 
     const fieldsByStep = {
-      1: ['banderaType', 'country', 'department', 'otherFlagType', 'quantity', 'widthCm', 'heightCm'],
+      1: ['banderaType', 'country', 'department', 'municipality', 'otherFlagType', 'quantity', 'widthCm', 'heightCm'],
       2: ['material', 'needsPoleBase', 'city', 'customLogo', 'logoFile'],
       3: ['name', 'email'],
       4: [],
@@ -208,6 +219,10 @@ const ContactComponent = {
         }
         if (field === 'otherFlagType' && !showOtherFlagTypeField.value) {
           errors.otherFlagType = '';
+          return true;
+        }
+        if (field === 'municipality' && !showMunicipalityField.value) {
+          errors.municipality = '';
           return true;
         }
         return validateField(field);
@@ -269,6 +284,75 @@ const ContactComponent = {
       return departments.filter((department) => normalizeText(department).includes(query));
     });
 
+    const municipalities = [
+      'Abejorral', 'Ábrego', 'Abriaquí', 'Acacías', 'Acandí', 'Acevedo', 'Achí', 'Agrado', 'Agua de Dios', 'Aguachica', 'Aguada', 'Aguadas', 'Aguazul', 'Agustín Codazzi', 'Aipe', 'Albán', 'Albania, Caquetá', 'Albania, La Guajira', 'Albania, Santander',
+      'Alcalá', 'Aldana', 'Alejandría', 'Algarrobo', 'Algeciras', 'Almaguer', 'Almeida', 'Alpujarra', 'Altamira', 'Alto Baudó', 'Altos del Rosario', 'Alvarado', 'Amagá', 'Amalfi', 'Ambalema', 'Anapoima', 'Ancuya', 'Andalucía', 'Andes',
+      'Angelópolis', 'Angostura', 'Anolaima', 'Anorí', 'Anserma', 'Ansermanuevo', 'Anzá', 'Anzoátegui', 'Apartadó', 'Apía', 'Apulo', 'Aquitania', 'Aracataca', 'Aranzazu', 'Aratoca', 'Arauca', 'Arauquita', 'Arbeláez', 'Arboleda', 'Arboledas',
+      'Arboletes', 'Arcabuco', 'Arenal', 'Argelia, Antioquia', 'Argelia, Cauca', 'Argelia, Valle del Cauca', 'Ariguaní', 'Arjona', 'Armenia, Antioquia', 'Armenia, Quindío', 'Armero', 'Arroyohondo', 'Astrea', 'Ataco', 'Ayapel', 'Bagadó', 'Bahía Solano', 'Bajo Baudó', 'Balboa, Cauca',
+      'Balboa, Risaralda', 'Baranoa', 'Baraya', 'Barbacoas', 'Barbosa, Antioquia', 'Barbosa, Santander', 'Barichara', 'Barranca de Upía', 'Barrancabermeja', 'Barrancas', 'Barranco de Loba', 'Barrancominas', 'Barranquilla', 'Becerril', 'Belalcázar', 'Belén, Boyacá', 'Belén, Nariño', 'Belén de Bajirá',
+      'Belén de los Andaquíes', 'Belén de Umbría', 'Bello', 'Belmira', 'Beltrán', 'Berbeo', 'Betania', 'Betéitiva', 'Betulia, Antioquia', 'Betulia, Santander', 'Bituima', 'Boavita', 'Bochalema', 'Bogotá', 'Bojacá', 'Bojayá', 'Bolívar, Antioquia', 'Bolívar, Cauca', 'Bolívar, Santander',
+      'Bolívar, Valle del Cauca', 'Bosconia', 'Boyacá', 'Briceño, Antioquia', 'Briceño, Boyacá', 'Bucaramanga', 'Bucarasica', 'Buenaventura', 'Buenavista, Boyacá', 'Buenavista, Córdoba', 'Buenavista, Quindío', 'Buenavista, Sucre', 'Buenos Aires', 'Buesaco', 'Buga', 'Bugalagrande', 'Buriticá', 'Busbanzá',
+      'Cabrera, Cundinamarca', 'Cabrera, Santander', 'Cabuyaro', 'Cáceres', 'Cachipay', 'Cáchira', 'Cácota', 'Caicedo', 'Caicedonia', 'Caimito', 'Cajamarca', 'Cajibío', 'Cajicá', 'Calamar, Bolívar', 'Calamar, Guaviare', 'Calarcá', 'Caldas, Antioquia', 'Caldas, Boyacá', 'Caldono',
+      'Cali', 'California', 'Calima', 'Caloto', 'Campamento', 'Campo de la Cruz', 'Campoalegre', 'Campohermoso', 'Canalete', 'Candelaria, Atlántico', 'Candelaria, Valle del Cauca', 'Cantagallo', 'Cantón de San Pablo', 'Cañasgordas', 'Caparrapí', 'Capitanejo', 'Cáqueza', 'Caracolí',
+      'Caramanta', 'Carcasí', 'Carepa', 'Carmen de Apicalá', 'Carmen de Carupa', 'Carolina del Príncipe', 'Cartagena de Indias', 'Cartagena del Chairá', 'Cartago', 'Carurú', 'Casabianca', 'Castilla la Nueva', 'Caucasia', 'Cepitá', 'Cereté', 'Cerinza', 'Cerrito',
+      'Cerro de San Antonio', 'Cértegui', 'Chachagüí', 'Chaguaní', 'Chalán', 'Chámeza', 'Chaparral', 'Charalá', 'Charta', 'Chía', 'Chibolo', 'Chigorodó', 'Chima', 'Chimá', 'Chimichagua', 'Chinácota', 'Chinavita', 'Chinchiná',
+      'Chinú', 'Chipaque', 'Chipatá', 'Chiquinquirá', 'Chíquiza', 'Chiriguaná', 'Chiscas', 'Chita', 'Chitagá', 'Chitaraque', 'Chivatá', 'Chivor', 'Choachí', 'Chocontá', 'Cicuco', 'Ciénaga', 'Ciénaga de Oro', 'Ciénega',
+      'Cimitarra', 'Circasia', 'Cisneros', 'Clemencia', 'Cocorná', 'Coello', 'Cogua', 'Colombia', 'Colón, Nariño', 'Colón, Putumayo', 'Colosó', 'Cómbita', 'Concepción, Antioquia', 'Concepción, Santander', 'Concordia, Antioquia', 'Concordia, Magdalena', 'Condoto', 'Confines',
+      'Consacá', 'Contadero', 'Contratación', 'Convención', 'Copacabana', 'Coper', 'Córdoba, Bolívar', 'Córdoba, Nariño', 'Córdoba, Quindío', 'Corinto', 'Coromoro', 'Corozal', 'Corrales', 'Cota', 'Cotorra', 'Covarachía', 'Coveñas', 'Coyaima',
+      'Cravo Norte', 'Cuaspud', 'Cubará', 'Cubarral', 'Cucaita', 'Cucunubá', 'Cúcuta', 'Cucutilla', 'Cuítiva', 'Cumaral', 'Cumaribo', 'Cumbal', 'Cumbitara', 'Cunday', 'Curillo', 'Curití', 'Curumaní', 'Dabeiba',
+      'Dagua', 'Dibulla', 'Distracción', 'Dolores', 'Donmatías', 'Dosquebradas', 'Duitama', 'Duranía', 'Ebéjico', 'El Águila', 'El Atrato', 'El Bagre', 'El Banco', 'El Cairo', 'El Calvario', 'El Carmen', 'El Carmen de Atrato', 'El Carmen de Bolívar',
+      'El Carmen de Chucurí', 'El Carmen de Viboral', 'El Carmen del Darién', 'El Castillo', 'El Cerrito', 'El Charco', 'El Cocuy', 'El Colegio', 'El Copey', 'El Doncello', 'El Dorado', 'El Dovio', 'El Espinal', 'El Espino', 'El Guacamayo', 'El Guamo', 'El Molino', 'El Paso', 'El Paujil', 'El Peñol, Antioquia', 'El Peñol, Nariño', 'El Peñón, Bolívar', 'El Peñón, Cundinamarca', 'El Peñón, Santander', 'El Piñón',
+      'El Pital', 'El Playón', 'El Retén', 'El Retiro', 'El Retorno', 'El Roble', 'El Rosal', 'El Rosario', 'El Santuario', 'El Socorro', 'El Tablón', 'El Tambo, Cauca', 'El Tambo, Nariño', 'El Tarra', 'El Zulia', 'Elías', 'Encino', 'Entrerríos', 'Envigado',
+      'Facatativá', 'Falán', 'Filadelfia', 'Filandia', 'Firavitoba', 'Flandes', 'Florencia, Cauca', 'Florencia, Caquetá', 'Floresta', 'Florián', 'Florida', 'Floridablanca', 'Fómeque', 'Fonseca', 'Fortul', 'Fosca', 'Francisco Pizarro', 'Fredonia', 'Fresno',
+      'Frontino', 'Fuente de Oro', 'Fundación', 'Funes', 'Funza', 'Fúquene', 'Fusagasugá', 'Gachalá', 'Gachancipá', 'Gachantivá', 'Gachetá', 'Galán', 'Galapa', 'Galeras', 'Gama', 'Gamarra', 'Gámbita', 'Gámeza', 'Garagoa',
+      'Garzón', 'Génova', 'Gigante', 'Ginebra', 'Giraldo', 'Girardot', 'Girardota', 'Girón', 'Gómez Plata', 'González', 'Gramalote', 'Granada, Antioquia', 'Granada, Cundinamarca', 'Granada, Meta', 'Guaca', 'Guacamayas', 'Guacarí', 'Guachené', 'Guachetá',
+      'Guachucal', 'Guadalupe, Antioquia', 'Guadalupe, Huila', 'Guadalupe, Santander', 'Guaduas', 'Guaitarilla', 'Gualmatán', 'Guamal, Magdalena', 'Guamal, Meta', 'Guamo', 'Guapí', 'Guapotá', 'Guaranda', 'Guarne', 'Guasca', 'Guatapé', 'Guataquí', 'Guatavita', 'Guateque',
+      'Guática', 'Guavatá', 'Guayabal de Síquima', 'Guayabetal', 'Guayatá', 'Güepsa', 'Güicán', 'Gutiérrez', 'Hacarí', 'Hatillo de Loba', 'Hato Corozal', 'Hato', 'Hatonuevo', 'Heliconia', 'Herrán', 'Herveo', 'Hispania', 'Hobo',
+      'Honda', 'Ibagué', 'Icononzo', 'Iles', 'Imués', 'Inírida', 'Inzá', 'Ipiales', 'Íquira', 'Isnos', 'Itagüí', 'Istmina', 'Ituango', 'Iza', 'Jambaló', 'Jamundí', 'Jardín', 'Jenesano', 'Jericó, Antioquia', 'Jericó, Boyacá',
+      'Jerusalén', 'Jesús María', 'Jordán', 'Juan de Acosta', 'Junín', 'Juradó', 'La Apartada', 'La Argentina', 'La Belleza', 'La Calera', 'La Capilla', 'La Ceja', 'La Celia', 'La Cruz', 'La Cumbre', 'La Dorada', 'La Esperanza', 'La Estrella',
+      'La Florida', 'La Gloria', 'La Jagua de Ibirico', 'La Jagua del Pilar', 'La Llanada', 'La Macarena', 'La Merced', 'La Mesa', 'La Montañita', 'La Palma', 'La Paz, Cesar', 'La Paz, Santander', 'La Peña', 'La Pintada', 'La Plata', 'La Playa de Belén', 'La Primavera', 'La Salina',
+      'La Sierra', 'La Tebaida', 'La Tola', 'La Unión, Antioquia', 'La Unión, Nariño', 'La Unión, Sucre', 'La Unión, Valle del Cauca', 'La Uribe', 'La Uvita', 'La Vega, Cauca', 'La Vega, Cundinamarca', 'La Victoria, Boyacá', 'La Victoria, Valle del Cauca', 'La Virginia', 'Labateca', 'Labranzagrande', 'Landázuri', 'Lebrija',
+      'Leiva', 'Lejanías', 'Lenguazaque', 'Lérida', 'Leticia', 'Líbano', 'Liborina', 'Linares', 'Litoral de San Juan', 'Lloró', 'López de Micay', 'Lorica', 'Los Andes', 'Los Córdobas', 'Los Palmitos', 'Los Patios', 'Los Santos', 'Lourdes',
+      'Luruaco', 'Macanal', 'Macaravita', 'Maceo', 'Machetá', 'Madrid', 'Magangué', 'Magüí Payán', 'Mahates', 'Maicao', 'Majagual', 'Málaga', 'Malambo', 'Mallama', 'Manatí', 'Manaure Balcón del Cesar', 'Manaure', 'Maní',
+      'Manizales', 'Manta', 'Manzanares', 'Mapiripán', 'Margarita', 'María la Baja', 'Marinilla', 'Maripí', 'Mariquita', 'Marmato', 'Marquetalia', 'Marsella', 'Marulanda', 'Matanza', 'Medellín', 'Medina', 'Medio Atrato', 'Medio Baudó',
+      'Medio San Juan', 'Melgar', 'Mercaderes', 'Mesetas', 'Miraflores, Boyacá', 'Miraflores, Guaviare', 'Miranda', 'Mistrató', 'Mitú', 'Mocoa', 'Mogotes', 'Molagavita', 'Momil', 'Mompós', 'Mongua', 'Monguí', 'Moniquirá', 'Montebello',
+      'Montecristo', 'Montelíbano', 'Montenegro', 'Montería', 'Monterrey', 'Moñitos', 'Morales, Bolívar', 'Morales, Cauca', 'Morelia', 'Morroa', 'Mosquera, Cundinamarca', 'Mosquera, Nariño', 'Motavita', 'Murillo', 'Murindó', 'Mutatá', 'Mutiscua', 'Muzo',
+      'Nariño, Antioquia', 'Nariño, Cundinamarca', 'Nariño, Nariño', 'Nátaga', 'Natagaima', 'Nechí', 'Necoclí', 'Neira', 'Neiva', 'Nemocón', 'Nilo', 'Nimaima', 'Nobsa', 'Nocaima', 'Norcasia', 'Norosí', 'Nóvita', 'Nueva Granada', 'Nuevo Colón', 'Nunchía', 'Nuquí', 'Obando', 'Ocamonte',
+      'Ocaña', 'Oiba', 'Oicatá', 'Olaya', 'Olaya Herrera', 'Onzaga', 'Oporapa', 'Orito', 'Orocué', 'Ortega', 'Ospina', 'Otanche', 'Ovejas', 'Pachavita', 'Pacho', 'Pácora', 'Padilla', 'Páez, Cauca', 'Páez, Boyacá', 'Paicol',
+      'Pailitas', 'Paime', 'Paipa', 'Pajarito', 'Palermo', 'Palestina, Caldas', 'Palestina, Huila', 'Palmar de Varela', 'Palmar', 'Palmas del Socorro', 'Palmira', 'Palocabildo', 'Pamplona', 'Pamplonita', 'Pandi', 'Panqueba', 'Páramo', 'Paratebueno', 'Pasca',
+      'Pasto', 'Patía', 'Pauna', 'Paya', 'Paz de Ariporo', 'Paz del Río', 'Pedraza', 'Pelaya', 'Pensilvania', 'Peque', 'Pereira', 'Pesca', 'Piamonte', 'Piedecuesta', 'Piedras', 'Piendamó', 'Pijao', 'Pijiño del Carmen', 'Pinchote',
+      'Pinillos', 'Piojó', 'Pisba', 'Pitalito', 'Pivijay', 'Planadas', 'Planeta Rica', 'Plato', 'Policarpa', 'Polonuevo', 'Ponedera', 'Popayán', 'Pore', 'Potosí', 'Pradera', 'Prado', 'Providencia', 'Providencia y Santa Catalina Islas', 'Pueblo Viejo',
+      'Pueblo Bello', 'Pueblo Nuevo', 'Pueblo Rico', 'Pueblorrico', 'Puente Nacional', 'Puerres', 'Puerto Asís', 'Puerto Berrío', 'Puerto Boyacá', 'Puerto Caicedo', 'Puerto Carreño', 'Puerto Colombia', 'Puerto Concordia', 'Puerto Escondido', 'Puerto Gaitán', 'Puerto Guzmán', 'Puerto Leguízamo', 'Puerto Libertador', 'Puerto Lleras',
+      'Puerto López', 'Puerto Milán', 'Puerto Nare', 'Puerto Nariño', 'Puerto Parra', 'Puerto Rico, Caquetá', 'Puerto Rico, Meta', 'Puerto Rondón', 'Puerto Salgar', 'Puerto Santander', 'Puerto Tejada', 'Puerto Triunfo', 'Puerto Wilches', 'Pulí', 'Pupiales', 'Puracé', 'Purificación', 'Purísima', 'Quebradanegra',
+      'Quetame', 'Quibdó', 'Quimbaya', 'Quinchía', 'Quípama', 'Quipile', 'Ragonvalia', 'Ramiriquí', 'Ráquira', 'Recetor', 'Regidor', 'Remedios', 'Remolino', 'Repelón', 'Restrepo, Meta', 'Restrepo, Valle del Cauca', 'Ricaurte, Cundinamarca', 'Ricaurte, Nariño', 'Río de Oro',
+      'Río Iró', 'Río Quito', 'Río Viejo', 'Rioblanco', 'Riofrío', 'Riohacha', 'Rionegro, Antioquia', 'Rionegro, Santander', 'Riosucio, Caldas', 'Riosucio, Chocó', 'Risaralda', 'Rivera', 'Roberto Payán', 'Roldanillo', 'Roncesvalles', 'Rondón', 'Rosas', 'Rovira', 'Sabana de Torres',
+      'Sabanas de San Ángel', 'Sabanagrande', 'Sabanalarga, Antioquia', 'Sabanalarga, Atlántico', 'Sabanalarga, Casanare', 'Sabaneta', 'Saboyá', 'Sácama', 'Sáchica', 'Sahagún', 'Saladoblanco', 'Salamina, Caldas', 'Salamina, Magdalena', 'Salazar de Las Palmas', 'Saldaña', 'Salento', 'Salgar', 'Samacá', 'Samaná',
+      'Samaniego', 'Sampués', 'San Agustín', 'San Alberto', 'San Andrés, San Andrés y Providencia', 'San Andrés, Santander', 'San Andrés de Cuerquia', 'San Andrés de Sotavento', 'San Antero', 'San Antonio', 'San Antonio de Palmito', 'San Antonio del Tequendama', 'San Benito', 'San Benito Abad', 'San Bernardo, Cundinamarca', 'San Bernardo, Nariño', 'San Bernardo del Viento', 'San Calixto', 'San Carlos, Antioquia',
+      'San Carlos, Córdoba', 'San Carlos de Guaroa', 'San Cayetano, Cundinamarca', 'San Cayetano, Norte de Santander', 'San Cristóbal', 'San Diego', 'San Eduardo', 'San Estanislao', 'San Fernando', 'San Francisco, Antioquia', 'San Francisco, Cundinamarca', 'San Francisco, Putumayo', 'San Gil', 'San Jacinto', 'San Jacinto del Cauca', 'San Jerónimo', 'San Joaquín', 'San José', 'San José de Albán',
+      'San José de Miranda', 'San José de Pare', 'San José de Uré', 'San José de la Montaña', 'San José del Fragua', 'San José del Guaviare', 'San José del Palmar', 'San Juan de Arama', 'San Juan de Betulia', 'San Juan de Rioseco', 'San Juan de Urabá', 'San Juan del Cesar', 'San Juan Nepomuceno', 'San Juanito', 'San Lorenzo', 'San Luis, Antioquia', 'San Luis, Tolima', 'San Luis de Gaceno', 'San Luis de Palenque',
+      'San Marcos', 'San Martín, Cesar', 'San Martín, Meta', 'San Martín de Loba', 'San Mateo', 'San Miguel, Putumayo', 'San Miguel, Santander', 'San Miguel de Sema', 'San Onofre', 'San Pablo, Bolívar', 'San Pablo, Nariño', 'San Pablo de Borbur', 'San Pedro, Sucre', 'San Pedro, Valle del Cauca', 'San Pedro de Cartago', 'San Pedro de Urabá', 'San Pedro de los Milagros', 'San Pelayo', 'San Rafael',
+      'San Roque', 'San Sebastián', 'San Sebastián de Buenavista', 'San Vicente', 'San Vicente de Chucurí', 'San Vicente del Caguán', 'San Zenón', 'Sandoná', 'Santa Ana', 'Santa Bárbara, Antioquia', 'Santa Bárbara, Nariño', 'Santa Bárbara, Santander', 'Santa Bárbara de Pinto', 'Santa Catalina', 'Santa Fe de Antioquia', 'Santa Helena del Opón', 'Santa Isabel', 'Santa Lucía', 'Santa María, Boyacá',
+      'Santa María, Huila', 'Santa Marta', 'Santa Rosa, Bolívar', 'Santa Rosa, Cauca', 'Santa Rosa de Cabal', 'Santa Rosa de Osos', 'Santa Rosa de Viterbo', 'Santa Rosa del Sur', 'Santa Rosalía', 'Santa Sofía', 'Santacruz', 'Santana', 'Santander de Quilichao', 'Santiago, Norte de Santander', 'Santiago, Putumayo', 'Santo Domingo', 'Santo Domingo de Silos', 'Santo Tomás', 'Santuario', 'Sapuyes', 'Saravena', 'Sardinata', 'Sasaima', 'Sativanorte', 'Sativasur', 'Segovia', 'Sesquilé', 'Sevilla', 'Siachoque', 'Sibaté', 'Sibundoy', 'Silvania',
+      'Silvia', 'Simacota', 'Simijaca', 'Simití', 'Sincé', 'Sincelejo', 'Sipí', 'Sitionuevo', 'Soacha', 'Soatá', 'Socha', 'Socotá', 'Sogamoso', 'Solano', 'Soledad', 'Solita', 'Somondoco', 'Sonsón', 'Sopetrán', 'Soplaviento',
+      'Sopó', 'Sora', 'Soracá', 'Sotaquirá', 'Sotará', 'Suaita', 'Suán', 'Suárez, Cauca', 'Suárez, Tolima', 'Suaza', 'Subachoque', 'Sucre, Cauca', 'Sucre, Santander', 'Sucre, Sucre', 'Suesca', 'Supatá', 'Supía', 'Suratá', 'Susa', 'Susacón', 'Sutamarchán', 'Sutatausa', 'Sutatenza',
+      'Tabio', 'Tadó', 'Talaigua Nuevo', 'Tamalameque', 'Támara', 'Tame', 'Támesis', 'Taminango', 'Tangua', 'Taraira', 'Tarazá', 'Tarquí', 'Tarso', 'Tasco', 'Tauramena', 'Tausa', 'Tello', 'Tena', 'Tenerife',
+      'Tenjo', 'Tenza', 'Teorama', 'Teruel', 'Tesalia', 'Tibacuy', 'Tibaná', 'Tibasosa', 'Tibirita', 'Tibú', 'Tierralta', 'Timaná', 'Timbío', 'Timbiquí', 'Tinjacá', 'Tipacoque', 'Tiquisio', 'Titiribí', 'Toca',
+      'Tocaima', 'Tocancipá', 'Togüí', 'Toledo, Antioquia', 'Toledo, Norte de Santander', 'Tolú', 'Tolú Viejo', 'Tona', 'Tópaga', 'Topaipí', 'Toribío', 'Toro', 'Tota', 'Totoró', 'Trinidad', 'Trujillo', 'Tubará', 'Tuchín', 'Tuluá',
+      'Tumaco', 'Tunja', 'Tununguá', 'Túquerres', 'Turbaco', 'Turbaná', 'Turbo', 'Turmequé', 'Tuta', 'Tutazá', 'Ubalá', 'Ubaque', 'Ubaté', 'Ulloa', 'Úmbita', 'Une', 'Unión Panamericana', 'Unguía', 'Uramita',
+      'Uribia', 'Urrao', 'Urumita', 'Usiacurí', 'Útica', 'Valdivia', 'Valencia', 'Valle de San José', 'Valle de San Juan', 'Valle del Guamuez', 'Valledupar', 'Valparaíso, Antioquia', 'Valparaíso, Caquetá', 'Vegachí', 'Vélez', 'Venadillo', 'Venecia, Antioquia', 'Venecia, Cundinamarca', 'Ventaquemada',
+      'Vergara', 'Versalles', 'Vetas', 'Vianí', 'Victoria', 'Vigía del Fuerte', 'Vijes', 'Villa Caro', 'Villa de Leyva', 'Villa del Rosario', 'Villa Rica', 'Villagarzón', 'Villagómez', 'Villahermosa', 'Villamaría', 'Villanueva, Bolívar', 'Villanueva, Casanare', 'Villanueva, La Guajira', 'Villanueva, Santander',
+      'Villapinzón', 'Villarrica', 'Villavicencio', 'Villavieja', 'Villeta', 'Viotá', 'Viracachá', 'Vista Hermosa', 'Viterbo', 'Yacopí', 'Yacuanquer', 'Yaguará', 'Yalí', 'Yarumal', 'Yolombó', 'Yondó', 'Yopal', 'Yotoco', 'Yumbo',
+      'Zambrano', 'Zapatoca', 'Zapayán', 'Zaragoza', 'Zarzal', 'Zetaquirá', 'Zipacón', 'Zipaquirá', 'Zona Bananera',
+    ];
+
+    const filteredMunicipalities = computed(() => {
+      const query = normalizeText(form.municipality || '').trim();
+      if (!query) {
+        return municipalities;
+      }
+      return municipalities.filter((municipality) => normalizeText(municipality).includes(query));
+    });
+
     const openCountryOptions = () => {
       if (!showCountryField.value) {
         return;
@@ -313,14 +397,40 @@ const ContactComponent = {
       closeDepartmentOptions();
     };
 
+    const openMunicipalityOptions = () => {
+      if (!showMunicipalityField.value) {
+        return;
+      }
+      showMunicipalityOptions.value = true;
+    };
+
+    const closeMunicipalityOptions = () => {
+      showMunicipalityOptions.value = false;
+    };
+
+    const onMunicipalityInput = () => {
+      validateField('municipality');
+      openMunicipalityOptions();
+    };
+
+    const selectMunicipality = (municipality) => {
+      form.municipality = municipality;
+      errors.municipality = '';
+      closeMunicipalityOptions();
+    };
+
     const onDocumentClick = (event) => {
       const clickedCountry = countryDropdownRef.value?.contains(event.target);
       const clickedDepartment = departmentDropdownRef.value?.contains(event.target);
+      const clickedMunicipality = municipalityDropdownRef.value?.contains(event.target);
       if (!clickedCountry) {
         closeCountryOptions();
       }
       if (!clickedDepartment) {
         closeDepartmentOptions();
+      }
+      if (!clickedMunicipality) {
+        closeMunicipalityOptions();
       }
     };
 
@@ -336,6 +446,11 @@ const ContactComponent = {
           form.department = '';
           errors.department = '';
           closeDepartmentOptions();
+        }
+        if (value !== 'De una ciudad o Municipio de Colombia') {
+          form.municipality = '';
+          errors.municipality = '';
+          closeMunicipalityOptions();
         }
         if (value !== 'Otra') {
           form.otherFlagType = '';
@@ -366,6 +481,7 @@ const ContactComponent = {
         banderaType: '',
         country: '',
         department: '',
+        municipality: '',
         quantity: '',
         widthCm: '',
         heightCm: '',
@@ -548,15 +664,20 @@ const ContactComponent = {
       filteredCountries,
       departments,
       filteredDepartments,
+      municipalities,
+      filteredMunicipalities,
       showCountryField,
       showDepartmentField,
+      showMunicipalityField,
       showOtherFlagTypeField,
       showCountryOptions,
       showDepartmentOptions,
+      showMunicipalityOptions,
       formRef,
       successCanvasRef,
       countryDropdownRef,
       departmentDropdownRef,
+      municipalityDropdownRef,
       submitStatus,
       isSubmitting,
       validateField,
@@ -568,6 +689,10 @@ const ContactComponent = {
       openDepartmentOptions,
       closeDepartmentOptions,
       selectDepartment,
+      onMunicipalityInput,
+      openMunicipalityOptions,
+      closeMunicipalityOptions,
+      selectMunicipality,
       nextStep,
       prevStep,
       handleSubmit,
@@ -604,6 +729,7 @@ const ContactComponent = {
         <input type="hidden" name="tipo_bandera" :value="form.banderaType" />
         <input type="hidden" name="pais_bandera" :value="form.country" />
         <input type="hidden" name="departamento_bandera" :value="form.department" />
+        <input type="hidden" name="municipio_bandera" :value="form.municipality" />
         <input type="hidden" name="cantidad" :value="form.quantity" />
         <input type="hidden" name="ancho_cm" :value="form.widthCm" />
         <input type="hidden" name="alto_cm" :value="form.heightCm" />
@@ -686,6 +812,38 @@ const ContactComponent = {
               </ul>
             </div>
             <small v-if="errors.department" class="field-error">{{ errors.department }}</small>
+          </label>
+
+          <label v-if="showMunicipalityField">
+            {{ t.municipality }}
+            <div ref="municipalityDropdownRef" class="country-autocomplete">
+              <input
+                type="text"
+                name="municipio_bandera"
+                v-model="form.municipality"
+                :placeholder="t.municipalityPlaceholder"
+                autocomplete="off"
+                @focus="openMunicipalityOptions"
+                @input="onMunicipalityInput"
+                @blur="validateField('municipality')"
+                required
+              />
+              <ul v-if="showMunicipalityOptions" class="country-options" role="listbox" aria-label="Lista de ciudades y municipios">
+                <li
+                  v-for="municipality in filteredMunicipalities"
+                  :key="municipality"
+                  class="country-option"
+                  role="option"
+                  @mousedown.prevent="selectMunicipality(municipality)"
+                >
+                  {{ municipality }}
+                </li>
+                <li v-if="!filteredMunicipalities.length" class="country-option-empty">
+                  No se encontraron ciudades o municipios.
+                </li>
+              </ul>
+            </div>
+            <small v-if="errors.municipality" class="field-error">{{ errors.municipality }}</small>
           </label>
 
           <label v-if="showOtherFlagTypeField">
