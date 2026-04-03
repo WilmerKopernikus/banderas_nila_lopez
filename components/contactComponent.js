@@ -21,7 +21,8 @@ const ContactComponent = {
         emailInvalid: 'Ingresa un correo válido.',
         banderaType: 'Tipo de Bandera',
         banderaTypes: [
-          'Colombia',
+          'De Colombia',
+          'De un departamento de Colombia',
           'De un país',
           'empresarial',
           'institucional',
@@ -31,6 +32,8 @@ const ContactComponent = {
         ],
         country: 'País',
         countryPlaceholder: 'Escribe o selecciona un país',
+        department: 'Departamento',
+        departmentPlaceholder: 'Escribe o selecciona un departamento',
         quantity: 'Cantidad',
         dimensionsTitle: 'Dimensiones (cm)',
         width: 'Ancho (cm)',
@@ -57,13 +60,16 @@ const ContactComponent = {
     const formRef = ref(null);
     const successCanvasRef = ref(null);
     const countryDropdownRef = ref(null);
+    const departmentDropdownRef = ref(null);
     const submitStatus = ref('idle');
     const showCountryOptions = ref(false);
+    const showDepartmentOptions = ref(false);
     let confettiSketch = null;
 
     const form = reactive({
       banderaType: '',
       country: '',
+      department: '',
       quantity: '',
       widthCm: '',
       heightCm: '',
@@ -81,6 +87,7 @@ const ContactComponent = {
     const progressPct = computed(() => Math.round((step.value / totalSteps) * 100));
     const isSubmitting = computed(() => submitStatus.value === 'submitting');
     const showCountryField = computed(() => form.banderaType === 'De un país');
+    const showDepartmentField = computed(() => form.banderaType === 'De un departamento de Colombia');
     const aspectRatio = computed(() => {
       const width = Number(form.widthCm);
       const height = Number(form.heightCm);
@@ -134,6 +141,10 @@ const ContactComponent = {
         errors[field] = t.value.required;
       }
 
+      if (field === 'department' && showDepartmentField.value && !form.department) {
+        errors[field] = t.value.required;
+      }
+
       if (field === 'quantity') {
         const value = Number(form.quantity);
         if (!form.quantity) {
@@ -169,7 +180,7 @@ const ContactComponent = {
     };
 
     const fieldsByStep = {
-      1: ['banderaType', 'country', 'quantity', 'widthCm', 'heightCm'],
+      1: ['banderaType', 'country', 'department', 'quantity', 'widthCm', 'heightCm'],
       2: ['material', 'needsPoleBase', 'city', 'customLogo', 'logoFile'],
       3: ['name', 'email'],
       4: [],
@@ -184,6 +195,10 @@ const ContactComponent = {
         }
         if (field === 'country' && !showCountryField.value) {
           errors.country = '';
+          return true;
+        }
+        if (field === 'department' && !showDepartmentField.value) {
+          errors.department = '';
           return true;
         }
         return validateField(field);
@@ -230,6 +245,21 @@ const ContactComponent = {
       return countries.filter((country) => normalizeText(country).includes(query));
     });
 
+    const departments = [
+      'Amazonas', 'Antioquia', 'Arauca', 'Atlántico', 'Bolívar', 'Boyacá', 'Caldas', 'Caquetá', 'Casanare',
+      'Cauca', 'Cesar', 'Chocó', 'Córdoba', 'Cundinamarca', 'Guainía', 'Guaviare', 'Huila', 'La Guajira',
+      'Magdalena', 'Meta', 'Nariño', 'Norte de Santander', 'Putumayo', 'Quindío', 'Risaralda',
+      'San Andrés y Providencia', 'Santander', 'Sucre', 'Tolima', 'Valle del Cauca', 'Vaupés', 'Vichada',
+    ];
+
+    const filteredDepartments = computed(() => {
+      const query = normalizeText(form.department || '').trim();
+      if (!query) {
+        return departments;
+      }
+      return departments.filter((department) => normalizeText(department).includes(query));
+    });
+
     const openCountryOptions = () => {
       if (!showCountryField.value) {
         return;
@@ -252,12 +282,36 @@ const ContactComponent = {
       closeCountryOptions();
     };
 
-    const onDocumentClick = (event) => {
-      if (!countryDropdownRef.value) {
+    const openDepartmentOptions = () => {
+      if (!showDepartmentField.value) {
         return;
       }
-      if (!countryDropdownRef.value.contains(event.target)) {
+      showDepartmentOptions.value = true;
+    };
+
+    const closeDepartmentOptions = () => {
+      showDepartmentOptions.value = false;
+    };
+
+    const onDepartmentInput = () => {
+      validateField('department');
+      openDepartmentOptions();
+    };
+
+    const selectDepartment = (department) => {
+      form.department = department;
+      errors.department = '';
+      closeDepartmentOptions();
+    };
+
+    const onDocumentClick = (event) => {
+      const clickedCountry = countryDropdownRef.value?.contains(event.target);
+      const clickedDepartment = departmentDropdownRef.value?.contains(event.target);
+      if (!clickedCountry) {
         closeCountryOptions();
+      }
+      if (!clickedDepartment) {
+        closeDepartmentOptions();
       }
     };
 
@@ -268,6 +322,11 @@ const ContactComponent = {
           form.country = '';
           errors.country = '';
           closeCountryOptions();
+        }
+        if (value !== 'De un departamento de Colombia') {
+          form.department = '';
+          errors.department = '';
+          closeDepartmentOptions();
         }
       }
     );
@@ -293,6 +352,7 @@ const ContactComponent = {
       Object.assign(form, {
         banderaType: '',
         country: '',
+        department: '',
         quantity: '',
         widthCm: '',
         heightCm: '',
@@ -472,11 +532,16 @@ const ContactComponent = {
       aspectRatio,
       countries,
       filteredCountries,
+      departments,
+      filteredDepartments,
       showCountryField,
+      showDepartmentField,
       showCountryOptions,
+      showDepartmentOptions,
       formRef,
       successCanvasRef,
       countryDropdownRef,
+      departmentDropdownRef,
       submitStatus,
       isSubmitting,
       validateField,
@@ -484,6 +549,10 @@ const ContactComponent = {
       openCountryOptions,
       closeCountryOptions,
       selectCountry,
+      onDepartmentInput,
+      openDepartmentOptions,
+      closeDepartmentOptions,
+      selectDepartment,
       nextStep,
       prevStep,
       handleSubmit,
@@ -519,6 +588,7 @@ const ContactComponent = {
 
         <input type="hidden" name="tipo_bandera" :value="form.banderaType" />
         <input type="hidden" name="pais_bandera" :value="form.country" />
+        <input type="hidden" name="departamento_bandera" :value="form.department" />
         <input type="hidden" name="cantidad" :value="form.quantity" />
         <input type="hidden" name="ancho_cm" :value="form.widthCm" />
         <input type="hidden" name="alto_cm" :value="form.heightCm" />
@@ -568,6 +638,38 @@ const ContactComponent = {
               </ul>
             </div>
             <small v-if="errors.country" class="field-error">{{ errors.country }}</small>
+          </label>
+
+          <label v-if="showDepartmentField">
+            {{ t.department }}
+            <div ref="departmentDropdownRef" class="country-autocomplete">
+              <input
+                type="text"
+                name="departamento_bandera"
+                v-model="form.department"
+                :placeholder="t.departmentPlaceholder"
+                autocomplete="off"
+                @focus="openDepartmentOptions"
+                @input="onDepartmentInput"
+                @blur="validateField('department')"
+                required
+              />
+              <ul v-if="showDepartmentOptions" class="country-options" role="listbox" aria-label="Lista de departamentos">
+                <li
+                  v-for="department in filteredDepartments"
+                  :key="department"
+                  class="country-option"
+                  role="option"
+                  @mousedown.prevent="selectDepartment(department)"
+                >
+                  {{ department }}
+                </li>
+                <li v-if="!filteredDepartments.length" class="country-option-empty">
+                  No se encontraron departamentos.
+                </li>
+              </ul>
+            </div>
+            <small v-if="errors.department" class="field-error">{{ errors.department }}</small>
           </label>
 
           <label>
@@ -656,6 +758,7 @@ const ContactComponent = {
             <ul>
               <li><strong>{{ t.banderaType }}:</strong> {{ form.banderaType }}</li>
               <li v-if="showCountryField"><strong>{{ t.country }}:</strong> {{ form.country }}</li>
+              <li v-if="showDepartmentField"><strong>{{ t.department }}:</strong> {{ form.department }}</li>
               <li><strong>{{ t.quantity }}:</strong> {{ form.quantity }}</li>
               <li><strong>{{ t.dimensionsTitle }}:</strong> {{ form.widthCm }} x {{ form.heightCm }} cm</li>
               <li><strong>{{ t.material }}:</strong> {{ form.material }}</li>
