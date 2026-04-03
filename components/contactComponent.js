@@ -24,12 +24,11 @@ const ContactComponent = {
           'De Colombia',
           'De un departamento de Colombia',
           'De un país',
-          'empresarial',
-          'institucional',
-          'escritorio',
-          'exterior',
-          'nacional',
+          'Empresarial o institucional',
+          'Otra',
         ],
+        otherFlagType: '¿Qué tipo de bandera necesitas?',
+        otherFlagTypePlaceholder: 'Escribe el tipo de bandera que necesitas',
         country: 'País',
         countryPlaceholder: 'Escribe o selecciona un país',
         department: 'Departamento',
@@ -80,6 +79,7 @@ const ContactComponent = {
       email: '',
       customLogo: 'no',
       logoFile: null,
+      otherFlagType: '',
     });
 
     const errors = reactive({});
@@ -88,6 +88,7 @@ const ContactComponent = {
     const isSubmitting = computed(() => submitStatus.value === 'submitting');
     const showCountryField = computed(() => form.banderaType === 'De un país');
     const showDepartmentField = computed(() => form.banderaType === 'De un departamento de Colombia');
+    const showOtherFlagTypeField = computed(() => form.banderaType === 'Otra');
     const aspectRatio = computed(() => {
       const width = Number(form.widthCm);
       const height = Number(form.heightCm);
@@ -145,6 +146,10 @@ const ContactComponent = {
         errors[field] = t.value.required;
       }
 
+      if (field === 'otherFlagType' && showOtherFlagTypeField.value && !form.otherFlagType) {
+        errors[field] = t.value.required;
+      }
+
       if (field === 'quantity') {
         const value = Number(form.quantity);
         if (!form.quantity) {
@@ -180,7 +185,7 @@ const ContactComponent = {
     };
 
     const fieldsByStep = {
-      1: ['banderaType', 'country', 'department', 'quantity', 'widthCm', 'heightCm'],
+      1: ['banderaType', 'country', 'department', 'otherFlagType', 'quantity', 'widthCm', 'heightCm'],
       2: ['material', 'needsPoleBase', 'city', 'customLogo', 'logoFile'],
       3: ['name', 'email'],
       4: [],
@@ -199,6 +204,10 @@ const ContactComponent = {
         }
         if (field === 'department' && !showDepartmentField.value) {
           errors.department = '';
+          return true;
+        }
+        if (field === 'otherFlagType' && !showOtherFlagTypeField.value) {
+          errors.otherFlagType = '';
           return true;
         }
         return validateField(field);
@@ -328,6 +337,10 @@ const ContactComponent = {
           errors.department = '';
           closeDepartmentOptions();
         }
+        if (value !== 'Otra') {
+          form.otherFlagType = '';
+          errors.otherFlagType = '';
+        }
       }
     );
 
@@ -363,6 +376,7 @@ const ContactComponent = {
         email: '',
         customLogo: 'no',
         logoFile: null,
+        otherFlagType: '',
       });
 
       Object.keys(errors).forEach((key) => {
@@ -536,6 +550,7 @@ const ContactComponent = {
       filteredDepartments,
       showCountryField,
       showDepartmentField,
+      showOtherFlagTypeField,
       showCountryOptions,
       showDepartmentOptions,
       formRef,
@@ -598,6 +613,7 @@ const ContactComponent = {
         <input type="hidden" name="bandera_personalizada" :value="form.customLogo" />
         <input type="hidden" name="nombre" :value="form.name" />
         <input type="hidden" name="email" :value="form.email" />
+        <input type="hidden" name="otra_bandera" :value="form.otherFlagType" />
         <template v-if="step === 1">
           <label>
             {{ t.banderaType }}
@@ -670,6 +686,19 @@ const ContactComponent = {
               </ul>
             </div>
             <small v-if="errors.department" class="field-error">{{ errors.department }}</small>
+          </label>
+
+          <label v-if="showOtherFlagTypeField">
+            {{ t.otherFlagType }}
+            <input
+              type="text"
+              name="otra_bandera"
+              v-model="form.otherFlagType"
+              :placeholder="t.otherFlagTypePlaceholder"
+              @input="validateField('otherFlagType')"
+              required
+            />
+            <small v-if="errors.otherFlagType" class="field-error">{{ errors.otherFlagType }}</small>
           </label>
 
           <label>
@@ -759,6 +788,7 @@ const ContactComponent = {
               <li><strong>{{ t.banderaType }}:</strong> {{ form.banderaType }}</li>
               <li v-if="showCountryField"><strong>{{ t.country }}:</strong> {{ form.country }}</li>
               <li v-if="showDepartmentField"><strong>{{ t.department }}:</strong> {{ form.department }}</li>
+              <li v-if="showOtherFlagTypeField"><strong>{{ t.otherFlagType }}:</strong> {{ form.otherFlagType }}</li>
               <li><strong>{{ t.quantity }}:</strong> {{ form.quantity }}</li>
               <li><strong>{{ t.dimensionsTitle }}:</strong> {{ form.widthCm }} x {{ form.heightCm }} cm</li>
               <li><strong>{{ t.material }}:</strong> {{ form.material }}</li>
