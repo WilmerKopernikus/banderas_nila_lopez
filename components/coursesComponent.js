@@ -64,15 +64,8 @@ const CoursesComponent = {
 
       // Booking logic
       const bookCourse = (courseTitle) => {
-        const messageMap = {
-          en: `I want to book the course: ${courseTitle}.`,
-          zh: `我想报名参加课程：${courseTitle}.`,
-          fr: `Je souhaite m’inscrire au cours : ${courseTitle}.`,
-          ru: `Я хотел(а) бы записаться на курс: ${courseTitle}.`,
-        };
-  
-        const message = messageMap[props.language] || messageMap.en;
-        localStorage.setItem('prefilledMessage', message);
+        localStorage.setItem('selectedProduct', courseTitle);
+        window.dispatchEvent(new CustomEvent('selected-product-updated'));
   
         const contactSection = document.getElementById('contact');
         if (contactSection) {

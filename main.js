@@ -13,6 +13,7 @@ createApp({
     TestimonialsComponent,
     ContactComponent,
     FooterComponent,
+    StickyWhatsAppCTAComponent,
   },
   setup() {
 
