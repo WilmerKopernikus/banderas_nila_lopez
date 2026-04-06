@@ -1,5 +1,5 @@
-// components/ContactComponent.js
-const ContactComponent = {
+// components/cotizacionComponent.js
+const CotizacionComponent = {
   props: ['language'],
   setup(props) {
     const { computed, reactive, ref, watch, onMounted, onUnmounted, nextTick } = Vue;

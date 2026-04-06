@@ -65,12 +65,7 @@ const CoursesComponent = {
       // Booking logic
       const bookCourse = (courseTitle) => {
         localStorage.setItem('selectedProduct', courseTitle);
-        window.dispatchEvent(new CustomEvent('selected-product-updated'));
-  
-        const contactSection = document.getElementById('contact');
-        if (contactSection) {
-          contactSection.scrollIntoView({ behavior: 'smooth' });
-        }
+        window.location.href = 'cotizacion.html';
       };
   
       return {

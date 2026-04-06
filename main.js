@@ -10,8 +10,8 @@ createApp({
     CoursesComponent,
     LocationsComponent,
     AboutComponent,
+    UrgencyBannerComponent,
     TestimonialsComponent,
-    ContactComponent,
     FooterComponent,
     StickyWhatsAppCTAComponent,
   },
@@ -21,8 +21,8 @@ createApp({
     const showCourses = ref(false);
     const showLocations = ref(false);
     const showAbout = ref(false);
+    const showUrgencyBanner = ref(false);
     const showTestimonials = ref(false);
-    const showContact = ref(false);
     const showFooter = ref(false);
 
     // Stagger component loading after mount
@@ -30,8 +30,8 @@ createApp({
       setTimeout(() => (showCourses.value = true), 300);
       setTimeout(() => (showLocations.value = true), 500);
       setTimeout(() => (showAbout.value = true), 700);
+      setTimeout(() => (showUrgencyBanner.value = true), 800);
       setTimeout(() => (showTestimonials.value = true), 900);
-      setTimeout(() => (showContact.value = true), 1100);
       setTimeout(() => (showFooter.value = true), 1300);
     });
 
@@ -40,8 +40,8 @@ createApp({
       showCourses,
       showLocations,
       showAbout,
+      showUrgencyBanner,
       showTestimonials,
-      showContact,
       showFooter,
     };
   },

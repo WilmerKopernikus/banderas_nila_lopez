@@ -12,23 +12,6 @@
 </head>
 
 <body>
-  <form name="contacto-cotizacion" method="POST" enctype="multipart/form-data" data-netlify="true"
-    netlify-honeypot="bot-field" aria-hidden="true" tabindex="-1"
-    style="display:none !important; visibility:hidden; position:absolute; left:-9999px; width:0; height:0; overflow:hidden;">
-    <input type="hidden" name="form-name" value="contacto-cotizacion" />
-    <input type="text" name="bot-field" />
-    <input type="text" name="tipo_bandera" />
-    <input type="number" name="cantidad" />
-    <input type="number" name="ancho_cm" />
-    <input type="number" name="alto_cm" />
-    <input type="text" name="material" />
-    <input type="text" name="asta_y_base" />
-    <input type="text" name="ciudad_entrega" />
-    <input type="text" name="bandera_personalizada" />
-    <input type="file" name="logo" />
-    <input type="text" name="nombre" />
-    <input type="email" name="email" />
-  </form>
 
   <div id="app">
     <header-component :language="language"></header-component>
@@ -37,8 +20,8 @@
     <courses-component v-if="showCourses" :language="language"></courses-component>
     <locations-component v-if="showLocations" :language="language"></locations-component>
     <about-component v-if="showAbout" :language="language"></about-component>
+    <urgency-banner-component v-if="showUrgencyBanner" :language="language"></urgency-banner-component>
     <testimonials-component v-if="showTestimonials" :language="language"></testimonials-component>
-    <contact-component :language="language"></contact-component>
     <footer-component v-if="showFooter" :language="language"></footer-component>
     <sticky-whats-app-c-t-a-component :language="language"></sticky-whats-app-c-t-a-component>
   </div>
@@ -48,8 +31,8 @@
   <script src="components/coursesComponent.js"></script>
   <script src="components/locationsComponent.js"></script>
   <script src="components/aboutComponent.js"></script>
+  <script src="components/urgencyBannerComponent.js"></script>
   <script src="components/testimonialsComponent.js"></script>
-  <script src="components/contactComponent.js"></script>
   <script src="components/footerComponent.js"></script>
   <script src="components/stickyWhatsAppCTAComponent.js"></script>
   <script src="main.js"></script>

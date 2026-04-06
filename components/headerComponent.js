@@ -15,7 +15,7 @@ const HeaderComponent = {
     };
 
     const translations = {
-      es: ['Inicio', 'Productos', 'Nuestra Empresa', 'Nuestro Catálogo', 'Contacto'],
+      es: ['Inicio', 'Productos', 'Nuestra Empresa', 'Nuestro Catálogo', 'Solicita una Cotización'],
     };
 
 
@@ -24,7 +24,7 @@ const HeaderComponent = {
       'assets/productos.svg',
       'assets/about.svg',
       'assets/gallery.svg',
-      'assets/contact.svg',
+      'assets/cotizar.svg',
     ];
 
     const contactItems = [
@@ -45,20 +45,20 @@ const HeaderComponent = {
       },
     ];
 
-    const sectionIds = ['home', 'courses', 'about', 'nuestro_catalogo.html', 'contact'];
+    const sectionIds = ['home', 'courses', 'about', 'nuestro_catalogo.html', 'cotizacion.html'];
 
     const labels = computed(() => translations[props.language] || translations.es);
     const sectionLinks = computed(() => {
-      const isGalleryPage = window.location.pathname.includes('nuestro_catalogo.html');
-      const hashPrefix = isGalleryPage ? 'index.html#' : '#';
+      const isSecondaryPage = window.location.pathname.includes('nuestro_catalogo.html') || window.location.pathname.includes('cotizacion.html');
+      const hashPrefix = isSecondaryPage ? 'index.html#' : '#';
 
       return sectionIds.map((sectionId) =>
         sectionId.includes('.html') ? sectionId : `${hashPrefix}${sectionId}`
       );
     });
     const logoLink = computed(() => {
-      const isGalleryPage = window.location.pathname.includes('nuestro_catalogo.html');
-      return isGalleryPage ? 'index.html#home' : '#home';
+      const isSecondaryPage = window.location.pathname.includes('nuestro_catalogo.html') || window.location.pathname.includes('cotizacion.html');
+      return isSecondaryPage ? 'index.html#home' : '#home';
     });
 
     return {

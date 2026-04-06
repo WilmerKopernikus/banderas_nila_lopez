@@ -1,14 +1,13 @@
-// components/HeroComponent.js
-const HeroComponent = {
+// components/UrgencyBannerComponent.js
+const UrgencyBannerComponent = {
     props: ['language'],
     setup(props) {
       const { computed } = Vue;
   
       const translations = {
         es: {
-          title: 'Cada hilo cuenta una historia, elige calidad, elige nuestras banderas.',
-          description: '',
-          button: 'Explora nuestro catálogo',
+          title: 'Elige tradición, elige calidad, elige confianza. Envíos nacionales desde Bogotá.',
+          buttonCatalog: 'Explora nuestro catálogo',
           buttonQuote: 'Cotizar ahora',
         },
       };
@@ -20,12 +19,11 @@ const HeroComponent = {
       };
     },
     template: `
-      <section class="hero" id="home">
+      <section class="hero" id="urgency-banner">
         <div class="hero-content">
           <h1>{{ t.title }}</h1>
-          <p>{{ t.description }}</p>
           <div class="hero-cta">
-            <a href="nuestro_catalogo.html" class="catalogo-btn"><span>{{ t.button }}</span></a>
+            <a href="nuestro_catalogo.html" class="catalogo-btn"><span>{{ t.buttonCatalog }}</span></a>
             <a href="cotizacion.html" class="catalogo-btn"><span>{{ t.buttonQuote }}</span></a>
           </div>
         </div>

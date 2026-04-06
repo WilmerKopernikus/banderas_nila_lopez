@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Banderas Nila López - Solicita una Cotización</title>
+
+  <link rel="stylesheet" href="global.css">
+  <link rel="stylesheet" href="header.css">
+
+  <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/p5@1.9.4/lib/p5.min.js"></script>
+</head>
+
+<body>
+  <form name="contacto-cotizacion" method="POST" enctype="multipart/form-data" data-netlify="true"
+    netlify-honeypot="bot-field" aria-hidden="true" tabindex="-1"
+    style="display:none !important; visibility:hidden; position:absolute; left:-9999px; width:0; height:0; overflow:hidden;">
+    <input type="hidden" name="form-name" value="contacto-cotizacion" />
+    <input type="text" name="bot-field" />
+    <input type="text" name="tipo_bandera" />
+    <input type="number" name="cantidad" />
+    <input type="number" name="ancho_cm" />
+    <input type="number" name="alto_cm" />
+    <input type="text" name="material" />
+    <input type="text" name="asta_y_base" />
+    <input type="text" name="ciudad_entrega" />
+    <input type="text" name="bandera_personalizada" />
+    <input type="file" name="logo" />
+    <input type="text" name="nombre" />
+    <input type="email" name="email" />
+  </form>
+
+  <div id="app">
+    <header-component :language="language"></header-component>
+
+    <cotizacion-component :language="language"></cotizacion-component>
+  </div>
+
+  <script src="components/headerComponent.js"></script>
+  <script src="components/cotizacionComponent.js"></script>
+  <script src="cotizacion-main.js"></script>
+</body>
+</html>
