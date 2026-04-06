@@ -753,12 +753,12 @@ footer {
 
 @media (max-width: 768px) {
   .sticky-whatsapp-cta {
-    top: 7px;
-    right: 7px;
+    top: 25px;
+    right: 10px;
   }
 
     .sticky-whatsapp-cta img {
-    width: 25px;
-    height: 25px;
+    width: 35px;
+    height: 35px;
   }
 }
