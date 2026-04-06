@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Banderas Nila López - Contáctanos</title>
+
+  <link rel="stylesheet" href="global.css">
+  <link rel="stylesheet" href="header.css">
+  <link rel="stylesheet" href="contacto.css">
+
+  <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
+</head>
+
+<body>
+  <div id="app">
+    <header-component :language="language"></header-component>
+
+    <main class="contacto-page">
+      <section class="contacto-hero">
+        <h1>Contáctanos</h1>
+        <p>Estamos listos para asesorarte en la fabricación de banderas institucionales, empresariales y personalizadas.</p>
+      </section>
+
+      <section class="contacto-layout">
+        <article class="map-card" aria-label="Ubicación en Google Maps">
+          <h2>Nuestra ubicación</h2>
+          <p>Visítanos en Bogotá o solicita atención virtual y despacho nacional.</p>
+          <div class="map-wrapper">
+            <div class="map-placeholder" id="map-placeholder">Google Maps se cargará en un instante…</div>
+            <iframe
+              class="map-frame"
+              src="https://www.google.com/maps?q=Calle%2075%20No%2058-51%2C%20Bogot%C3%A1%2C%20Colombia&output=embed"
+              loading="lazy"
+              allowfullscreen
+              referrerpolicy="no-referrer-when-downgrade"
+              title="Mapa de Banderas Nila López en Bogotá"
+              onload="document.getElementById('map-placeholder').style.display='none'"></iframe>
+          </div>
+        </article>
+
+        <aside>
+          <article class="info-card">
+            <h2>Canales de contacto</h2>
+            <ul class="info-list">
+              <li>
+                <strong>Teléfono / WhatsApp</strong>
+                <a href="https://wa.me/573156299918" target="_blank" rel="noopener noreferrer">+57 315 629 9918</a>
+              </li>
+              <li>
+                <strong>Correo</strong>
+                <a href="mailto:banderasnilalopez@gmail.com">banderasnilalopez@gmail.com</a>
+              </li>
+              <li>
+                <strong>Dirección</strong>
+                Calle 75 No 58-51, 2° piso, Bogotá, Colombia
+              </li>
+              <li>
+                <strong>Horario</strong>
+                Lunes a viernes: 8:00 a.m. – 5:30 p.m.<br>
+                Sábados: 9:00 a.m. – 1:00 p.m.
+              </li>
+            </ul>
+          </article>
+
+          <article class="cta-card">
+            <h2>¿Necesitas cotización rápida?</h2>
+            <p>Cuéntanos tipo de bandera, medidas y cantidad para responderte más rápido.</p>
+            <a class="catalogo-btn" href="cotizacion.html"><span>Ir al formulario de cotización</span></a>
+          </article>
+        </aside>
+      </section>
+
+      <section class="faq-card">
+        <h2>Información útil antes de escribirnos</h2>
+        <div class="faq-item">
+          <strong>Tiempos de entrega:</strong>
+          Producción estándar entre 3 y 8 días hábiles según volumen y acabados.
+        </div>
+        <div class="faq-item">
+          <strong>Cobertura:</strong>
+          Envíos a todo Colombia por transportadora.
+        </div>
+        <div class="faq-item">
+          <strong>Recomendación:</strong>
+          Si tienes logo o diseño, envíalo en alta calidad (PDF, AI o PNG).
+        </div>
+      </section>
+    </main>
+    <sticky-whats-app-c-t-a-component :language="language"></sticky-whats-app-c-t-a-component>
+  </div>
+
+  <script src="components/headerComponent.js"></script>
+  <script src="components/stickyWhatsAppCTAComponent.js"></script>
+  <script src="contacto-main.js"></script>
+</body>
+</html>

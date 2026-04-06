@@ -1,17 +1,15 @@
-// cotizacion-main.js
 const { createApp, ref } = Vue;
-
-const appLanguage = ref('es');
 
 createApp({
   components: {
     HeaderComponent,
-    CotizacionComponent,
     StickyWhatsAppCTAComponent,
   },
   setup() {
+    const language = ref('es');
+
     return {
-      language: appLanguage,
+      language,
     };
   },
 }).mount('#app');

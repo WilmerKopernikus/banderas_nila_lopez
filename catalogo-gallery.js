@@ -312,7 +312,8 @@ const galleryImages = [
 createApp({
   components: {
     HeaderComponent,
-    GalleryComponent
+    GalleryComponent,
+    StickyWhatsAppCTAComponent
   },
   setup() {
     return {

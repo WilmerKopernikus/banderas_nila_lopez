@@ -1,0 +1,146 @@
+.contacto-page {
+  max-width: 1100px;
+  margin: 20px auto 20px;
+  padding: 0 20px;
+  color: #1f2b3a;
+}
+
+.contacto-hero {
+  text-align: center;
+  margin-bottom: 24px;
+  padding: 10px;
+}
+
+.contacto-hero h1 {
+  margin-bottom: 8px;
+  font-size: 2rem;
+  color: #003b7a;
+}
+
+.contacto-hero p {
+  text-align: center;
+}
+
+.contacto-layout {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 24px;
+  padding: 0;
+}
+
+.map-card,
+.info-card,
+.faq-card,
+.cta-card {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.08);
+  padding: 20px;
+}
+
+.map-wrapper {
+  position: relative;
+  min-height: 420px;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.map-placeholder {
+  position: absolute;
+  inset: 0;
+  background: #e8edf2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #6b7a8d;
+  font-size: 0.95rem;
+  font-style: italic;
+  border-radius: 10px;
+}
+
+.map-frame {
+  width: 100%;
+  min-height: 420px;
+  border: 0;
+  border-radius: 10px;
+  position: relative;
+  z-index: 1;
+}
+
+.info-card h2,
+.faq-card h2,
+.cta-card h2 {
+  color: #003b7a;
+  margin-top: 0;
+}
+
+.info-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 14px;
+}
+
+.info-list li strong {
+  display: block;
+  margin-bottom: 3px;
+}
+
+.info-list a {
+  color: #0c57a2;
+  text-decoration: none;
+}
+
+.faq-card {
+  margin-top: 24px;
+}
+
+.faq-item {
+  border-top: 1px solid #e6ebf2;
+  padding: 10px 0;
+}
+
+.faq-item:first-of-type {
+  border-top: 0;
+}
+
+.cta-card {
+  margin-top: 24px;
+  text-align: center;
+}
+
+.cta-card .catalogo-btn {
+  color: #ffffff;
+}
+
+.cta-card .catalogo-btn::after {
+  background: linear-gradient(to right, #009fe3, #004f9f);
+}
+
+
+
+@media (max-width: 960px) {
+  .contacto-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .map-frame {
+    min-height: 360px;
+  }
+}
+
+@media (max-width: 600px) {
+  .contacto-page {
+    margin-top: 100px;
+    margin-bottom: 150px;
+  }
+
+  .contacto-hero h1 {
+    font-size: 1.7rem;
+  }
+
+  .map-frame {
+    min-height: 300px;
+  }
+}

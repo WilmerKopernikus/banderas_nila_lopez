@@ -20,18 +20,20 @@ header {
   padding: 0 20px;
   gap: 12px;
   background: linear-gradient(to right, #000b47, #074692);
-    position: fixed;
+  position: fixed;
   bottom: 0;
   left: 0;
   width: 100%;
   z-index: 1000;
+  cursor: pointer;
+  text-decoration: none;
 }
 
 .contact-info-item {
   display: flex;
   align-items: center;
   gap: 8px;
-  font-size: 14px;
+  font-size: 16;
   color: #fff;
 }
 

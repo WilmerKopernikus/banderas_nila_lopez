@@ -15,7 +15,7 @@ const HeaderComponent = {
     };
 
     const translations = {
-      es: ['Inicio', 'Productos', 'Nuestra Empresa', 'Nuestro Catálogo', 'Solicita una Cotización'],
+      es: ['Inicio', 'Productos', 'Nuestra Empresa', 'Nuestro Catálogo', 'Solicita una Cotización', 'Contáctanos'],
     };
 
 
@@ -25,6 +25,7 @@ const HeaderComponent = {
       'assets/about.svg',
       'assets/gallery.svg',
       'assets/cotizar.svg',
+      'assets/contact.svg',
     ];
 
     const contactItems = [
@@ -45,11 +46,11 @@ const HeaderComponent = {
       },
     ];
 
-    const sectionIds = ['home', 'courses', 'about', 'nuestro_catalogo.html', 'cotizacion.html'];
+    const sectionIds = ['home', 'courses', 'about', 'nuestro_catalogo.html', 'cotizacion.html', 'contacto.html'];
 
     const labels = computed(() => translations[props.language] || translations.es);
     const sectionLinks = computed(() => {
-      const isSecondaryPage = window.location.pathname.includes('nuestro_catalogo.html') || window.location.pathname.includes('cotizacion.html');
+      const isSecondaryPage = window.location.pathname.includes('nuestro_catalogo.html') || window.location.pathname.includes('cotizacion.html') || window.location.pathname.includes('contacto.html');
       const hashPrefix = isSecondaryPage ? 'index.html#' : '#';
 
       return sectionIds.map((sectionId) =>
@@ -57,7 +58,7 @@ const HeaderComponent = {
       );
     });
     const logoLink = computed(() => {
-      const isSecondaryPage = window.location.pathname.includes('nuestro_catalogo.html') || window.location.pathname.includes('cotizacion.html');
+      const isSecondaryPage = window.location.pathname.includes('nuestro_catalogo.html') || window.location.pathname.includes('cotizacion.html') || window.location.pathname.includes('contacto.html');
       return isSecondaryPage ? 'index.html#home' : '#home';
     });
 
@@ -75,12 +76,12 @@ const HeaderComponent = {
     };
   },
   template: `
-    <div class="contact-info-bar">
+    <a class="contact-info-bar" href="contacto.html">
       <div v-for="(item, index) in contactItems" :key="index" class="contact-info-item">
         <img :src="item.icon" :alt="item.alt" />
         <span>{{ item.text }}</span>
       </div>
-    </div>
+    </a>
     <header>
       <div class="nav-container">
         <!-- Logo -->
