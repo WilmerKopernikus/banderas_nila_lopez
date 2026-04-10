@@ -544,7 +544,7 @@ section {
 
 .flag-preview--image {
   display: block;
-  border: none;
+  border: 1.5px solid #222;
   background: none;
   object-fit: fill;
 }

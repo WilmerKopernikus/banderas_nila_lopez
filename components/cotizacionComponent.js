@@ -74,6 +74,9 @@ const CotizacionComponent = {
     const showCountryOptions = ref(false);
     const showDepartmentOptions = ref(false);
     const showMunicipalityOptions = ref(false);
+    const departmentSearch = ref('');
+    const countrySearch = ref('');
+    const municipalitySearch = ref('');
     let confettiSketch = null;
 
     const createEmptyItem = () => ({
@@ -110,6 +113,11 @@ const CotizacionComponent = {
     const isOtherType = (item) => item.banderaType === 'Otra';
     const isColombiaType = (item) => item.banderaType === 'De Colombia';
     const hasOfficialRatio = (item) => isColombiaType(item) && item.flagRatio === 'oficial';
+
+    const departmentFlagSrc = (item) => {
+      if (!item.department) return '';
+      return `images/banderas/departamentos_colombia/${item.department}.svg`;
+    };
 
     const itemAspectRatio = (item) => {
       if (hasOfficialRatio(item)) return '3 / 2';
@@ -418,6 +426,7 @@ const CotizacionComponent = {
       if (!isCountryType(item)) {
         return;
       }
+      countrySearch.value = '';
       showCountryOptions.value = true;
     };
 
@@ -426,12 +435,14 @@ const CotizacionComponent = {
     };
 
     const onCountryInput = (item, index) => {
+      countrySearch.value = item.country;
       validateItemField(item, index, 'country');
       openCountryOptions(item);
     };
 
     const selectCountry = (item, index, country) => {
       item.country = country;
+      countrySearch.value = '';
       clearItemError(index, 'country');
       closeCountryOptions();
     };
@@ -440,6 +451,7 @@ const CotizacionComponent = {
       if (!isDepartmentType(item)) {
         return;
       }
+      departmentSearch.value = '';
       showDepartmentOptions.value = true;
     };
 
@@ -448,12 +460,14 @@ const CotizacionComponent = {
     };
 
     const onDepartmentInput = (item, index) => {
+      departmentSearch.value = item.department;
       validateItemField(item, index, 'department');
       openDepartmentOptions(item);
     };
 
     const selectDepartment = (item, index, department) => {
       item.department = department;
+      departmentSearch.value = '';
       clearItemError(index, 'department');
       closeDepartmentOptions();
     };
@@ -462,6 +476,7 @@ const CotizacionComponent = {
       if (!isMunicipalityType(item)) {
         return;
       }
+      municipalitySearch.value = '';
       showMunicipalityOptions.value = true;
     };
 
@@ -470,12 +485,14 @@ const CotizacionComponent = {
     };
 
     const onMunicipalityInput = (item, index) => {
+      municipalitySearch.value = item.municipality;
       validateItemField(item, index, 'municipality');
       openMunicipalityOptions(item);
     };
 
     const selectMunicipality = (item, index, municipality) => {
       item.municipality = municipality;
+      municipalitySearch.value = '';
       clearItemError(index, 'municipality');
       closeMunicipalityOptions();
     };
@@ -736,6 +753,7 @@ const onItemBanderaTypeChange = (item, index) => {
       itemAspectRatio,
       isColombiaType,
       hasOfficialRatio,
+      departmentFlagSrc,
       onWidthInput,
       onHeightInput,
       onFlagRatioChange,
@@ -748,6 +766,9 @@ const onItemBanderaTypeChange = (item, index) => {
       showCountryOptions,
       showDepartmentOptions,
       showMunicipalityOptions,
+      departmentSearch,
+      countrySearch,
+      municipalitySearch,
       formRef,
       successCanvasRef,
       countryDropdownRef,
@@ -833,10 +854,10 @@ const onItemBanderaTypeChange = (item, index) => {
             <label v-if="isCountryType(item)">
               {{ t.country }}
               <div ref="countryDropdownRef" class="country-autocomplete">
-                <input type="text" v-model="item.country" :placeholder="t.countryPlaceholder" autocomplete="off" @focus="openCountryOptions(item)" @input="onCountryInput(item, index)" @blur="validateItemField(item, index, 'country')" required />
+                <input type="text" v-model="item.country" :placeholder="t.countryPlaceholder" autocomplete="off" @focus="openCountryOptions(item)" @click="openCountryOptions(item)" @input="onCountryInput(item, index)" @blur="validateItemField(item, index, 'country')" required />
                 <ul v-if="showCountryOptions" class="country-options" role="listbox" aria-label="Lista de países">
-                  <li v-for="country in filterCountries(item.country)" :key="country" class="country-option" role="option" @mousedown.prevent="selectCountry(item, index, country)">{{ country }}</li>
-                  <li v-if="!filterCountries(item.country).length" class="country-option-empty">No se encontraron países.</li>
+                  <li v-for="country in filterCountries(countrySearch)" :key="country" class="country-option" role="option" @mousedown.prevent="selectCountry(item, index, country)">{{ country }}</li>
+                  <li v-if="!filterCountries(countrySearch).length" class="country-option-empty">No se encontraron países.</li>
                 </ul>
               </div>
               <small v-if="errors[getItemErrorKey(index, 'country')]" class="field-error">{{ errors[getItemErrorKey(index, 'country')] }}</small>
@@ -845,10 +866,10 @@ const onItemBanderaTypeChange = (item, index) => {
           <label v-if="isDepartmentType(item)">
               {{ t.department }}
               <div ref="departmentDropdownRef" class="country-autocomplete">
-                <input type="text" v-model="item.department" :placeholder="t.departmentPlaceholder" autocomplete="off" @focus="openDepartmentOptions(item)" @input="onDepartmentInput(item, index)" @blur="validateItemField(item, index, 'department')" required />
+                <input type="text" v-model="item.department" :placeholder="t.departmentPlaceholder" autocomplete="off" @focus="openDepartmentOptions(item)" @click="openDepartmentOptions(item)" @input="onDepartmentInput(item, index)" @blur="validateItemField(item, index, 'department')" required />
                 <ul v-if="showDepartmentOptions" class="country-options" role="listbox" aria-label="Lista de departamentos">
-                  <li v-for="department in filterDepartments(item.department)" :key="department" class="country-option" role="option" @mousedown.prevent="selectDepartment(item, index, department)">{{ department }}</li>
-                  <li v-if="!filterDepartments(item.department).length" class="country-option-empty">No se encontraron departamentos.</li>
+                  <li v-for="department in filterDepartments(departmentSearch)" :key="department" class="country-option" role="option" @mousedown.prevent="selectDepartment(item, index, department)">{{ department }}</li>
+                  <li v-if="!filterDepartments(departmentSearch).length" class="country-option-empty">No se encontraron departamentos.</li>
                 </ul>
               </div>
               <small v-if="errors[getItemErrorKey(index, 'department')]" class="field-error">{{ errors[getItemErrorKey(index, 'department')] }}</small>
@@ -857,10 +878,10 @@ const onItemBanderaTypeChange = (item, index) => {
           <label v-if="isMunicipalityType(item)">
               {{ t.municipality }}
               <div ref="municipalityDropdownRef" class="country-autocomplete">
-                <input type="text" v-model="item.municipality" :placeholder="t.municipalityPlaceholder" autocomplete="off" @focus="openMunicipalityOptions(item)" @input="onMunicipalityInput(item, index)" @blur="validateItemField(item, index, 'municipality')" required />
+                <input type="text" v-model="item.municipality" :placeholder="t.municipalityPlaceholder" autocomplete="off" @focus="openMunicipalityOptions(item)" @click="openMunicipalityOptions(item)" @input="onMunicipalityInput(item, index)" @blur="validateItemField(item, index, 'municipality')" required />
                 <ul v-if="showMunicipalityOptions" class="country-options" role="listbox" aria-label="Lista de ciudades y municipios">
-                  <li v-for="municipality in filterMunicipalities(item.municipality)" :key="municipality" class="country-option" role="option" @mousedown.prevent="selectMunicipality(item, index, municipality)">{{ municipality }}</li>
-                  <li v-if="!filterMunicipalities(item.municipality).length" class="country-option-empty">No se encontraron ciudades o municipios.</li>
+                  <li v-for="municipality in filterMunicipalities(municipalitySearch)" :key="municipality" class="country-option" role="option" @mousedown.prevent="selectMunicipality(item, index, municipality)">{{ municipality }}</li>
+                  <li v-if="!filterMunicipalities(municipalitySearch).length" class="country-option-empty">No se encontraron ciudades o municipios.</li>
                 </ul>
               </div>
               <small v-if="errors[getItemErrorKey(index, 'municipality')]" class="field-error">{{ errors[getItemErrorKey(index, 'municipality')] }}</small>
@@ -906,6 +927,7 @@ const onItemBanderaTypeChange = (item, index) => {
             <div class="flag-preview-wrap">
               <p>{{ t.preview }}</p>
               <img v-if="item.banderaType === 'De Colombia'" src="images/banderas/Flag_of_Colombia.svg" alt="Bandera de Colombia" class="flag-preview flag-preview--image" :style="{ aspectRatio: itemAspectRatio(item) }" />
+              <img v-else-if="isDepartmentType(item) && item.department" :src="departmentFlagSrc(item)" :alt="'Bandera de ' + item.department" class="flag-preview flag-preview--image" :style="{ aspectRatio: itemAspectRatio(item) }" @error="$event.target.style.display='none'" @load="$event.target.style.display='block'" />
               <div v-else class="flag-preview" :style="{ aspectRatio: itemAspectRatio(item) }"></div>
             </div>
             <button v-if="form.items.length > 1" type="button" class="btn-secondary quote-remove-item" @click="removeItem(index)">{{ t.removeFlag }}</button>
