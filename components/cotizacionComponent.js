@@ -55,6 +55,9 @@ const CotizacionComponent = {
         uploadLogo: 'Subir logo (PNG/JPG/SVG)',
         summary: 'Resumen',
         preview: 'Vista proporcional aproximada',
+        flagRatioLabel: 'Proporción de la bandera',
+        flagRatioOficial: 'Proporción oficial (2:3)',
+        flagRatioPersonalizada: 'Proporción personalizada',
       },
     };
 
@@ -82,6 +85,7 @@ const CotizacionComponent = {
       widthCm: '',
       heightCm: '',
       otherFlagType: '',
+      flagRatio: 'oficial',
     });
 
     const form = reactive({
@@ -104,14 +108,43 @@ const CotizacionComponent = {
     const isDepartmentType = (item) => item.banderaType === 'De un departamento de Colombia';
     const isMunicipalityType = (item) => item.banderaType === 'De una ciudad o Municipio de Colombia';
     const isOtherType = (item) => item.banderaType === 'Otra';
+    const isColombiaType = (item) => item.banderaType === 'De Colombia';
+    const hasOfficialRatio = (item) => isColombiaType(item) && item.flagRatio === 'oficial';
+
     const itemAspectRatio = (item) => {
+      if (hasOfficialRatio(item)) return '3 / 2';
       const width = Number(item.widthCm);
       const height = Number(item.heightCm);
       if (!width || !height || width <= 0 || height <= 0) {
         return '3 / 2';
       }
       return `${width} / ${height}`;
-     };
+    };
+
+    const onWidthInput = (item, index) => {
+      if (hasOfficialRatio(item) && item.widthCm) {
+        const w = Number(item.widthCm);
+        if (w > 0) item.heightCm = String(Math.round(w * 2 / 3));
+      }
+      validateItemField(item, index, 'widthCm');
+      validateItemField(item, index, 'heightCm');
+    };
+
+    const onHeightInput = (item, index) => {
+      if (hasOfficialRatio(item) && item.heightCm) {
+        const h = Number(item.heightCm);
+        if (h > 0) item.widthCm = String(Math.round(h * 3 / 2));
+      }
+      validateItemField(item, index, 'heightCm');
+      validateItemField(item, index, 'widthCm');
+    };
+
+    const onFlagRatioChange = (item, index) => {
+      if (hasOfficialRatio(item) && item.widthCm) {
+        const w = Number(item.widthCm);
+        if (w > 0) item.heightCm = String(Math.round(w * 2 / 3));
+      }
+    };
 
     const orderSummaryText = computed(() => form.items.map((item, index) => {
       const details = [`${index + 1}. ${item.banderaType || 'Sin tipo'}`];
@@ -701,6 +734,11 @@ const onItemBanderaTypeChange = (item, index) => {
       totalSteps,
       progressPct,
       itemAspectRatio,
+      isColombiaType,
+      hasOfficialRatio,
+      onWidthInput,
+      onHeightInput,
+      onFlagRatioChange,
       countries,
       filterCountries,
       departments,
@@ -843,19 +881,32 @@ const onItemBanderaTypeChange = (item, index) => {
          <div class="dimensions-grid">
               <label>
                 {{ t.width }}
-                <input type="number" min="1" step="1" v-model="item.widthCm" @input="validateItemField(item, index, 'widthCm')" required />
+                <input type="number" min="1" step="1" v-model="item.widthCm" @input="onWidthInput(item, index)" required />
                 <small v-if="errors[getItemErrorKey(index, 'widthCm')]" class="field-error">{{ errors[getItemErrorKey(index, 'widthCm')] }}</small>
               </label>
               <label>
                 {{ t.height }}
-                <input type="number" min="1" step="1" v-model="item.heightCm" @input="validateItemField(item, index, 'heightCm')" required />
+                <input type="number" min="1" step="1" v-model="item.heightCm" @input="onHeightInput(item, index)" :readonly="hasOfficialRatio(item)" required />
                 <small v-if="errors[getItemErrorKey(index, 'heightCm')]" class="field-error">{{ errors[getItemErrorKey(index, 'heightCm')] }}</small>
+              </label>
+            </div>
+
+            <div v-if="isColombiaType(item)" class="flag-ratio-options">
+              <p class="flag-ratio-label">{{ t.flagRatioLabel }}</p>
+              <label class="flag-ratio-option">
+                <input type="radio" v-model="item.flagRatio" value="oficial" @change="onFlagRatioChange(item, index)" />
+                {{ t.flagRatioOficial }}
+              </label>
+              <label class="flag-ratio-option">
+                <input type="radio" v-model="item.flagRatio" value="personalizada" @change="onFlagRatioChange(item, index)" />
+                {{ t.flagRatioPersonalizada }}
               </label>
             </div>
 
             <div class="flag-preview-wrap">
               <p>{{ t.preview }}</p>
-              <div class="flag-preview" :style="{ aspectRatio: itemAspectRatio(item) }"></div>
+              <img v-if="item.banderaType === 'De Colombia'" src="images/banderas/Flag_of_Colombia.svg" alt="Bandera de Colombia" class="flag-preview flag-preview--image" :style="{ aspectRatio: itemAspectRatio(item) }" />
+              <div v-else class="flag-preview" :style="{ aspectRatio: itemAspectRatio(item) }"></div>
             </div>
             <button v-if="form.items.length > 1" type="button" class="btn-secondary quote-remove-item" @click="removeItem(index)">{{ t.removeFlag }}</button>
           </div>

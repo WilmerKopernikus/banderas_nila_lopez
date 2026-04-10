@@ -461,6 +461,11 @@ section {
   resize: vertical;
 }
 
+.quote-form input[type="radio"] {
+  width: auto;
+  padding: 0;
+}
+
 .country-autocomplete {
   position: relative;
 }
@@ -535,6 +540,36 @@ section {
   width: min(280px, 100%);
   border: 2px dashed #8aa7e2;
   background: linear-gradient(135deg, #ffffff, #f0f5ff);
+}
+
+.flag-preview--image {
+  display: block;
+  border: none;
+  background: none;
+  object-fit: fill;
+}
+
+.flag-ratio-options {
+  display: flex;
+  flex-direction: column;
+  gap: .4rem;
+  margin-top: .25rem;
+}
+
+.flag-ratio-label {
+  font-weight: 600;
+  margin: 0 0 .2rem;
+  font-size: .95rem;
+}
+
+.flag-ratio-option,
+.quote-form label.flag-ratio-option {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: .5rem;
+  font-weight: 400;
+  cursor: pointer;
 }
 
 .field-error {
