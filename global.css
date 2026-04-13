@@ -538,15 +538,19 @@ section {
 
 .flag-preview {
   width: min(280px, 100%);
-  border: 2px dashed #8aa7e2;
+  border: 1.5px solid #222;
   background: linear-gradient(135deg, #ffffff, #f0f5ff);
+  position: relative;
+  overflow: hidden;
 }
 
 .flag-preview--image {
   display: block;
-  border: 1.5px solid #222;
-  background: none;
+  width: 100%;
+  height: 100%;
   object-fit: fill;
+  border: none;
+  background: none;
 }
 
 .flag-ratio-options {

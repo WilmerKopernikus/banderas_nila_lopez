@@ -1,0 +1,517 @@
+Abejorral
+Ábrego (Norte de Santander)
+Abriaquí
+Acacías
+Acandí
+Acevedo (Huila)
+Achí (Bolívar)
+Agrado
+Agua de Dios
+Aguachica
+Aguada (Santander)
+Aguadas
+Aguazul
+Agustín Codazzi (Cesar)
+Aipe
+Albán (Cundinamarca)
+Albania (Caquetá)
+Albania (La Guajira)
+Albania (Santander)
+Alcalá (Valle del Cauca)
+Aldana
+Alejandría (Antioquia)
+Algarrobo (Colombia)
+Algeciras (Huila)
+Almaguer
+Almeida (Boyacá)
+Alpujarra (Tolima)
+Altamira (Huila)
+Alto Baudó
+Altos del Rosario
+Alvarado (Tolima)
+Amagá
+Amalfi (Antioquia)
+Ambalema
+Anapoima
+Ancuya
+Andalucía (Valle del Cauca)
+Andes (Antioquia)
+Angelópolis
+Angostura (Antioquia)
+Anolaima
+Anorí
+Anserma
+Ansermanuevo
+Anzá
+Anzoátegui (Tolima)
+Apartadó
+Apía
+Apulo
+Aquitania (Boyacá)
+Aracataca
+Aranzazu
+Aratoca
+Arauca (Arauca)
+Arauquita
+Arbeláez
+Arboleda (Nariño)
+Berruecos
+Arboledas (Norte de Santander)
+Arboletes
+Arcabuco
+Arenal (Bolívar)
+Argelia (Antioquia)
+Argelia (Cauca)
+Argelia (Valle del Cauca)
+Ariguaní
+Arjona (Bolívar)
+Armenia (Antioquia)
+Armenia (Quindío)
+Armero Guayabal
+Guayabal (Tolima)
+Arroyohondo
+Astrea (Cesar)
+Ataco (Tolima)
+Ayapel
+Bagadó
+Bahía Solano (Colombia)
+Bajo Baudó
+Balboa (Cauca)
+Balboa (Risaralda)
+Baranoa
+Baraya
+Barbacoas (Nariño)
+Barbosa (Antioquia)
+Barbosa (Santander)
+Barichara
+Barranca de Upía
+Barrancabermeja
+Barrancas (La Guajira)
+Barranco de Loba
+Barrancominas
+Barranquilla
+Becerril (Cesar)
+Belalcázar (Caldas)
+Belén (Boyacá)
+Belén (Nariño)
+Belén de Bajirá (Chocó)
+Belén de los Andaquíes
+Belén de Umbría
+Bello (Antioquia)
+Belmira
+Beltrán (Cundinamarca)
+Berbeo
+Betania (Antioquia)
+Betéitiva
+Betulia (Antioquia)
+Betulia (Santander)
+Bituima
+Boavita
+Bochalema
+Bogotá
+Colombia
+Bojacá
+Bojayá
+Bolívar (Antioquia)
+Bolívar (Cauca)
+Bolívar (Santander)
+Bolívar (Valle del Cauca)
+Bosconia
+Boyacá (Boyacá)
+Briceño (Antioquia)
+Briceño (Boyacá)
+Bucaramanga
+Bucarasica
+Buenaventura (Valle del Cauca)
+Buenavista (Boyacá)
+Buenavista (Córdoba)
+Buenavista (Quindío)
+Buenavista (Sucre)
+Buenos Aires (Cauca)
+Buesaco
+Buga
+Bugalagrande
+Buriticá
+Busbanzá
+Cabrera (Cundinamarca)
+Cabrera (Santander)
+Cabuyaro
+Cáceres (Antioquia)
+Cachipay
+Cáchira
+Cácota
+Caicedo
+Caicedonia
+Caimito (Sucre)
+Cajamarca (Tolima)
+Cajibío
+Cajicá
+Calamar (Bolívar)
+Calamar (Guaviare)
+Calarcá (Quindío)
+Caldas (Antioquia)
+Caldas (Boyacá)
+Caldono
+Cali
+California (Santander)
+Calima (Valle del Cauca)
+Darién (Valle del Cauca)
+Caloto
+Campamento (Antioquia)
+Campo de la Cruz
+Campoalegre
+Campohermoso (Boyacá)
+Canalete (Córdoba)
+Candelaria (Atlántico)
+Candelaria (Valle del Cauca)
+Cantagallo (Bolívar)
+Cantón de San Pablo (Chocó)
+Cañasgordas
+Caparrapí
+Capitanejo (Santander)
+Cáqueza
+Caracolí
+Caramanta
+Carcasí
+Carepa
+Carmen de Apicalá
+Carmen de Carupa
+Carolina del Príncipe
+Cartagena de Indias
+Cartagena del Chairá
+Cartago (Colombia)
+Carurú
+Casabianca (Tolima)
+Castilla la Nueva (Colombia)
+Caucasia
+Cepitá
+Cereté
+Cerinza
+Cerrito (Santander)
+Cerro de San Antonio (Magdalena)
+Cértegui
+Chachagüí
+Chaguaní
+Chalán (Sucre)
+Chámeza
+Chaparral (Tolima)
+Charalá
+Charta
+Chía (Cundinamarca)
+Chibolo
+Chigorodó
+Chima
+Chimá
+Chimichagua
+Chinácota
+Chinavita
+Chinchiná
+Chinú
+Chipaque
+Chipatá
+Chiquinquirá
+Chíquiza
+Chiriguaná
+Chiscas
+Chita (Boyacá)
+Chitagá
+Chitaraque
+Chivatá
+Chivor
+Choachí
+Chocontá
+Cicuco
+Ciénaga (Magdalena)
+Ciénaga de Oro
+Ciénega (Boyacá)
+Cimitarra (Santander)
+Circasia (Quindío)
+Cisneros (Antioquia)
+Clemencia (Bolívar)
+Cocorná
+Coello (Tolima)
+Cogua
+Colombia (Huila)
+Colón (Nariño)
+Colón (Putumayo)
+Colosó
+Ricaurte
+Cómbita
+Concepción (Antioquia)
+Concepción (Santander)
+Concordia (Antioquia)
+Concordia (Magdalena)
+Condoto
+Confines
+Consacá
+Contadero
+Contratación
+Convención (Norte de Santander)
+Copacabana (Antioquia)
+Coper
+Córdoba (Bolívar)
+Córdoba (Nariño)
+Córdoba (Quindío)
+Corinto (Cauca)
+Coromoro
+Corozal (Sucre)
+Corrales (Boyacá)
+Cota (Cundinamarca)
+Cotorra (Córdoba)
+Covarachía
+Coveñas
+Coyaima
+Cravo Norte
+Cuaspud
+Carlosama
+Cubará
+Cubarral
+Cucaita
+Cucunubá
+Cúcuta
+Cucutilla
+Cuítiva
+Cumaral
+Cumaribo
+Vichada
+Cumbal (Nariño)
+Cumbitara
+Cunday
+Curillo
+Curití
+Curumaní
+Dabeiba
+Dagua
+Dibulla
+Distracción (La Guajira)
+Dolores (Tolima)
+Donmatías
+Dosquebradas
+Duitama
+Duranía
+Ebéjico
+El Águila
+El Atrato
+Yuto
+El Bagre
+El Banco
+El Cairo (Valle del Cauca)
+El Calvario (Meta)
+El Carmen (Norte de Santander)
+El Carmen de Atrato
+El Carmen de Bolívar
+El Carmen de Chucurí
+El Carmen de Viboral
+El Carmen del Darién
+El Castillo (Meta)
+El Cerrito (Valle del Cauca)
+El Charco (Nariño)
+El Cocuy
+El Colegio
+El Copey
+El Doncello
+El Dorado (Meta)
+El Dovio
+El Espinal (Tolima)
+El Espino (Boyacá)
+El Guacamayo
+El Guamo
+El Molino (La Guajira)
+El Paso (Cesar)
+El Paujil
+El Peñol (Antioquia)
+El Peñol (Nariño)
+El Peñón (Bolívar)
+El Peñón (Cundinamarca)
+El Peñón (Santander)
+El Piñón
+El Pital
+El Playón (Santander)
+El Retén
+El Retiro (Antioquia)
+El Retorno (Guaviare)
+El Roble (Sucre)
+El Rosal (Cundinamarca)
+El Rosario (Nariño)
+El Santuario
+El Socorro (Santander)
+El Tablón (Nariño)
+El Tambo (Cauca)
+El Tambo (Nariño)
+El Tarra
+El Zulia
+Elías (Huila)
+Encino (Santander)
+Entrerríos (Antioquia)
+Envigado
+Facatativá
+Falán
+Filadelfia (Caldas)
+Filandia
+Firavitoba
+Flandes (Tolima)
+Florencia (Cauca)
+Florencia (Caquetá)
+Floresta (Boyacá)
+Florián
+Florida (Valle del Cauca)
+Floridablanca (Santander)
+Fómeque
+Fonseca (La Guajira)
+Fortul
+Fosca
+Francisco Pizarro (Nariño)
+Fredonia (Antioquia)
+Fresno (Colombia)
+Frontino (Antioquia)
+Fuente de Oro
+Fundación (Magdalena)
+Funes (Colombia)
+Funza
+Fúquene
+Fusagasugá
+Gachalá
+Gachancipá
+Gachantivá
+Gachetá
+Galán (Santander)
+Galapa
+Galeras (Sucre)
+Gama (Cundinamarca)
+Gamarra (Cesar)
+Gámbita
+Gámeza
+Garagoa
+Garzón (Huila)
+Génova (Quindío)
+Gigante (Huila)
+Ginebra (Valle del Cauca)
+Giraldo
+Girardot
+Girardota
+Girón (Santander)
+Gómez Plata
+González (Cesar)
+Gramalote
+Granada (Antioquia)
+Granada (Cundinamarca)
+Granada (Meta)
+Guaca (Santander)
+Guacamayas
+Guacarí
+Guachené
+Guachetá
+Guachucal
+Guadalupe (Antioquia)
+Guadalupe (Huila)
+Guadalupe (Santander)
+Guaduas
+Guaitarilla
+Gualmatán
+Guamal (Magdalena)
+Guamal (Meta)
+Guamo
+Guapí
+Guapotá
+Guaranda (Sucre)
+Guarne
+Guasca (Cundinamarca)
+Guatapé
+Guataquí
+Guatavita
+Guateque
+Guática
+Guavatá
+Guayabal de Síquima
+Guayabetal
+Guayatá
+Güepsa
+Güicán
+Gutiérrez (Cundinamarca)
+Hacarí
+Hatillo de Loba
+Hato Corozal
+Hato (Santander)
+Hatonuevo
+Heliconia (Antioquia)
+Herrán (Norte de Santander)
+Herveo
+Hispania (Antioquia)
+Hobo
+Honda (Colombia)
+Ibagué
+Icononzo
+Iles
+Imués
+Inírida
+Guainía
+Inzá
+Ipiales
+Íquira
+Isnos
+Itagüí
+Istmina
+Ituango
+Iza (Boyacá)
+Jambaló
+Jamundí
+Jardín (Antioquia)
+Jenesano
+Jericó (Antioquia)
+Jericó (Boyacá)
+Jerusalén (Cundinamarca)
+Jesús María (Santander)
+Jordán (Santander)
+Juan de Acosta
+Junín (Cundinamarca)
+Juradó
+La Apartada
+La Argentina (Huila)
+La Belleza
+La Calera (Cundinamarca)
+La Capilla (Boyacá)
+La Ceja
+La Celia
+La Cruz (Nariño)
+La Cumbre (Valle del Cauca)
+La Dorada (Caldas)
+La Esperanza (Norte de Santander)
+La Estrella (Antioquia)
+La Florida (Nariño)
+La Gloria (Cesar)
+La Jagua de Ibirico
+La Jagua del Pilar
+La Llanada
+La Macarena (Meta)
+La Merced (Caldas)
+La Mesa (Cundinamarca)
+La Montañita (Caquetá)
+La Palma (Cundinamarca)
+La Paz (Cesar)
+Robles
+La Paz (Santander)
+La Peña (Cundinamarca)
+La Pintada (Antioquia)
+La Plata (Huila)
+La Playa de Belén
+La Primavera (Vichada)
+La Salina
+La Sierra (Cauca)
+La Tebaida
+La Tola
+La Unión (Antioquia)
+La Unión (Nariño)
+La Unión (Sucre)
+La Unión (Valle del Cauca)
+La Uribe
+La Uvita
+La Vega (Cauca)
+La Vega (Cundinamarca)
+La Victoria (Boyacá)
+La Victoria (Valle del Cauca)
+La Virginia
+Labateca
+Labranzagrande
+Landázuri
+Lebrija (Santander)
+Leiva (Nariño)

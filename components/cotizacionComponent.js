@@ -56,7 +56,7 @@ const CotizacionComponent = {
         summary: 'Resumen',
         preview: 'Vista proporcional aproximada',
         flagRatioLabel: 'Proporción de la bandera',
-        flagRatioOficial: 'Proporción oficial (2:3)',
+        flagRatioOficial: 'Proporción oficial',
         flagRatioPersonalizada: 'Proporción personalizada',
       },
     };
@@ -89,6 +89,7 @@ const CotizacionComponent = {
       heightCm: '',
       otherFlagType: '',
       flagRatio: 'oficial',
+      flagNaturalRatio: null,
     });
 
     const form = reactive({
@@ -112,15 +113,33 @@ const CotizacionComponent = {
     const isMunicipalityType = (item) => item.banderaType === 'De una ciudad o Municipio de Colombia';
     const isOtherType = (item) => item.banderaType === 'Otra';
     const isColombiaType = (item) => item.banderaType === 'De Colombia';
-    const hasOfficialRatio = (item) => isColombiaType(item) && item.flagRatio === 'oficial';
+    const hasOfficialRatio = (item) => item.flagRatio === 'oficial' && (isColombiaType(item) || isCountryType(item));
+
+    const itemNaturalRatio = (item) => {
+      if (isColombiaType(item)) return 3 / 2;
+      return item.flagNaturalRatio || null;
+    };
 
     const departmentFlagSrc = (item) => {
       if (!item.department) return '';
       return `images/banderas/departamentos_colombia/${item.department}.svg`;
     };
 
+    const municipalityFlagSrc = (item) => {
+      if (!item.municipality) return '';
+      return `images/banderas/municipios_colombia/${item.municipality}.svg`;
+    };
+
+    const countryFlagSrc = (item) => {
+      if (!item.country) return '';
+      return `images/banderas/banderas_del_mundo/${item.country}.svg`;
+    };
+
     const itemAspectRatio = (item) => {
-      if (hasOfficialRatio(item)) return '3 / 2';
+      if (hasOfficialRatio(item)) {
+        const r = itemNaturalRatio(item);
+        if (r) return `${r} / 1`;
+      }
       const width = Number(item.widthCm);
       const height = Number(item.heightCm);
       if (!width || !height || width <= 0 || height <= 0) {
@@ -132,7 +151,8 @@ const CotizacionComponent = {
     const onWidthInput = (item, index) => {
       if (hasOfficialRatio(item) && item.widthCm) {
         const w = Number(item.widthCm);
-        if (w > 0) item.heightCm = String(Math.round(w * 2 / 3));
+        const r = itemNaturalRatio(item);
+        if (w > 0 && r) item.heightCm = String(Math.round(w / r));
       }
       validateItemField(item, index, 'widthCm');
       validateItemField(item, index, 'heightCm');
@@ -141,7 +161,8 @@ const CotizacionComponent = {
     const onHeightInput = (item, index) => {
       if (hasOfficialRatio(item) && item.heightCm) {
         const h = Number(item.heightCm);
-        if (h > 0) item.widthCm = String(Math.round(h * 3 / 2));
+        const r = itemNaturalRatio(item);
+        if (h > 0 && r) item.widthCm = String(Math.round(h * r));
       }
       validateItemField(item, index, 'heightCm');
       validateItemField(item, index, 'widthCm');
@@ -150,7 +171,20 @@ const CotizacionComponent = {
     const onFlagRatioChange = (item, index) => {
       if (hasOfficialRatio(item) && item.widthCm) {
         const w = Number(item.widthCm);
-        if (w > 0) item.heightCm = String(Math.round(w * 2 / 3));
+        const r = itemNaturalRatio(item);
+        if (w > 0 && r) item.heightCm = String(Math.round(w / r));
+      }
+    };
+
+    const onFlagImageLoad = (event, item) => {
+      const img = event.target;
+      const { naturalWidth, naturalHeight } = img;
+      if (!naturalWidth || !naturalHeight) return;
+      img.style.display = 'block';
+      item.flagNaturalRatio = naturalWidth / naturalHeight;
+      if (item.flagRatio === 'oficial') {
+        item.heightCm = '100';
+        item.widthCm = String(Math.round(100 * naturalWidth / naturalHeight));
       }
     };
 
@@ -339,7 +373,7 @@ const CotizacionComponent = {
     };
 
     const departments = [
-      'Amazonas', 'Antioquia', 'Arauca', 'Atlántico', 'Bolívar', 'Boyacá', 'Caldas', 'Caquetá', 'Casanare',
+      'Amazonas', 'Antioquia', 'Arauca', 'Atlántico','Bogotá Distrito Capital', 'Bolívar', 'Boyacá', 'Caldas', 'Caquetá', 'Casanare',
       'Cauca', 'Cesar', 'Chocó', 'Córdoba', 'Cundinamarca', 'Guainía', 'Guaviare', 'Huila', 'La Guajira',
       'Magdalena', 'Meta', 'Nariño', 'Norte de Santander', 'Putumayo', 'Quindío', 'Risaralda',
       'San Andrés y Providencia', 'Santander', 'Sucre', 'Tolima', 'Valle del Cauca', 'Vaupés', 'Vichada',
@@ -426,7 +460,7 @@ const CotizacionComponent = {
       if (!isCountryType(item)) {
         return;
       }
-      countrySearch.value = '';
+      countrySearch.value = item.country;
       showCountryOptions.value = true;
     };
 
@@ -451,7 +485,7 @@ const CotizacionComponent = {
       if (!isDepartmentType(item)) {
         return;
       }
-      departmentSearch.value = '';
+      departmentSearch.value = item.department;
       showDepartmentOptions.value = true;
     };
 
@@ -476,7 +510,7 @@ const CotizacionComponent = {
       if (!isMunicipalityType(item)) {
         return;
       }
-      municipalitySearch.value = '';
+      municipalitySearch.value = item.municipality;
       showMunicipalityOptions.value = true;
     };
 
@@ -754,9 +788,12 @@ const onItemBanderaTypeChange = (item, index) => {
       isColombiaType,
       hasOfficialRatio,
       departmentFlagSrc,
+      municipalityFlagSrc,
+      countryFlagSrc,
       onWidthInput,
       onHeightInput,
       onFlagRatioChange,
+      onFlagImageLoad,
       countries,
       filterCountries,
       departments,
@@ -907,12 +944,12 @@ const onItemBanderaTypeChange = (item, index) => {
               </label>
               <label>
                 {{ t.height }}
-                <input type="number" min="1" step="1" v-model="item.heightCm" @input="onHeightInput(item, index)" :readonly="hasOfficialRatio(item)" required />
+                <input type="number" min="1" step="1" v-model="item.heightCm" @input="onHeightInput(item, index)" :readonly="isColombiaType(item) && hasOfficialRatio(item)" required />
                 <small v-if="errors[getItemErrorKey(index, 'heightCm')]" class="field-error">{{ errors[getItemErrorKey(index, 'heightCm')] }}</small>
               </label>
             </div>
 
-            <div v-if="isColombiaType(item)" class="flag-ratio-options">
+            <div v-if="isColombiaType(item) || isCountryType(item)" class="flag-ratio-options">
               <p class="flag-ratio-label">{{ t.flagRatioLabel }}</p>
               <label class="flag-ratio-option">
                 <input type="radio" v-model="item.flagRatio" value="oficial" @change="onFlagRatioChange(item, index)" />
@@ -926,9 +963,12 @@ const onItemBanderaTypeChange = (item, index) => {
 
             <div class="flag-preview-wrap">
               <p>{{ t.preview }}</p>
-              <img v-if="item.banderaType === 'De Colombia'" src="images/banderas/Flag_of_Colombia.svg" alt="Bandera de Colombia" class="flag-preview flag-preview--image" :style="{ aspectRatio: itemAspectRatio(item) }" />
-              <img v-else-if="isDepartmentType(item) && item.department" :src="departmentFlagSrc(item)" :alt="'Bandera de ' + item.department" class="flag-preview flag-preview--image" :style="{ aspectRatio: itemAspectRatio(item) }" @error="$event.target.style.display='none'" @load="$event.target.style.display='block'" />
-              <div v-else class="flag-preview" :style="{ aspectRatio: itemAspectRatio(item) }"></div>
+              <div class="flag-preview" :style="{ aspectRatio: itemAspectRatio(item) }">
+                <img v-if="item.banderaType === 'De Colombia'" src="images/banderas/Flag_of_Colombia.svg" alt="Bandera de Colombia" class="flag-preview--image" @load="onFlagImageLoad($event, item)" />
+                <img v-else-if="isDepartmentType(item) && item.department" :src="departmentFlagSrc(item)" :alt="'Bandera de ' + item.department" class="flag-preview--image" @error="$event.target.style.display='none'" @load="onFlagImageLoad($event, item)" />
+                <img v-else-if="isMunicipalityType(item) && item.municipality" :src="municipalityFlagSrc(item)" :alt="'Bandera de ' + item.municipality" class="flag-preview--image" @error="$event.target.style.display='none'" @load="onFlagImageLoad($event, item)" />
+                <img v-else-if="isCountryType(item) && item.country" :src="countryFlagSrc(item)" :alt="'Bandera de ' + item.country" class="flag-preview--image" @error="$event.target.style.display='none'" @load="onFlagImageLoad($event, item)" />
+              </div>
             </div>
             <button v-if="form.items.length > 1" type="button" class="btn-secondary quote-remove-item" @click="removeItem(index)">{{ t.removeFlag }}</button>
           </div>
