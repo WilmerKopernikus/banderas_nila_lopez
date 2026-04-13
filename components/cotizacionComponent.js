@@ -113,7 +113,7 @@ const CotizacionComponent = {
     const isMunicipalityType = (item) => item.banderaType === 'De una ciudad o Municipio de Colombia';
     const isOtherType = (item) => item.banderaType === 'Otra';
     const isColombiaType = (item) => item.banderaType === 'De Colombia';
-    const hasOfficialRatio = (item) => item.flagRatio === 'oficial' && (isColombiaType(item) || isCountryType(item));
+    const hasOfficialRatio = (item) => item.flagRatio === 'oficial' && (isColombiaType(item) || isCountryType(item) || isDepartmentType(item) || isMunicipalityType(item));
 
     const itemNaturalRatio = (item) => {
       if (isColombiaType(item)) return 3 / 2;
@@ -1520,6 +1520,10 @@ const CotizacionComponent = {
 
     const selectCountry = (item, index, country) => {
       item.country = country;
+      item.flagRatio = 'oficial';
+      item.flagNaturalRatio = null;
+      item.widthCm = '';
+      item.heightCm = '';
       countrySearch.value = '';
       clearItemError(index, 'country');
       closeCountryOptions();
@@ -1545,6 +1549,10 @@ const CotizacionComponent = {
 
     const selectDepartment = (item, index, department) => {
       item.department = department;
+      item.flagRatio = 'oficial';
+      item.flagNaturalRatio = null;
+      item.widthCm = '';
+      item.heightCm = '';
       departmentSearch.value = '';
       clearItemError(index, 'department');
       closeDepartmentOptions();
@@ -1570,6 +1578,10 @@ const CotizacionComponent = {
 
     const selectMunicipality = (item, index, municipality) => {
       item.municipality = municipality;
+      item.flagRatio = 'oficial';
+      item.flagNaturalRatio = null;
+      item.widthCm = '';
+      item.heightCm = '';
       municipalitySearch.value = '';
       clearItemError(index, 'municipality');
       closeMunicipalityOptions();
@@ -1599,6 +1611,10 @@ const CotizacionComponent = {
     };
 
 const onItemBanderaTypeChange = (item, index) => {
+      item.flagRatio = 'oficial';
+      item.flagNaturalRatio = null;
+      item.widthCm = '';
+      item.heightCm = '';
       if (!isCountryType(item)) {
         item.country = '';
         clearItemError(index, 'country');
@@ -1988,12 +2004,12 @@ const onItemBanderaTypeChange = (item, index) => {
               </label>
               <label>
                 {{ t.height }}
-                <input type="number" min="1" step="1" v-model="item.heightCm" @input="onHeightInput(item, index)" :readonly="isColombiaType(item) && hasOfficialRatio(item)" required />
+                <input type="number" min="1" step="1" v-model="item.heightCm" @input="onHeightInput(item, index)" :readonly="hasOfficialRatio(item)" required />
                 <small v-if="errors[getItemErrorKey(index, 'heightCm')]" class="field-error">{{ errors[getItemErrorKey(index, 'heightCm')] }}</small>
               </label>
             </div>
 
-            <div v-if="isColombiaType(item) || isCountryType(item)" class="flag-ratio-options">
+            <div v-if="isColombiaType(item) || isCountryType(item) || (isDepartmentType(item) && item.department) || (isMunicipalityType(item) && item.municipality)" class="flag-ratio-options">
               <p class="flag-ratio-label">{{ t.flagRatioLabel }}</p>
               <label class="flag-ratio-option">
                 <input type="radio" v-model="item.flagRatio" value="oficial" @change="onFlagRatioChange(item, index)" />
