@@ -30,12 +30,12 @@ const AboutComponent = {
           <div
             class="course-card"
             v-for="(section, index) in t.sections"
-            :key="index"
+            :key="section.id"
           >
             <img :src="section.image" :alt="section.alt" :id="section.id" />
             <div class="course-content">
               <h3>{{ section.heading }}</h3>
-              <p v-html="section.description.replace(/\\n/g, '<br>')"></p>
+              <p>{{ section.description }}</p>
               <a
                 v-if="section.button"
                 href="#!"

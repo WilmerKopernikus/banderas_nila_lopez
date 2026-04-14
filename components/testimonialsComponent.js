@@ -96,7 +96,7 @@ const TestimonialsComponent = {
         <div class="testimonial-wrapper">
           <div
             v-for="(item, index) in t.testimonials"
-            :key="index"
+            :key="item.src"
             class="testimonial"
             :class="{ active: index === activeIndex }"
           >

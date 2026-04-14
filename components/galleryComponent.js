@@ -124,7 +124,7 @@ const GalleryComponent = {
         <div 
           class="item" 
           v-for="(img, index) in visibleImages" 
-          :key="index"
+          :key="img"
         >
           <img :src="img" alt="">
         </div>

@@ -77,7 +77,7 @@ const CoursesComponent = {
       <section id="courses">
         <h2 class="section-title">{{ t.title }}</h2>
         <div class="courses-grid">
-          <div class="course-card" v-for="(course, index) in t.courses" :key="index">
+          <div class="course-card" v-for="(course, index) in t.courses" :key="course.title">
             <img :src="course.image" :alt="course.alt" />
             <div class="course-content">
               <h3>{{ course.title }}</h3>

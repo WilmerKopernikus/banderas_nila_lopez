@@ -77,7 +77,7 @@ const HeaderComponent = {
   },
   template: `
     <a class="contact-info-bar" href="contacto.html">
-      <div v-for="(item, index) in contactItems" :key="index" class="contact-info-item">
+      <div v-for="(item, index) in contactItems" :key="item.alt" class="contact-info-item">
         <img :src="item.icon" :alt="item.alt" />
         <span>{{ item.text }}</span>
       </div>
@@ -104,7 +104,7 @@ const HeaderComponent = {
       <!-- Menu Overlay -->
       <div :class="['menu-overlay', { show: menuOpen }]">
         <ul>
-          <li v-for="(label, i) in labels" :key="i">
+          <li v-for="(label, i) in labels" :key="label">
             <a 
               :href="sectionLinks[i]" 
               @click="closeMenu"
