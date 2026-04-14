@@ -1,0 +1,223 @@
+Municipalities to process (S–Z): 332
+
+============================================================
+RENOMBRADOS: 178
+  'Sabana de Torres.svg'  →  'Sabana de Torres, Santander.svg'
+  'Sabanas de San Ángel.svg'  →  'Sabanas de San Ángel, Magdalena.svg'
+  'Saboyá.svg'  →  'Saboyá, Boyacá.svg'
+  'Sácama.svg'  →  'Sácama, Casanare.svg'
+  'Sáchica.svg'  →  'Sáchica, Boyacá.svg'
+  'Saladoblanco.svg'  →  'Saladoblanco, Huila.svg'
+  'Salazar de Las Palmas.svg'  →  'Salazar de Las Palmas, Norte de Santander.svg'
+  'Samacá.svg'  →  'Samacá, Boyacá.svg'
+  'Sampués.svg'  →  'Sampués, Sucre.svg'
+  'San Andrés de Cuerquia.svg'  →  'San Andrés de Cuerquia, Antioquia.svg'
+  'San Andrés de Sotavento.svg'  →  'San Andrés de Sotavento, Córdoba.svg'
+  'San Antonio de Palmito.svg'  →  'San Antonio de Palmito, Sucre.svg'
+  'San Antonio del Tequendama.svg'  →  'San Antonio del Tequendama, Cundinamarca.svg'
+  'San Bernardo del Viento.svg'  →  'San Bernardo del Viento, Córdoba.svg'
+  'San Carlos de Guaroa.svg'  →  'San Carlos de Guaroa, Meta.svg'
+  'San Jacinto del Cauca.svg'  →  'San Jacinto del Cauca, Bolívar.svg'
+  'San José de Albán.svg'  →  'San José de Albán, Nariño.svg'
+  'San José de Miranda.svg'  →  'San José de Miranda, Santander.svg'
+  'San José de Pare.svg'  →  'San José de Pare, Boyacá.svg'
+  'San José del Fragua.svg'  →  'San José del Fragua, Caquetá.svg'
+  'San José del Guaviare.svg'  →  'San José del Guaviare, Guaviare.svg'
+  'San Juan de Arama.svg'  →  'San Juan de Arama, Meta.svg'
+  'San Juan de Betulia.svg'  →  'San Juan de Betulia, Sucre.svg'
+  'San Juan de Rioseco.svg'  →  'San Juan de Rioseco, Cundinamarca.svg'
+  'San Juan de Urabá.svg'  →  'San Juan de Urabá, Antioquia.svg'
+  'San Juan del Cesar.svg'  →  'San Juan del Cesar, La Guajira.svg'
+  'San Luis de Gaceno.svg'  →  'San Luis de Gaceno, Boyacá.svg'
+  'San Luis de Palenque.svg'  →  'San Luis de Palenque, Casanare.svg'
+  'San Martín de Loba.svg'  →  'San Martín de Loba, Bolívar.svg'
+  'San Miguel de Sema.svg'  →  'San Miguel de Sema, Boyacá.svg'
+  'San Pablo de Borbur.svg'  →  'San Pablo de Borbur, Boyacá.svg'
+  'San Pedro de Cartago.svg'  →  'San Pedro de Cartago, Nariño.svg'
+  'San Pedro de Urabá.svg'  →  'San Pedro de Urabá, Antioquia.svg'
+  'San Pedro de los Milagros.svg'  →  'San Pedro de los Milagros, Antioquia.svg'
+  'San Sebastián de Buenavista.svg'  →  'San Sebastián de Buenavista, Magdalena.svg'
+  'San Vicente de Chucurí.svg'  →  'San Vicente de Chucurí, Santander.svg'
+  'San Vicente del Caguán.svg'  →  'San Vicente del Caguán, Caquetá.svg'
+  'Sandoná.svg'  →  'Sandoná, Nariño.svg'
+  'Santa Bárbara de Pinto.svg'  →  'Santa Bárbara de Pinto, Magdalena.svg'
+  'Santa Fe de Antioquia.svg'  →  'Santa Fe de Antioquia, Antioquia.svg'
+  'Santa Helena del Opón.svg'  →  'Santa Helena del Opón, Santander.svg'
+  'Santa Rosa de Cabal.svg'  →  'Santa Rosa de Cabal, Risaralda.svg'
+  'Santa Rosa de Osos.svg'  →  'Santa Rosa de Osos, Antioquia.svg'
+  'Santa Rosa del Sur.svg'  →  'Santa Rosa del Sur, Bolívar.svg'
+  'Santacruz.svg'  →  'Santacruz, Nariño.svg'
+  'Santander de Quilichao.svg'  →  'Santander de Quilichao, Cauca.svg'
+  'Saravena.svg'  →  'Saravena, Arauca.svg'
+  'Sardinata.svg'  →  'Sardinata, Norte de Santander.svg'
+  'Sasaima.svg'  →  'Sasaima, Cundinamarca.svg'
+  'Sativanorte.svg'  →  'Sativanorte, Boyacá.svg'
+  'Sativasur.svg'  →  'Sativasur, Boyacá.svg'
+  'Sesquilé.svg'  →  'Sesquilé, Cundinamarca.svg'
+  'Siachoque.svg'  →  'Siachoque, Boyacá.svg'
+  'Sibaté.svg'  →  'Sibaté, Cundinamarca.svg'
+  'Sibundoy.svg'  →  'Sibundoy, Putumayo.svg'
+  'Silvania.svg'  →  'Silvania, Cundinamarca.svg'
+  'Simacota.svg'  →  'Simacota, Santander.svg'
+  'Simijaca.svg'  →  'Simijaca, Cundinamarca.svg'
+  'Simití.svg'  →  'Simití, Bolívar.svg'
+  'Sincé.svg'  →  'Sincé, Sucre.svg'
+  'Sincelejo.svg'  →  'Sincelejo, Sucre.svg'
+  'Sipí.svg'  →  'Sipí, Chocó.svg'
+  'Sitionuevo.svg'  →  'Sitionuevo, Magdalena.svg'
+  'Soacha.svg'  →  'Soacha, Cundinamarca.svg'
+  'Soatá.svg'  →  'Soatá, Boyacá.svg'
+  'Socha.svg'  →  'Socha, Boyacá.svg'
+  'Socotá.svg'  →  'Socotá, Boyacá.svg'
+  'Sogamoso.svg'  →  'Sogamoso, Boyacá.svg'
+  'Solita.svg'  →  'Solita, Caquetá.svg'
+  'Somondoco.svg'  →  'Somondoco, Boyacá.svg'
+  'Sonsón.svg'  →  'Sonsón, Antioquia.svg'
+  'Sopetrán.svg'  →  'Sopetrán, Antioquia.svg'
+  'Sopó.svg'  →  'Sopó, Cundinamarca.svg'
+  'Soracá.svg'  →  'Soracá, Boyacá.svg'
+  'Sotaquirá.svg'  →  'Sotaquirá, Boyacá.svg'
+  'Suaita.svg'  →  'Suaita, Santander.svg'
+  'Suaza.svg'  →  'Suaza, Huila.svg'
+  'Subachoque.svg'  →  'Subachoque, Cundinamarca.svg'
+  'Suesca.svg'  →  'Suesca, Cundinamarca.svg'
+  'Supatá.svg'  →  'Supatá, Cundinamarca.svg'
+  'Supía.svg'  →  'Supía, Caldas.svg'
+  'Suratá.svg'  →  'Suratá, Santander.svg'
+  'Susacón.svg'  →  'Susacón, Boyacá.svg'
+  'Sutamarchán.svg'  →  'Sutamarchán, Boyacá.svg'
+  'Sutatausa.svg'  →  'Sutatausa, Cundinamarca.svg'
+  'Sutatenza.svg'  →  'Sutatenza, Boyacá.svg'
+  'Tabio.svg'  →  'Tabio, Cundinamarca.svg'
+  'Tadó.svg'  →  'Tadó, Chocó.svg'
+  'Tamalameque.svg'  →  'Tamalameque, Cesar.svg'
+  'Taminango.svg'  →  'Taminango, Nariño.svg'
+  'Tangua.svg'  →  'Tangua, Nariño.svg'
+  'Taraira.svg'  →  'Taraira, Vaupés.svg'
+  'Tarazá.svg'  →  'Tarazá, Antioquia.svg'
+  'Tasco.svg'  →  'Tasco, Boyacá.svg'
+  'Tauramena.svg'  →  'Tauramena, Casanare.svg'
+  'Tausa.svg'  →  'Tausa, Cundinamarca.svg'
+  'Tello.svg'  →  'Tello, Huila.svg'
+  'Tenjo.svg'  →  'Tenjo, Cundinamarca.svg'
+  'Tenza.svg'  →  'Tenza, Boyacá.svg'
+  'Teorama.svg'  →  'Teorama, Norte de Santander.svg'
+  'Tibacuy.svg'  →  'Tibacuy, Cundinamarca.svg'
+  'Tibaná.svg'  →  'Tibaná, Boyacá.svg'
+  'Tibasosa.svg'  →  'Tibasosa, Boyacá.svg'
+  'Tibirita.svg'  →  'Tibirita, Cundinamarca.svg'
+  'Tibú.svg'  →  'Tibú, Norte de Santander.svg'
+  'Tierralta.svg'  →  'Tierralta, Córdoba.svg'
+  'Timaná.svg'  →  'Timaná, Huila.svg'
+  'Timbío.svg'  →  'Timbío, Cauca.svg'
+  'Timbiquí.svg'  →  'Timbiquí, Cauca.svg'
+  'Tinjacá.svg'  →  'Tinjacá, Boyacá.svg'
+  'Tipacoque.svg'  →  'Tipacoque, Boyacá.svg'
+  'Tiquisio.svg'  →  'Tiquisio, Bolívar.svg'
+  'Titiribí.svg'  →  'Titiribí, Antioquia.svg'
+  'Toca.svg'  →  'Toca, Boyacá.svg'
+  'Tocaima.svg'  →  'Tocaima, Cundinamarca.svg'
+  'Tocancipá.svg'  →  'Tocancipá, Cundinamarca.svg'
+  'Togüí.svg'  →  'Togüí, Boyacá.svg'
+  'Tolú.svg'  →  'Tolú, Sucre.svg'
+  'Tópaga.svg'  →  'Tópaga, Boyacá.svg'
+  'Topaipí.svg'  →  'Topaipí, Cundinamarca.svg'
+  'Toribío.svg'  →  'Toribío, Cauca.svg'
+  'Tota.svg'  →  'Tota, Boyacá.svg'
+  'Totoró.svg'  →  'Totoró, Cauca.svg'
+  'Tubará.svg'  →  'Tubará, Atlántico.svg'
+  'Tuluá.svg'  →  'Tuluá, Valle del Cauca.svg'
+  'Tumaco.svg'  →  'Tumaco, Nariño.svg'
+  'Tunja.svg'  →  'Tunja, Boyacá.svg'
+  'Tununguá.svg'  →  'Tununguá, Boyacá.svg'
+  'Túquerres.svg'  →  'Túquerres, Nariño.svg'
+  'Turbaco.svg'  →  'Turbaco, Bolívar.svg'
+  'Turmequé.svg'  →  'Turmequé, Boyacá.svg'
+  'Tuta.svg'  →  'Tuta, Boyacá.svg'
+  'Tutazá.svg'  →  'Tutazá, Boyacá.svg'
+  'Ubalá.svg'  →  'Ubalá, Cundinamarca.svg'
+  'Ubaque.svg'  →  'Ubaque, Cundinamarca.svg'
+  'Ubaté.svg'  →  'Ubaté, Cundinamarca.svg'
+  'Úmbita.svg'  →  'Úmbita, Boyacá.svg'
+  'Unguía.svg'  →  'Unguía, Chocó.svg'
+  'Uramita.svg'  →  'Uramita, Antioquia.svg'
+  'Uribia.svg'  →  'Uribia, La Guajira.svg'
+  'Urrao.svg'  →  'Urrao, Antioquia.svg'
+  'Urumita.svg'  →  'Urumita, La Guajira.svg'
+  'Usiacurí.svg'  →  'Usiacurí, Atlántico.svg'
+  'Valle de San José.svg'  →  'Valle de San José, Santander.svg'
+  'Valle de San Juan.svg'  →  'Valle de San Juan, Tolima.svg'
+  'Valle del Guamuez.svg'  →  'Valle del Guamuez, Putumayo.svg'
+  'Valledupar.svg'  →  'Valledupar, Cesar.svg'
+  'Vegachí.svg'  →  'Vegachí, Antioquia.svg'
+  'Venadillo.svg'  →  'Venadillo, Tolima.svg'
+  'Ventaquemada.svg'  →  'Ventaquemada, Boyacá.svg'
+  'Vetas.svg'  →  'Vetas, Santander.svg'
+  'Vianí.svg'  →  'Vianí, Cundinamarca.svg'
+  'Vigía del Fuerte.svg'  →  'Vigía del Fuerte, Antioquia.svg'
+  'Vijes.svg'  →  'Vijes, Valle del Cauca.svg'
+  'Villa Caro.svg'  →  'Villa Caro, Norte de Santander.svg'
+  'Villa de Leyva.svg'  →  'Villa de Leyva, Boyacá.svg'
+  'Villagarzón.svg'  →  'Villagarzón, Putumayo.svg'
+  'Villagómez.svg'  →  'Villagómez, Cundinamarca.svg'
+  'Villamaría.svg'  →  'Villamaría, Caldas.svg'
+  'Villapinzón.svg'  →  'Villapinzón, Cundinamarca.svg'
+  'Villavicencio.svg'  →  'Villavicencio, Meta.svg'
+  'Viotá.svg'  →  'Viotá, Cundinamarca.svg'
+  'Viracachá.svg'  →  'Viracachá, Boyacá.svg'
+  'Yacopí.svg'  →  'Yacopí, Cundinamarca.svg'
+  'Yacuanquer.svg'  →  'Yacuanquer, Nariño.svg'
+  'Yaguará.svg'  →  'Yaguará, Huila.svg'
+  'Yalí.svg'  →  'Yalí, Antioquia.svg'
+  'Yarumal.svg'  →  'Yarumal, Antioquia.svg'
+  'Yolombó.svg'  →  'Yolombó, Antioquia.svg'
+  'Yondó.svg'  →  'Yondó, Antioquia.svg'
+  'Yopal.svg'  →  'Yopal, Casanare.svg'
+  'Yotoco.svg'  →  'Yotoco, Valle del Cauca.svg'
+  'Yumbo.svg'  →  'Yumbo, Valle del Cauca.svg'
+  'Zapatoca.svg'  →  'Zapatoca, Santander.svg'
+  'Zapayán.svg'  →  'Zapayán, Magdalena.svg'
+  'Zipacón.svg'  →  'Zipacón, Cundinamarca.svg'
+  'Zipaquirá.svg'  →  'Zipaquirá, Cundinamarca.svg'
+  'Zona Bananera.svg'  →  'Zona Bananera, Magdalena.svg'
+
+============================================================
+YA CORRECTOS (sin cambio): 119
+
+============================================================
+MUNICIPIOS SIN ARCHIVO: 35
+  ✗  Sabaneta, Antioquia
+  ✗  Sahagún, Córdoba
+  ✗  San Andrés, San Andrés y Providencia
+  ✗  San Andrés, Santander
+  ✗  San Benito Abad, Sucre
+  ✗  San Francisco, Cundinamarca
+  ✗  San Gil, Santander
+  ✗  San Jacinto, Bolívar
+  ✗  San José de Uré, Córdoba
+  ✗  San José de la Montaña, Antioquia
+  ✗  San José del Palmar, Chocó
+  ✗  San Juan Nepomuceno, Bolívar
+  ✗  San Lorenzo, Nariño
+  ✗  San Rafael, Antioquia
+  ✗  San Vicente, Antioquia
+  ✗  Santa Marta, Magdalena
+  ✗  Santa Rosa, Bolívar
+  ✗  Santa Rosa de Viterbo, Boyacá
+  ✗  Santo Domingo de Silos, Norte de Santander
+  ✗  Sapuyes, Nariño
+  ✗  Soplaviento, Bolívar
+  ✗  Sotará, Cauca
+  ✗  Suán, Atlántico
+  ✗  Talaigua Nuevo, Bolívar
+  ✗  Támara, Casanare
+  ✗  Tarquí, Huila
+  ✗  Tenerife, Magdalena
+  ✗  Tolú Viejo, Sucre
+  ✗  Tuchín, Córdoba
+  ✗  Turbaná, Bolívar
+  ✗  Turbo, Antioquia
+  ✗  Valencia, Córdoba
+  ✗  Venecia, Antioquia
+  ✗  Villanueva, Casanare
+  ✗  Zetaquirá, Boyacá

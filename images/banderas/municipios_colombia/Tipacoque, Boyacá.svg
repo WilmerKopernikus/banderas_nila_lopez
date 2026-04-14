@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   version="1.0"
+   width="900"
+   height="500"
+   id="svg2"
+   sodipodi:version="0.32"
+   inkscape:version="0.46"
+   sodipodi:docname="Flag_of_Tipacoque_(Boyacá).svg"
+   inkscape:output_extension="org.inkscape.output.svg.inkscape">
+  <metadata
+     id="metadata28">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <sodipodi:namedview
+     inkscape:window-height="712"
+     inkscape:window-width="1024"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     guidetolerance="10.0"
+     gridtolerance="10.0"
+     objecttolerance="10.0"
+     borderopacity="1.0"
+     bordercolor="#666666"
+     pagecolor="#ffffff"
+     id="base"
+     showgrid="false"
+     inkscape:zoom="1.014"
+     inkscape:cx="450"
+     inkscape:cy="250"
+     inkscape:window-x="-4"
+     inkscape:window-y="-4"
+     inkscape:current-layer="svg2" />
+  <defs
+     id="defs4">
+    <inkscape:perspective
+       sodipodi:type="inkscape:persp3d"
+       inkscape:vp_x="0 : 250 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_z="900 : 250 : 1"
+       inkscape:persp3d-origin="450 : 166.66667 : 1"
+       id="perspective16" />
+  </defs>
+  <rect
+     x="0.077806175"
+     y="0"
+     width="899.95129"
+     height="249.9951"
+     id="rect7"
+     style="fill:#ffffff" />
+  <rect
+     x="0.077806175"
+     y="249.9951"
+     width="899.95129"
+     height="249.9951"
+     id="rect9"
+     style="fill:#da121a;fill-opacity:1" />
+  <path
+     d="M 0.077806177,0 L 372.47144,249.99509 L 0.077806177,499.99018 L 0.077806177,0 z"
+     id="path11"
+     style="fill:#078930;fill-opacity:1" />
+  <path
+     id="path3177"
+     d="M 38.045949,52.164092 L 45.544808,73.737342 L 68.379464,74.202683 L 50.179353,88.001019 L 56.79309,109.86186 L 38.045949,96.816452 L 19.298807,109.86186 L 25.912543,88.001019 L 7.7124356,74.202683 L 30.547092,73.737342 L 38.045949,52.164092 z"
+     style="fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-opacity:1" />
+  <path
+     id="path3186"
+     d="M 116.82884,102.12035 L 124.32769,123.6936 L 147.16235,124.15894 L 128.96224,137.95727 L 135.57598,159.81811 L 116.82884,146.77271 L 98.081694,159.81811 L 104.69543,137.95727 L 86.495317,124.15894 L 109.32998,123.6936 L 116.82884,102.12035 z"
+     style="fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-opacity:1" />
+  <path
+     id="path3188"
+     d="M 205.4704,160.72021 L 212.96925,182.29346 L 235.80391,182.7588 L 217.6038,196.55714 L 224.21754,218.41798 L 205.4704,205.37257 L 186.72325,218.41798 L 193.33699,196.55714 L 175.13688,182.7588 L 197.97154,182.29346 L 205.4704,160.72021 z"
+     style="fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-opacity:1" />
+  <path
+     id="path3190"
+     d="M 293.74107,218.5783 L 301.23993,240.15155 L 324.07458,240.61689 L 305.87448,254.41522 L 312.48822,276.27606 L 293.74107,263.23066 L 274.99392,276.27606 L 281.60766,254.41522 L 263.40756,240.61689 L 286.24222,240.15155 L 293.74107,218.5783 z"
+     style="fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-opacity:1" />
+  <path
+     id="path3192"
+     d="M 205.09951,275.32373 L 212.59837,296.89698 L 235.43303,297.36232 L 217.23292,311.16066 L 223.84666,333.0215 L 205.09951,319.97609 L 186.35237,333.0215 L 192.96611,311.16066 L 174.766,297.36232 L 197.60066,296.89698 L 205.09951,275.32373 z"
+     style="fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-opacity:1" />
+  <path
+     id="path3194"
+     d="M 116.82884,335.03625 L 124.32769,356.6095 L 147.16235,357.07484 L 128.96224,370.87317 L 135.57598,392.73401 L 116.82884,379.68861 L 98.081692,392.73401 L 104.69543,370.87317 L 86.495322,357.07484 L 109.32999,356.6095 L 116.82884,335.03625 z"
+     style="fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-opacity:1" />
+  <path
+     id="path3196"
+     d="M 37.830289,385.47664 L 45.329148,407.04988 L 68.163804,407.51523 L 49.963693,421.31356 L 56.57743,443.1744 L 37.830289,430.12899 L 19.083147,443.1744 L 25.696883,421.31356 L 7.4967753,407.51523 L 30.331432,407.04988 L 37.830289,385.47664 z"
+     style="fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-opacity:1" />
+</svg>

@@ -1,3 +1,29 @@
+# Node/Vite/JS build artifacts
+node_modules/
+dist/
+build/
+.vite/
+
+# VSCode
+.vscode/
+
+# System
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Python
+__pycache__/
+*.pyc
+
+# Env
+.env
+
+# Three.js skills
+skills-lock.json
+
 CONSULTING_ASSESSMENT.md
 ACTION_PLAN.md
 scripts/

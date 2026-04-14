@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="750"
+   height="500"
+   id="svg2842"
+   version="1.1"
+   inkscape:version="0.47 r22583"
+   sodipodi:docname="Flag of Alcalá (Valle del Cauca).svg">
+  <defs
+     id="defs2844">
+    <inkscape:perspective
+       sodipodi:type="inkscape:persp3d"
+       inkscape:vp_x="0 : 526.18109 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_z="744.09448 : 526.18109 : 1"
+       inkscape:persp3d-origin="372.04724 : 350.78739 : 1"
+       id="perspective2850" />
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.62"
+     inkscape:cx="350"
+     inkscape:cy="258.87502"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     inkscape:window-width="1024"
+     inkscape:window-height="538"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1" />
+  <metadata
+     id="metadata2847">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Capa 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(0,-552.36218)">
+    <rect
+       style="fill:#89c5e3;fill-opacity:1;stroke:none"
+       id="rect2852"
+       width="750"
+       height="250"
+       x="0"
+       y="-5.6843419e-14"
+       transform="translate(0,552.36218)" />
+    <rect
+       style="fill:#81b31c;fill-opacity:1;stroke:none"
+       id="rect2854"
+       width="750"
+       height="250"
+       x="0"
+       y="250"
+       transform="translate(0,552.36218)" />
+    <path
+       style="fill:#ffffff;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="M 650,0 750,0 750,100 100,500 0,500 0,400 650,0 z"
+       id="path2822"
+       transform="translate(0,552.36218)" />
+    <path
+       sodipodi:type="arc"
+       style="fill:#da121a;fill-opacity:1;stroke:none"
+       id="path2814"
+       sodipodi:cx="365.32257"
+       sodipodi:cy="239.51613"
+       sodipodi:rx="94.354836"
+       sodipodi:ry="81.451614"
+       d="m 459.67741,239.51613 a 94.354836,81.451614 0 1 1 -188.70967,0 94.354836,81.451614 0 1 1 188.70967,0 z"
+       transform="matrix(0.79487182,0,0,0.92079206,84.615383,581.81763)" />
+    <path
+       sodipodi:type="arc"
+       style="fill:#ffffff;fill-opacity:1;stroke:none"
+       id="path2816"
+       sodipodi:cx="862.9032"
+       sodipodi:cy="288.70969"
+       sodipodi:rx="17.741936"
+       sodipodi:ry="19.354839"
+       d="m 880.64513,288.70969 a 17.741936,19.354839 0 1 1 -35.48387,0 17.741936,19.354839 0 1 1 35.48387,0 z"
+       transform="matrix(3.3818182,0,0,3.0999999,-2542.6978,-93.121667)" />
+    <path
+       sodipodi:type="arc"
+       style="fill:#da121a;fill-opacity:1;stroke:none"
+       id="path2818"
+       sodipodi:cx="890.32257"
+       sodipodi:cy="271.7742"
+       sodipodi:rx="33.870968"
+       sodipodi:ry="21.774193"
+       d="m 924.19354,271.7742 a 33.870968,21.774193 0 1 1 -67.74194,0 33.870968,21.774193 0 1 1 67.74194,0 z"
+       transform="matrix(1.3285715,0,0,2.0666667,-806.88935,239.72772)" />
+    <path
+       sodipodi:type="arc"
+       style="fill:#ffffff;fill-opacity:1;stroke:none"
+       id="path2820"
+       sodipodi:cx="893.5484"
+       sodipodi:cy="271.7742"
+       sodipodi:rx="17.741936"
+       sodipodi:ry="18.548388"
+       d="m 911.29034,271.7742 a 17.741936,18.548388 0 1 1 -35.48387,0 17.741936,18.548388 0 1 1 35.48387,0 z"
+       transform="matrix(1.690909,0,0,1.6173912,-1134.4574,361.34534)" />
+  </g>
+</svg>
