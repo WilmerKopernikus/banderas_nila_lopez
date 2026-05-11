@@ -410,28 +410,6 @@ const CotizacionComponent = {
       payload.append('nombre', form.name);
       payload.append('email', form.email);
 
-      // Agregar todos los ítems de banderas
-      form.items.forEach((item, index) => {
-        payload.append(`tipo_bandera_${index}`, item.banderaType);
-        payload.append(`cantidad_${index}`, item.quantity);
-        payload.append(`ancho_cm_${index}`, item.widthCm);
-        payload.append(`alto_cm_${index}`, item.heightCm);
-        
-        if (isCountryType(item)) {
-          payload.append(`pais_${index}`, item.country);
-        }
-        if (isDepartmentType(item)) {
-          payload.append(`departamento_${index}`, item.department);
-        }
-        if (isMunicipalityType(item)) {
-          payload.append(`municipio_${index}`, item.municipality);
-        }
-        if (isOtherType(item)) {
-          payload.append(`otro_tipo_${index}`, item.otherFlagType);
-        }
-      });
-
-      // Agregar el archivo de logo si existe
       if (form.logoFile) {
         payload.append('logo', form.logoFile);
       }
@@ -559,12 +537,6 @@ const CotizacionComponent = {
         </p>
 
         <input type="hidden" name="pedido_detalle" :value="orderSummaryText" />
-        <input type="hidden" name="material" :value="form.material" />
-        <input type="hidden" name="asta_y_base" :value="form.needsPoleBase" />
-        <input type="hidden" name="ciudad_entrega" :value="form.city" />
-        <input type="hidden" name="bandera_personalizada" :value="form.customLogo" />
-        <input type="hidden" name="nombre" :value="form.name" />
-        <input type="hidden" name="email" :value="form.email" />
         <template v-if="step === 1">
           <quote-step-flag-type
             :items="form.items"
