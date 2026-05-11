@@ -2,9 +2,9 @@
 // Renders Step 1 of the quote form: flag type selection, dimensions, and preview.
 // Requires js/quoteFlagData.js to be loaded first (provides QUOTE_FLAG_* globals).
 const QuoteStepFlagTypeComponent = {
-  props: ['items', 'errors', 't', 'validateItemField', 'clearItemError', 'addItem', 'removeItem'],
+  props: ['items', 'errors', 't', 'validateItemField', 'clearItemError', 'addItem', 'removeItem', 'openItemIdOverride'],
   setup(props) {
-    const { ref, onMounted, onUnmounted } = Vue;
+    const { ref, computed, watch, nextTick, onMounted, onUnmounted, onBeforeUnmount } = Vue;
 
     // Dropdown UI state
     const showCountryOptions = ref(false);
@@ -252,6 +252,216 @@ const QuoteStepFlagTypeComponent = {
     onMounted(() => { document.addEventListener('click', onDocumentClick); });
     onUnmounted(() => { document.removeEventListener('click', onDocumentClick); });
 
+    // Accordion state — only one item open at a time
+    const openItemId = ref(props.items.length > 0 ? props.items[props.items.length - 1].id : null);
+
+    const toggleItem = (id) => {
+      openItemId.value = openItemId.value === id ? null : id;
+    };
+
+    const itemSummaryLabel = (item) => {
+      if (!item.banderaType) return '';
+      let label = item.banderaType;
+      if (item.country) label += ` · ${item.country}`;
+      else if (item.department) label += ` · ${item.department}`;
+      else if (item.municipality) label += ` · ${item.municipality}`;
+      return label;
+    };
+
+    // When parent forces an item open (e.g. after failed validation), open it and scroll to it
+    watch(() => props.openItemIdOverride, (id) => {
+      if (!id) return;
+      openItemId.value = id;
+      nextTick(() => {
+        const cards = document.querySelectorAll('.quote-item-card');
+        const index = props.items.findIndex((item) => item.id === id);
+        if (cards[index]) cards[index].scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    });
+
+    // Auto-open the newest item; if the open item is removed, fall back to the last one
+    watch(() => props.items.length, (newLen, oldLen) => {
+      if (newLen > oldLen) {
+        openItemId.value = props.items[props.items.length - 1].id;
+      } else if (newLen < oldLen) {
+        const stillOpen = props.items.some((item) => item.id === openItemId.value);
+        if (!stillOpen) {
+          openItemId.value = props.items.length > 0 ? props.items[props.items.length - 1].id : null;
+        }
+      }
+    });
+
+    // ── Three.js waving-flag preview ──────────────────────────────────────────
+    const _flagCanvasRefs = {};
+    const setFlagCanvasRef = (el, id) => {
+      if (el) _flagCanvasRefs[id] = el;
+      else delete _flagCanvasRefs[id];
+    };
+
+    let _renderer = null;
+    let _scene = null;
+    let _camera = null;
+    let _mesh = null;
+    let _clock = null;
+    let _animId = null;
+    let _resizeObserver = null;
+
+    const teardownThree = () => {
+      if (_animId !== null) { cancelAnimationFrame(_animId); _animId = null; }
+      if (_resizeObserver) { _resizeObserver.disconnect(); _resizeObserver = null; }
+      if (_mesh) {
+        _mesh.geometry.dispose();
+        if (_mesh.material.map) _mesh.material.map.dispose();
+        _mesh.material.dispose();
+        _mesh = null;
+      }
+      if (_renderer) { _renderer.dispose(); _renderer = null; }
+      _scene = null;
+      _camera = null;
+      _clock = null;
+    };
+
+    const _animate = () => {
+      if (!_renderer || !_scene || !_camera) return;
+      _animId = requestAnimationFrame(_animate);
+      if (_mesh) {
+        const t = _clock.getElapsedTime();
+        const pos = _mesh.geometry.attributes.position;
+        for (let i = 0; i < pos.count; i++) {
+          const x = pos.getX(i); // -1 (pole/left) to 1 (free/right)
+          const xNorm = (x + 1) / 2; // 0..1
+          pos.setZ(i, 0.12 * xNorm * Math.sin(x * 3.5 + t * 3.0));
+        }
+        pos.needsUpdate = true;
+      }
+      _renderer.render(_scene, _camera);
+    };
+
+    const initThreeForItem = (item) => {
+      if (!window.THREE) return;
+      const src = itemFlagSrc(item);
+      if (!src) return;
+      const canvas = _flagCanvasRefs[item.id];
+      if (!canvas) return;
+
+      teardownThree();
+
+      // Size the renderer to the canvas itself, not its container
+      const rect = canvas.getBoundingClientRect();
+      const W = Math.max(rect.width, 60);
+      const H = Math.max(rect.height, 40);
+
+      _renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+      _renderer.setSize(W, H, false);
+      _renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+      _scene = new THREE.Scene();
+      _camera = new THREE.PerspectiveCamera(50, W / H, 0.1, 100);
+      _camera.position.z = 1.85;
+      _clock = new THREE.Clock();
+
+      const fitMeshToCamera = () => {
+        if (!_mesh || !_camera) return;
+        const vH = 2 * _camera.position.z * Math.tan(THREE.MathUtils.degToRad(_camera.fov / 2));
+        const vW = vH * _camera.aspect;
+        // 0.90: less padding, flag fills more space
+        _mesh.scale.set(vW / 2 * 0.90, vH / 2 * 0.90, 1);
+        // Shift left by 40% of the equal padding so the pole side has less gap
+        _mesh.position.x = -(vW / 2) * 0.18 * 0.2;
+      };
+
+      const geom = new THREE.PlaneGeometry(2, 2, 32, 20);
+      const cleanSrc = src.replace(/#.*$/, '');
+      const loader = new THREE.TextureLoader();
+
+      // Shader to boost saturation
+      const vertexShader = `
+        varying vec2 vUv;
+        void main() {
+          vUv = uv;
+          gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+        }
+      `;
+
+      const fragmentShader = `
+        uniform sampler2D map;
+        uniform float saturation;
+        varying vec2 vUv;
+
+        void main() {
+          vec4 texColor = texture2D(map, vUv);
+          vec3 gray = vec3(dot(texColor.rgb, vec3(0.299, 0.587, 0.114)));
+          vec3 result = mix(gray, texColor.rgb, saturation);
+          gl_FragColor = vec4(result, texColor.a);
+        }
+      `;
+
+      const onTextureLoad = (texture) => {
+        if (texture.image && !item.flagNaturalRatio) {
+          const iw = texture.image.naturalWidth || texture.image.width;
+          const ih = texture.image.naturalHeight || texture.image.height;
+          if (iw && ih) {
+            item.flagNaturalRatio = iw / ih;
+            if (item.flagRatio === 'oficial' && (!item.widthCm || !item.heightCm)) {
+              item.heightCm = '100';
+              item.widthCm = String(Math.round(100 * iw / ih));
+            }
+          }
+        }
+        const mat = new THREE.ShaderMaterial({
+          uniforms: {
+            map: { value: texture },
+            saturation: { value: 1.4 },
+          },
+          vertexShader,
+          fragmentShader,
+          side: THREE.DoubleSide,
+        });
+        _mesh = new THREE.Mesh(geom, mat);
+        _scene.add(_mesh);
+        fitMeshToCamera();
+        _animate();
+      };
+
+      const onTextureError = () => {
+        const mat = new THREE.MeshBasicMaterial({ color: 0xcccccc });
+        _mesh = new THREE.Mesh(geom, mat);
+        _scene.add(_mesh);
+        fitMeshToCamera();
+        _animate();
+      };
+
+      loader.load(cleanSrc, onTextureLoad, undefined, onTextureError);
+
+      _resizeObserver = new ResizeObserver(() => {
+        if (!_renderer || !_camera) return;
+        const r2 = canvas.getBoundingClientRect();
+        const nW = Math.max(r2.width, 60);
+        const nH = Math.max(r2.height, 40);
+        _renderer.setSize(nW, nH, false);
+        _camera.aspect = nW / nH;
+        _camera.updateProjectionMatrix();
+        fitMeshToCamera();
+      });
+      _resizeObserver.observe(canvas);
+    };
+
+    const openItemFlagSrc = computed(() => {
+      const item = props.items.find(i => i.id === openItemId.value);
+      return item ? itemFlagSrc(item) : null;
+    });
+
+    watch([openItemId, openItemFlagSrc], async ([newId, newSrc]) => {
+      teardownThree();
+      if (!newId || !newSrc) return;
+      await nextTick();
+      const item = props.items.find(i => i.id === newId);
+      if (item) initThreeForItem(item);
+    });
+
+    onBeforeUnmount(() => teardownThree());
+    // ─────────────────────────────────────────────────────────────────────────
+
     return {
       getItemErrorKey,
       isCountryType,
@@ -290,12 +500,24 @@ const QuoteStepFlagTypeComponent = {
       onMunicipalityInput,
       selectMunicipality,
       onItemBanderaTypeChange,
+      openItemId,
+      toggleItem,
+      itemSummaryLabel,
+      itemFlagSrc,
+      setFlagCanvasRef,
     };
   },
   template: `
     <div style="display: contents;">
-      <div v-for="(item, index) in items" :key="item.id" class="quote-item-card">
-        <h3>{{ t.itemLabel }} #{{ index + 1 }}</h3>
+      <div v-for="(item, index) in items" :key="item.id" class="quote-item-card" :class="{ 'quote-item-open': openItemId === item.id }">
+        <button type="button" class="quote-item-header" @click="toggleItem(item.id)" :aria-expanded="String(openItemId === item.id)">
+          <span class="quote-item-header-title">
+            {{ t.itemLabel }} #{{ index + 1 }}
+            <span v-if="itemSummaryLabel(item)" class="quote-item-summary">— {{ itemSummaryLabel(item) }}</span>
+          </span>
+          <span class="quote-item-chevron" :class="{ open: openItemId === item.id }">&#9662;</span>
+        </button>
+        <div v-show="openItemId === item.id" class="quote-item-body">
         <label>
           {{ t.banderaType }}
           <select v-model="item.banderaType" @change="onItemBanderaTypeChange(item, index)" @blur="validateItemField(item, index, 'banderaType')" required>
@@ -381,14 +603,16 @@ const QuoteStepFlagTypeComponent = {
         <div class="flag-preview-wrap">
           <p>{{ t.preview }}</p>
           <div class="flag-preview" :style="itemPreviewStyle(item)">
-            <img v-if="isColombiaType(item)" src="images/banderas/Flag_of_Colombia.svg#svgView(preserveAspectRatio(none))" alt="" class="flag-display" :ref="el => { if (el && el.complete && el.naturalWidth) onFlagImageLoad({ target: el }, item); }" @load="onFlagImageLoad($event, item)" />
-            <img v-else-if="isDepartmentType(item) && item.department" :src="departmentFlagSrc(item)" alt="" class="flag-display" :ref="el => { if (el && el.complete && el.naturalWidth) onFlagImageLoad({ target: el }, item); }" @error="$event.target.style.display='none'" @load="onFlagImageLoad($event, item)" />
-            <img v-else-if="isMunicipalityType(item) && item.municipality" :src="municipalityFlagSrc(item)" alt="" class="flag-display" :ref="el => { if (el && el.complete && el.naturalWidth) onFlagImageLoad({ target: el }, item); }" @error="$event.target.style.display='none'" @load="onFlagImageLoad($event, item)" />
-            <img v-else-if="isCountryType(item) && item.country" :src="countryFlagSrc(item)" alt="" class="flag-display" :ref="el => { if (el && el.complete && el.naturalWidth) onFlagImageLoad({ target: el }, item); }" @error="$event.target.style.display='none'" @load="onFlagImageLoad($event, item)" />
+            <canvas
+              v-if="itemFlagSrc(item)"
+              :ref="el => setFlagCanvasRef(el, item.id)"
+              class="flag-canvas-3d"
+            ></canvas>
           </div>
         </div>
 
-        <button v-if="items.length > 1" type="button" class="btn-secondary quote-remove-item" @click="removeItem(index)">{{ t.removeFlag }}</button>
+          <button v-if="items.length > 1" type="button" class="btn-secondary quote-remove-item" @click="removeItem(index)">{{ t.removeFlag }}</button>
+        </div>
       </div>
 
       <button type="button" class="btn-primary quote-add-item" @click="addItem">{{ t.addFlag }}</button>

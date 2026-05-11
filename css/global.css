@@ -512,16 +512,89 @@ section {
 }
 
 .quote-item-card {
-  border: 1px solid #dce5f7;
-  border-radius: 10px;
-  padding: 1rem;
-  display: grid;
-  gap: .9rem;
-  background: #fbfdff;
+  border: none;
+  border-radius: 4px;
+  overflow: hidden;
+  background: linear-gradient(to right, #009fe3, #004f9f);
 }
 
-.quote-item-card h3 {
-  margin: 0;
+/* When open, revert card to plain white style */
+.quote-item-open {
+  border: 1px solid #dce5f7;
+  background: #fbfdff;
+  border-radius: 10px;
+}
+
+.quote-item-header {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: .75rem 1.5rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #fff;
+  gap: .5rem;
+  border-radius: 4px;
+  transition: background 0.3s ease;
+}
+
+.quote-item-header:hover {
+  background: rgba(255,255,255,0.15);
+}
+
+/* When open, header text reverts to dark */
+.quote-item-open > .quote-item-header {
+  color: inherit;
+  border-bottom: 1px solid #dce5f7;
+  border-radius: 10px 10px 0 0;
+}
+
+.quote-item-open > .quote-item-header:hover {
+  background: #edf2ff;
+}
+
+.quote-item-header-title {
+  display: flex;
+  align-items: center;
+  gap: .45rem;
+  flex-wrap: wrap;
+}
+
+.quote-item-summary {
+  font-weight: 400;
+  font-size: .88rem;
+  color: rgba(255,255,255,0.8);
+}
+
+.quote-item-open .quote-item-summary {
+  color: #555;
+}
+
+.quote-item-chevron {
+  transition: transform .22s ease;
+  font-size: 1.1rem;
+  line-height: 1;
+  flex-shrink: 0;
+  color: #fff;
+}
+
+.quote-item-open .quote-item-chevron {
+  color: inherit;
+}
+
+.quote-item-chevron.open {
+  transform: rotate(180deg);
+}
+
+.quote-item-body {
+  display: grid;
+  gap: .9rem;
+  padding: 1rem;
 }
 
 .quote-add-item,
@@ -537,9 +610,9 @@ section {
 }
 
 .flag-preview {
-  width: min(280px, 100%);
-  border: 1.5px solid #222;
-  background-color: white;
+  width: min(420px, 100%);
+  outline: 1.5px solid #222;
+  background-color: #5b5b5b;
   position: relative;
   overflow: hidden;
 }
@@ -549,6 +622,15 @@ section {
   height: 100%;
   display: block;
   object-fit: fill;
+}
+
+.flag-canvas-3d {
+  display: block;
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
 }
 
 .flag-ratio-options {

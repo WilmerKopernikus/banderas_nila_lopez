@@ -280,17 +280,27 @@ const CotizacionComponent = {
 
     const scrollToFirstError = () => {
       nextTick(() => {
-        const el = formRef.value?.querySelector('.field-error');
+        const el = formRef.value?.querySelector('.field-error:not([style*="display: none"])');
         if (el) {
           el.scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
       });
     };
 
+    const openAccordionItemId = ref(null);
+
     const nextStep = () => {
       if (validateStep() && step.value < totalSteps) {
         step.value += 1;
       } else {
+        if (step.value === 1) {
+          const firstErrorIndex = form.items.findIndex((item, index) =>
+            Object.keys(errors).some((key) => key.startsWith(`item_${index}_`) && errors[key])
+          );
+          if (firstErrorIndex !== -1) {
+            openAccordionItemId.value = form.items[firstErrorIndex].id;
+          }
+        }
         scrollToFirstError();
       }
     };
@@ -523,6 +533,7 @@ const CotizacionComponent = {
       addItem,
       removeItem,
       orderSummaryText,
+      openAccordionItemId,
     };
   },
   template: `
@@ -562,6 +573,7 @@ const CotizacionComponent = {
             :clear-item-error="clearItemError"
             :add-item="addItem"
             :remove-item="removeItem"
+            :open-item-id-override="openAccordionItemId"
           ></quote-step-flag-type>
         </template>
 
