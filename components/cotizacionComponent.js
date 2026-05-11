@@ -54,6 +54,7 @@ const CotizacionComponent = {
         no: 'No',
         city: 'Ciudad para entregar',
         name: 'Nombre',
+        phone: 'Número de celular',
         email: 'Correo electrónico',
         customLogo: '¿Bandera personalizada con logo?',
         uploadLogo: 'Subir logo (PNG/JPG/SVG)',
@@ -95,6 +96,7 @@ const CotizacionComponent = {
       needsPoleBase: '',
       city: '',
       name: '',
+      phone: '',
       email: '',
       customLogo: 'no',
       logoFile: null,
@@ -163,7 +165,7 @@ const CotizacionComponent = {
     const validateField = (field) => {
       errors[field] = '';
 
-      if (['material', 'needsPoleBase', 'city', 'name'].includes(field) && !form[field]) {
+      if (['material', 'needsPoleBase', 'city', 'name', 'phone'].includes(field) && !form[field]) {
         errors[field] = t.value.required;
       }
 
@@ -229,7 +231,7 @@ const CotizacionComponent = {
     const fieldsByStep = {
       1: [],
       2: ['material', 'needsPoleBase', 'city', 'customLogo', 'logoFile'],
-      3: ['name', 'email'],
+      3: ['name', 'phone', 'email'],
       4: [],
     };
 
@@ -276,9 +278,20 @@ const CotizacionComponent = {
         .forEach((key) => { errors[key] = ''; });
     };
 
+    const scrollToFirstError = () => {
+      nextTick(() => {
+        const el = formRef.value?.querySelector('.field-error');
+        if (el) {
+          el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+      });
+    };
+
     const nextStep = () => {
       if (validateStep() && step.value < totalSteps) {
         step.value += 1;
+      } else {
+        scrollToFirstError();
       }
     };
 
@@ -300,6 +313,7 @@ const CotizacionComponent = {
         needsPoleBase: '',
         city: '',
         name: '',
+        phone: '',
         email: '',
         customLogo: 'no',
         logoFile: null,
@@ -408,6 +422,7 @@ const CotizacionComponent = {
       payload.append('ciudad_entrega', form.city);
       payload.append('bandera_personalizada', form.customLogo);
       payload.append('nombre', form.name);
+      payload.append('celular', form.phone);
       payload.append('email', form.email);
 
       if (form.logoFile) {
@@ -439,6 +454,7 @@ const CotizacionComponent = {
       }
 
       if (!validateStep()) {
+        scrollToFirstError();
         return;
       }
 
@@ -565,6 +581,12 @@ const CotizacionComponent = {
               {{ t.name }}
               <input type="text" name="nombre" v-model="form.name" @input="validateField('name')" required />
               <small v-if="errors.name" class="field-error">{{ errors.name }}</small>
+            </label>
+
+            <label>
+              {{ t.phone }}
+              <input type="tel" name="celular" v-model="form.phone" @input="validateField('phone')" required />
+              <small v-if="errors.phone" class="field-error">{{ errors.phone }}</small>
             </label>
 
             <label>
