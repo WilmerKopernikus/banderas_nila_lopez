@@ -252,8 +252,8 @@ const QuoteStepFlagTypeComponent = {
     onMounted(() => { document.addEventListener('click', onDocumentClick); });
     onUnmounted(() => { document.removeEventListener('click', onDocumentClick); });
 
-    // Accordion state — only one item open at a time
-    const openItemId = ref(props.items.length > 0 ? props.items[props.items.length - 1].id : null);
+    // Accordion state — only one item open at a time; first item open by default
+    const openItemId = ref(props.items.length > 0 ? props.items[0].id : null);
 
     const toggleItem = (id) => {
       openItemId.value = openItemId.value === id ? null : id;
@@ -321,6 +321,8 @@ const QuoteStepFlagTypeComponent = {
       _clock = null;
     };
 
+    let _shaderMaterial = null;  // Reference to shader material for uniform updates
+
     const _animate = () => {
       if (!_renderer || !_scene || !_camera) return;
       _animId = requestAnimationFrame(_animate);
@@ -333,6 +335,11 @@ const QuoteStepFlagTypeComponent = {
           pos.setZ(i, 0.12 * xNorm * Math.sin(x * 3.5 + t * 3.0));
         }
         pos.needsUpdate = true;
+        
+        // Update shader time uniform for wave lighting
+        if (_shaderMaterial && _shaderMaterial.uniforms.time) {
+          _shaderMaterial.uniforms.time.value = t;
+        }
       }
       _renderer.render(_scene, _camera);
     };
@@ -374,7 +381,7 @@ const QuoteStepFlagTypeComponent = {
       const cleanSrc = src.replace(/#.*$/, '');
       const loader = new THREE.TextureLoader();
 
-      // Shader to boost saturation
+      // Shader to boost saturation and add wave-based lighting
       const vertexShader = `
         varying vec2 vUv;
         void main() {
@@ -386,12 +393,23 @@ const QuoteStepFlagTypeComponent = {
       const fragmentShader = `
         uniform sampler2D map;
         uniform float saturation;
+        uniform float time;
         varying vec2 vUv;
 
         void main() {
           vec4 texColor = texture2D(map, vUv);
           vec3 gray = vec3(dot(texColor.rgb, vec3(0.299, 0.587, 0.114)));
           vec3 result = mix(gray, texColor.rgb, saturation);
+          
+          // Wave-based lighting: brighten where the wave is moving left
+          // Use X coordinate mapped to -1..1, simulate the same sine wave as vertex displacement
+          float x = vUv.x * 2.0 - 1.0;  // Map 0..1 to -1..1
+          float xNorm = (x + 1.0) / 2.0;  // Back to 0..1
+          float waveHeight = 0.35 * xNorm * sin(x * 3.5 + time * 3.0);
+          float brightness = 0.5 + 0.5 * (waveHeight + 0.35) / 0.7;  // Map wave to 0..1 brightness
+          brightness = clamp(brightness, 0.5, 1.5);  // Keep in reasonable range
+          
+          result *= brightness;
           gl_FragColor = vec4(result, texColor.a);
         }
       `;
@@ -412,12 +430,14 @@ const QuoteStepFlagTypeComponent = {
           uniforms: {
             map: { value: texture },
             saturation: { value: 1.4 },
+            time: { value: 0 },
           },
           vertexShader,
           fragmentShader,
           side: THREE.DoubleSide,
         });
         _mesh = new THREE.Mesh(geom, mat);
+        _shaderMaterial = mat;  // Store reference for time uniform updates
         _scene.add(_mesh);
         fitMeshToCamera();
         _animate();
