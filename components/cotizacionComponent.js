@@ -139,7 +139,15 @@ const CotizacionComponent = {
         Object.assign(form, parsed);
       }
 
-      if (storedStep >= 1 && storedStep <= totalSteps) {
+      // Only restore a step > 1 if items actually have data.
+      // This prevents users from landing on step 2+ when localStorage
+      // was left by a previous session with empty items.
+      const itemsHaveData = form.items.length > 0
+        && form.items.some((item) => item.banderaType);
+
+      if (storedStep >= 2 && !itemsHaveData) {
+        step.value = 1;
+      } else if (storedStep >= 1 && storedStep <= totalSteps) {
         step.value = storedStep;
       }
     });
@@ -227,6 +235,8 @@ const CotizacionComponent = {
 
     const validateStep = () => {
       if (step.value === 1) {
+        // An empty items array passes every() vacuously — guard against it.
+        if (form.items.length === 0) return false;
         return form.items.every((item, index) => {
           const baseValid = validateItemField(item, index, 'banderaType')
             && validateItemField(item, index, 'quantity')
@@ -440,6 +450,16 @@ const CotizacionComponent = {
       if (isSubmitting.value) {
         return;
       }
+
+      // Guard: if items are missing (e.g. session restored without step 1),
+      // redirect the user back to step 1 instead of submitting empty data.
+      const itemsHaveData = form.items.length > 0
+        && form.items.some((item) => item.banderaType);
+      if (!itemsHaveData) {
+        step.value = 1;
+        return;
+      }
+
       if (!validateStep()) {
         return;
       }
