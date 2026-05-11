@@ -390,8 +390,41 @@ const CotizacionComponent = {
     });
 
     const submitToNetlify = async () => {
-      const payload = new FormData(formRef.value);
-      payload.set('form-name', 'contacto-cotizacion');
+      const payload = new FormData();
+      payload.append('form-name', 'contacto-cotizacion');
+      payload.append('pedido_detalle', orderSummaryText.value);
+      payload.append('material', form.material);
+      payload.append('asta_y_base', form.needsPoleBase);
+      payload.append('ciudad_entrega', form.city);
+      payload.append('bandera_personalizada', form.customLogo);
+      payload.append('nombre', form.name);
+      payload.append('email', form.email);
+
+      // Agregar todos los ítems de banderas
+      form.items.forEach((item, index) => {
+        payload.append(`tipo_bandera_${index}`, item.banderaType);
+        payload.append(`cantidad_${index}`, item.quantity);
+        payload.append(`ancho_cm_${index}`, item.widthCm);
+        payload.append(`alto_cm_${index}`, item.heightCm);
+        
+        if (isCountryType(item)) {
+          payload.append(`pais_${index}`, item.country);
+        }
+        if (isDepartmentType(item)) {
+          payload.append(`departamento_${index}`, item.department);
+        }
+        if (isMunicipalityType(item)) {
+          payload.append(`municipio_${index}`, item.municipality);
+        }
+        if (isOtherType(item)) {
+          payload.append(`otro_tipo_${index}`, item.otherFlagType);
+        }
+      });
+
+      // Agregar el archivo de logo si existe
+      if (form.logoFile) {
+        payload.append('logo', form.logoFile);
+      }
 
       const response = await fetch('/', {
         method: 'POST',

@@ -71,6 +71,7 @@ global.css / header.css / gallery.css / contacto.css
 - Form state persistence via `localStorage` so users do not lose progress on page reload
 - Multi-item support — users can add multiple flag line items in a single request
 
+
 ### Sticky WhatsApp CTA
 `stickyWhatsAppCTAComponent.js` provides a persistent low-friction conversion channel:
 - Floating button visible on all viewport sizes
