@@ -477,7 +477,7 @@ const QuoteStepFlagTypeComponent = {
       await nextTick();
       const item = props.items.find(i => i.id === newId);
       if (item) initThreeForItem(item);
-    });
+    }, { immediate: true });
 
     onBeforeUnmount(() => teardownThree());
     // ─────────────────────────────────────────────────────────────────────────

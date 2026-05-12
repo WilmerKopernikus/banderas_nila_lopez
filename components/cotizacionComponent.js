@@ -291,6 +291,7 @@ const CotizacionComponent = {
 
     const nextStep = () => {
       if (validateStep() && step.value < totalSteps) {
+        openAccordionItemId.value = null;
         step.value += 1;
       } else {
         if (step.value === 1) {
@@ -307,6 +308,7 @@ const CotizacionComponent = {
 
     const prevStep = () => {
       if (step.value > 1) {
+        openAccordionItemId.value = null;
         step.value -= 1;
       }
     };
