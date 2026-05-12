@@ -518,6 +518,14 @@ section {
   background: linear-gradient(to right, #009fe3, #004f9f);
 }
 
+.quote-form-section {
+  border: 1px solid #dce5f7;
+  border-radius: 10px;
+  background: #edf6ff;
+  padding: 10px;
+  overflow: hidden;
+}
+
 /* When open, revert card to plain white style */
 .quote-item-open {
   border: 1px solid #dce5f7;

@@ -5,7 +5,7 @@ const QuoteStepDetailsComponent = {
   props: ['form', 'errors', 't', 'validateField', 'onFileChange'],
   template: `
     <div style="display: contents;">
-      <div class="quote-item-card">
+      <div class="quote-form-section">
       <label>
         {{ t.material }}
         <select name="material" v-model="form.material" @blur="validateField('material')" required>

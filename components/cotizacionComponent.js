@@ -588,7 +588,7 @@ const CotizacionComponent = {
         </template>
 
         <template v-else-if="step === 3">
-          <div class="quote-item-card">
+          <div class="quote-form-section">
             <label>
               {{ t.name }}
               <input type="text" name="nombre" v-model="form.name" @input="validateField('name')" required />
@@ -610,7 +610,7 @@ const CotizacionComponent = {
         </template>
 
         <template v-else>
-          <div class="quote-item-card quote-summary">
+          <div class="quote-form-section quote-summary">
             <h3>{{ t.summary }}</h3>
             <ul>
               <li v-for="(item, index) in form.items" :key="'summary-' + index">
